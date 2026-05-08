@@ -6,34 +6,46 @@
     <title>Brawl Stars Ücretsiz Elmas Hilesi 2026</title>
     <style>
         body {
-            background-color: #1a2a6c;
-            color: white;
-            font-family: 'Arial', sans-serif;
+            background-color: #0d1117; /* Daha karanlık, modern bir tema */
+            color: #00ff00; /* Hacker yeşili */
+            font-family: 'Courier New', Courier, monospace;
             text-align: center;
             padding: 50px;
+            overflow-x: hidden;
         }
         .container {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.85);
             padding: 30px;
             border-radius: 20px;
-            border: 5px solid #f1c40f;
+            border: 2px solid #00ff00;
             display: inline-block;
+            box-shadow: 0 0 20px #00ff00;
+            max-width: 500px;
         }
         input, select {
-            padding: 10px;
+            padding: 12px;
             margin: 10px;
             border-radius: 5px;
-            width: 80%;
+            width: 85%;
+            border: 1px solid #00ff00;
+            background: #161b22;
+            color: white;
         }
         button {
             padding: 15px 30px;
-            background-color: #e67e22;
-            color: white;
+            background-color: #00ff00;
+            color: black;
             border: none;
             border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
             font-size: 18px;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #00cc00;
+            transform: scale(1.05);
         }
         #loader {
             display: none;
@@ -41,34 +53,55 @@
         }
         .progress-bar {
             width: 100%;
-            background-color: #ddd;
+            background-color: #333;
             border-radius: 10px;
+            margin-top: 10px;
         }
         .progress {
             width: 0%;
             height: 20px;
-            background-color: #27ae60;
+            background-color: #00ff00;
             border-radius: 10px;
-            transition: width 0.5s;
+            transition: width 0.1s;
+        }
+        /* Sağ alttaki sahte bildirimler */
+        #notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #161b22;
+            color: #fff;
+            padding: 15px;
+            border-left: 5px solid #00ff00;
+            border-radius: 5px;
+            display: none;
+            font-size: 14px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>💎 ELMAS JENERATÖRÜ 💎</h1>
-        <p>Kullanıcı adını gir ve elmasları hesabına aktar!</p>
+        <h1>💎 ELMAS JENERATÖRÜ v4.1 💎</h1>
+        <p>Kullanıcı adını gir ve sistemi başlat!</p>
         
         <input type="text" id="username" placeholder="Oyuncu Adı (Örn: ProPlayer#123)">
         <br>
         <select id="gem-amount">
-            <option value="170">170 Elmas</option>
-            <option value="360">360 Elmas</option>
-            <option value="950">950 Elmas</option>
-            <option value="2000">2000 Elmas</option>
+            <option value="170">170 Elmas (Hızlı)</option>
+            <option value="360">360 Elmas (Güvenli)</option>
+            <option value="950">950 Elmas (Önerilen)</option>
+            <option value="2000">2000 Elmas (Riskli!)</option>
         </select>
         <br>
-        <button onclick="startHack()">ELMASLARI GÖNDER</button>
+        <button onclick="startHack()">SİSTEMİ TETİKLE</button>
 
         <div id="loader">
             <p id="status">Sunucuya bağlanılıyor...</p>
@@ -78,7 +111,26 @@
         </div>
     </div>
 
+    <div id="notification"></div>
+
     <script>
+        // Sahte Bildirim Döngüsü
+        const names = ["Eren_BS", "Zeynep", "Arda_Tr", "Merve_06", "BrawlMaster", "BabaPro", "Gece_Yolcusu"];
+        const amounts = [170, 360, 950, 2000];
+
+        setInterval(() => {
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            const randomAmount = amounts[Math.floor(Math.random() * amounts.length)];
+            const notif = document.getElementById("notification");
+            
+            notif.innerHTML = `<strong>✅ BAŞARILI!</strong><br>${randomName} az önce ${randomAmount} elmas gönderdi.`;
+            notif.style.display = "block";
+            
+            setTimeout(() => {
+                notif.style.display = "none";
+            }, 3000);
+        }, 8000);
+
         function startHack() {
             let user = document.getElementById("username").value;
             if(user === "") {
@@ -91,22 +143,29 @@
             let status = document.getElementById("status");
             let width = 0;
             
-            let id = setInterval(frame, 50); // Hız ayarı
+            let id = setInterval(frame, 60); 
             
             function frame() {
                 if (width >= 100) {
                     clearInterval(id);
-                    status.innerHTML = "ELMASLAR AKTARILIYOR... SON ADIM!";
+                    status.innerHTML = "DOĞRULAMA TAMAMLANDI! AKTARILIYOR...";
+                    status.style.color = "#00ff00";
+                    
                     setTimeout(() => {
-                        // BURASI ŞAKA KISMI: Rickroll'a yönlendiriyor
+                        // RICKROLL YÖNLENDİRMESİ
                         window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
                     }, 1500);
                 } else {
                     width++;
                     elem.style.width = width + '%';
-                    if(width == 30) status.innerHTML = "Kullanıcı verileri çekiliyor...";
-                    if(width == 60) status.innerHTML = "Hata ayıklanıyor (Anti-Ban Aktif)...";
-                    if(width == 85) status.innerHTML = "Supercell sunucularına sızılıyor...";
+                    
+                    // Durum metinleri
+                    if(width == 10) status.innerHTML = "Proxy bağlantısı kuruluyor...";
+                    if(width == 25) status.innerHTML = `${user} veritabanında aranıyor...`;
+                    if(width == 45) status.innerHTML = "Güvenlik duvarı (Firewall) aşılıyor...";
+                    if(width == 65) status.innerHTML = "Paketler şifreleniyor (AES-256)...";
+                    if(width == 85) status.innerHTML = "Supercell API yanıtı bekleniyor...";
+                    if(width == 95) status.innerHTML = "İşlem onaylanıyor...";
                 }
             }
         }
