@@ -3,171 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brawl Stars Ücretsiz Elmas Hilesi 2026</title>
+    <title>Brawl Stars Destek & Elmas Paneli</title>
     <style>
         body {
-            background-color: #0d1117; /* Daha karanlık, modern bir tema */
-            color: #00ff00; /* Hacker yeşili */
-            font-family: 'Courier New', Courier, monospace;
-            text-align: center;
+            background-color: #f0f2f5;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sol Ana Panel */
+        .main-panel {
+            flex: 3;
             padding: 50px;
-            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+
         .container {
-            background: rgba(0, 0, 0, 0.85);
-            padding: 30px;
-            border-radius: 20px;
-            border: 2px solid #00ff00;
-            display: inline-block;
-            box-shadow: 0 0 20px #00ff00;
-            max-width: 500px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            border-top: 8px solid #007bff;
         }
-        input, select {
-            padding: 12px;
-            margin: 10px;
-            border-radius: 5px;
-            width: 85%;
-            border: 1px solid #00ff00;
-            background: #161b22;
-            color: white;
+
+        /* Sağ Destek Paneli */
+        .support-panel {
+            flex: 1;
+            background: #1c1e21;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-left: 4px solid #007bff;
         }
-        button {
-            padding: 15px 30px;
-            background-color: #00ff00;
-            color: black;
+
+        .support-header {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        #console-output {
+            flex-grow: 1;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            color: #bdc3c7;
+        }
+
+        #console-input {
+            background: #2c2f33;
             border: none;
-            border-radius: 10px;
+            color: #fff;
+            padding: 10px;
+            font-family: 'Consolas', monospace;
+            border-radius: 5px;
+        }
+
+        input, select, button {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
             font-weight: bold;
             cursor: pointer;
-            font-size: 18px;
-            margin-top: 15px;
             transition: 0.3s;
         }
-        button:hover {
-            background-color: #00cc00;
-            transform: scale(1.05);
-        }
-        #loader {
+
+        button:hover { background-color: #0056b3; }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #eee;
+            border-radius: 10px;
             display: none;
             margin-top: 20px;
         }
-        .progress-bar {
-            width: 100%;
-            background-color: #333;
-            border-radius: 10px;
-            margin-top: 10px;
-        }
+
         .progress {
             width: 0%;
-            height: 20px;
-            background-color: #00ff00;
+            height: 15px;
+            background-color: #28a745;
             border-radius: 10px;
-            transition: width 0.1s;
+            transition: width 0.2s;
         }
-        /* Sağ alttaki sahte bildirimler */
-        #notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #161b22;
-            color: #fff;
-            padding: 15px;
-            border-left: 5px solid #00ff00;
-            border-radius: 5px;
-            display: none;
-            font-size: 14px;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            animation: slideIn 0.5s ease-out;
-        }
-        @keyframes slideIn {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
+
+        /* Troll Efektleri */
+        .shake { animation: shake 0.2s infinite; }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px); }
+            50% { transform: translate(-2px, -1px); }
+            100% { transform: translate(1px, 1px); }
         }
     </style>
 </head>
-<body>
+<body id="main-body">
 
-    <div class="container">
-        <h1>💎 ELMAS JENERATÖRÜ v4.1 💎</h1>
-        <p>Kullanıcı adını gir ve sistemi başlat!</p>
-        
-        <input type="text" id="username" placeholder="Oyuncu Adı (Örn: ProPlayer#123)">
-        <br>
-        <select id="gem-amount">
-            <option value="170">170 Elmas (Hızlı)</option>
-            <option value="360">360 Elmas (Güvenli)</option>
-            <option value="950">950 Elmas (Önerilen)</option>
-            <option value="2000">2000 Elmas (Riskli!)</option>
-        </select>
-        <br>
-        <button onclick="startHack()">SİSTEMİ TETİKLE</button>
+    <div class="main-panel">
+        <div class="container" id="main-card">
+            <h1 style="color: #007bff;">💎 Elmas Merkezi</h1>
+            <p>Resmi 2026 Destek Paneline Hoş Geldiniz.</p>
+            
+            <input type="text" id="username" placeholder="Supercell ID Giriniz">
+            <select id="gem-amount">
+                <option value="170">170 Elmas Paketi</option>
+                <option value="950">950 Elmas Paketi</option>
+                <option value="2000">2000 Elmas Paketi</option>
+            </select>
+            <button onclick="startHack()">GÖNDERİMİ BAŞLAT</button>
 
-        <div id="loader">
-            <p id="status">Sunucuya bağlanılıyor...</p>
-            <div class="progress-bar">
-                <div id="myProgress" class="progress"></div>
+            <div id="loader" class="progress-bar">
+                <p id="status" style="font-size: 14px; margin-bottom: 5px;">Bağlanılıyor...</p>
+                <div class="progress-bar" style="display: block;">
+                    <div id="myProgress" class="progress"></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="notification"></div>
+    <div class="support-panel">
+        <div class="support-header">DURUM KONSOLU v2.0</div>
+        <div id="console-output">
+            > Sistem hazır...<br>
+            > Destek ekibi aktif.<br>
+            > Komut bekliyor...
+        </div>
+        <input type="text" id="console-input" placeholder="Komut yaz..." onkeydown="if(event.key==='Enter') executeCommand()">
+    </div>
 
     <script>
-        // Sahte Bildirim Döngüsü
-        const names = ["Eren_BS", "Zeynep", "Arda_Tr", "Merve_06", "BrawlMaster", "BabaPro", "Gece_Yolcusu"];
-        const amounts = [170, 360, 950, 2000];
-
-        setInterval(() => {
-            const randomName = names[Math.floor(Math.random() * names.length)];
-            const randomAmount = amounts[Math.floor(Math.random() * amounts.length)];
-            const notif = document.getElementById("notification");
-            
-            notif.innerHTML = `<strong>✅ BAŞARILI!</strong><br>${randomName} az önce ${randomAmount} elmas gönderdi.`;
-            notif.style.display = "block";
-            
-            setTimeout(() => {
-                notif.style.display = "none";
-            }, 3000);
-        }, 8000);
+        let width = 0;
+        let isHacked = false;
 
         function startHack() {
             let user = document.getElementById("username").value;
-            if(user === "") {
-                alert("Lütfen önce kullanıcı adını gir!");
-                return;
-            }
+            if(!user) return alert("Kullanıcı adı boş!");
 
             document.getElementById("loader").style.display = "block";
             let elem = document.getElementById("myProgress");
             let status = document.getElementById("status");
-            let width = 0;
             
-            let id = setInterval(frame, 60); 
-            
-            function frame() {
+            let id = setInterval(() => {
                 if (width >= 100) {
                     clearInterval(id);
-                    status.innerHTML = "DOĞRULAMA TAMAMLANDI! AKTARILIYOR...";
-                    status.style.color = "#00ff00";
-                    
-                    setTimeout(() => {
-                        // RICKROLL YÖNLENDİRMESİ
-                        window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-                    }, 1500);
+                    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
                 } else {
+                    if(isHacked && width >= 99) return; // 'hack' komutu çalıştıysa durdur
                     width++;
                     elem.style.width = width + '%';
-                    
-                    // Durum metinleri
-                    if(width == 10) status.innerHTML = "Proxy bağlantısı kuruluyor...";
-                    if(width == 25) status.innerHTML = `${user} veritabanında aranıyor...`;
-                    if(width == 45) status.innerHTML = "Güvenlik duvarı (Firewall) aşılıyor...";
-                    if(width == 65) status.innerHTML = "Paketler şifreleniyor (AES-256)...";
-                    if(width == 85) status.innerHTML = "Supercell API yanıtı bekleniyor...";
-                    if(width == 95) status.innerHTML = "İşlem onaylanıyor...";
+                    if(width == 30) status.innerHTML = "Veritabanı taranıyor...";
+                    if(width == 70) status.innerHTML = "Token oluşturuluyor...";
                 }
+            }, 80);
+        }
+
+        function executeCommand() {
+            let cmdInput = document.getElementById("console-input");
+            let output = document.getElementById("console-output");
+            let cmd = cmdInput.value.toLowerCase();
+            cmdInput.value = "";
+
+            if(cmd === "hack") {
+                isHacked = true;
+                output.innerHTML += `<br><span style="color:yellow">> Zorlamalı sızma aktif!</span>`;
+                width = 98;
+            } 
+            else if(cmd === "admin") {
+                output.innerHTML += `<br><span style="color:red">> ERİŞİM REDDEDİLDİ!</span>`;
+                document.getElementById("main-card").innerHTML = "<h1 style='color:red'>KRİTİK HATA!<br>HESABINIZ İNCELENİYOR</h1>";
             }
+            else if(cmd === "error") {
+                document.getElementById("main-body").classList.add("shake");
+                output.innerHTML += `<br><span style="color:red">> SİSTEM ÇÖKTÜ!</span>`;
+            }
+            else if(cmd === "clear") {
+                output.innerHTML = "> Konsol temizlendi.";
+            }
+            else {
+                output.innerHTML += `<br>> Bilinmeyen komut: ${cmd}`;
+            }
+            output.scrollTop = output.scrollHeight;
         }
     </script>
 </body>
