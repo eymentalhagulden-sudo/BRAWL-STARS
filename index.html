@@ -3,168 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURAL-LINK: BRAWL GEN 5</title>
+    <title>NEURAL_CORE_2126</title>
     <style>
         :root {
-            --neon-blue: #00f3ff;
-            --neon-purple: #bc13fe;
-            --dark-bg: #050505;
+            --core-white: rgba(255, 255, 255, 0.8);
+            --neon-cyan: #00ffff;
+            --deep-space: #020205;
         }
 
         body {
-            background-color: var(--dark-bg);
-            color: var(--neon-blue);
-            font-family: 'Orbitron', sans-serif;
+            background-color: var(--deep-space);
+            color: white;
+            font-family: 'Inter', sans-serif;
             margin: 0;
-            display: flex;
             height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
-            perspective: 1000px;
-            transition: background 0.5s;
+            perspective: 2000px;
         }
 
-        /* Arka Plan Grid */
-        .bg-grid {
+        /* Kuantum Parçacık Arka Planı */
+        #particles {
             position: fixed;
-            top: 0; left: 0; width: 200%; height: 200%;
-            background-image: linear-gradient(0deg, transparent 24%, rgba(0, 243, 255, .05) 25%, rgba(0, 243, 255, .05) 26%, transparent 27%, transparent 74%, rgba(0, 243, 255, .05) 75%, rgba(0, 243, 255, .05) 76%, transparent 77%, transparent),
-                              linear-gradient(90deg, transparent 24%, rgba(0, 243, 255, .05) 25%, rgba(0, 243, 255, .05) 26%, transparent 27%, transparent 74%, rgba(0, 243, 255, .05) 75%, rgba(0, 243, 255, .05) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;
-            animation: moveGrid 20s linear infinite;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #020205 100%);
         }
 
-        @keyframes moveGrid { from { transform: translateY(0); } to { transform: translateY(-50px); } }
-
-        /* DNA Tarayıcı */
-        #dna-scanner {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 120px;
-            height: 120px;
-            border: 2px solid var(--neon-blue);
-            border-radius: 50%;
-            display: none;
-            overflow: hidden;
-            background: rgba(0,0,0,0.7);
-            z-index: 5000;
-            box-shadow: 0 0 15px var(--neon-blue);
-        }
-        .scan-line {
-            width: 100%;
-            height: 2px;
-            background: var(--neon-blue);
-            position: absolute;
-            animation: scan 2s linear infinite;
-            box-shadow: 0 0 10px var(--neon-blue);
-        }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
-
-        /* Hologram Kartı */
-        .hologram-card {
-            margin: auto;
-            background: rgba(0, 243, 255, 0.05);
-            border: 2px solid var(--neon-blue);
-            padding: 50px;
-            border-radius: 5px;
-            box-shadow: 0 0 20px var(--neon-blue), inset 0 0 15px var(--neon-blue);
-            backdrop-filter: blur(10px);
+        /* 3D Kristal Kart */
+        .crystal-panel {
+            width: 400px;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            border-radius: 2px;
             text-align: center;
-            max-width: 500px;
-            position: relative;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.05);
             transform-style: preserve-3d;
-            transition: transform 0.1s;
+            transition: transform 0.1s ease-out;
         }
 
-        input, select {
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--neon-purple);
-            color: var(--neon-blue);
-            padding: 15px;
-            margin: 15px 0;
-            width: 100%;
-            font-family: inherit;
+        h1 {
+            font-weight: 200;
+            letter-spacing: 15px;
             text-transform: uppercase;
+            font-size: 24px;
+            margin-bottom: 40px;
+            transform: translateZ(50px);
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px var(--neon-cyan);
         }
+
+        .input-group {
+            transform: translateZ(30px);
+            margin-bottom: 20px;
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            font-family: inherit;
+            letter-spacing: 3px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus { border-bottom: 1px solid var(--neon-cyan); }
 
         button {
-            background: var(--neon-purple);
-            color: white;
-            border: none;
-            padding: 20px;
-            width: 110%;
+            margin-top: 40px;
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 15px 40px;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 0 15px var(--neon-purple);
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 10px;
+            transition: 0.4s;
+            transform: translateZ(40px);
         }
 
-        /* Glitch Katmanı */
-        #glitch-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://media.giphy.com/media/oEI9uWUicKgR6S7Lqz/giphy.gif');
-            opacity: 0.15;
-            pointer-events: none;
-            display: none;
-            z-index: 8000;
+        button:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 30px var(--neon-cyan);
         }
 
-        /* AI Dalga */
-        .ai-wave { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
-        .bar { width: 3px; height: 20px; background: var(--neon-blue); animation: wave 1s infinite; }
-        @keyframes wave { 0%, 100% { height: 10px; } 50% { height: 40px; } }
+        /* Sistem Yükleniyor Işığı */
+        #light-beam {
+            position: fixed;
+            width: 2px;
+            height: 0;
+            background: var(--neon-cyan);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 100px var(--neon-cyan);
+            transition: height 2s, width 1s;
+            z-index: 1000;
+        }
 
-        #final-screen {
+        /* Final Beyaz Ekran */
+        #final-void {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: black;
+            background: white;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 10000;
+            z-index: 2000;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="bg-grid"></div>
-    <div id="glitch-overlay"></div>
-    
-    <div id="dna-scanner">
-        <div class="scan-line"></div>
-        <div style="font-size:8px; color:white; text-align:center; margin-top:40px;">BİYOMETRİK<br>TARANIYOR...</div>
-    </div>
+    <div id="particles"></div>
+    <div id="light-beam"></div>
 
-    <div class="hologram-card" id="main-ui">
-        <div style="font-size: 10px; text-align: left; opacity: 0.6;">SYSTEM: ONLINE [V7.62]</div>
-        <h1 style="text-shadow: 0 0 10px var(--neon-blue);">QUANTUM GEMS</h1>
-        <p style="font-size: 12px;">Nöral Bağlantı İçin ID Giriniz</p>
+    <div class="crystal-panel" id="main-panel">
+        <div style="font-size: 8px; margin-bottom: 20px; opacity: 0.4; letter-spacing: 2px;">NEURAL_LINK_ESTABLISHED</div>
+        <h1>Gems_2126</h1>
         
-        <input type="text" id="id-input" placeholder="NEURAL_ID_00X">
-        <select>
-            <option>1.000.000 KUANTUM ELMAS</option>
-            <option>SINIRSIZ GALAXY PASS</option>
-        </select>
+        <div class="input-group">
+            <input type="text" id="target" placeholder="USER_CONSCIOUSNESS_ID">
+        </div>
         
-        <div class="ai-wave">
-            <div class="bar" style="animation-delay: 0.1s"></div>
-            <div class="bar" style="animation-delay: 0.3s"></div>
-            <div class="bar" style="animation-delay: 0.5s"></div>
+        <div class="input-group">
+            <p style="font-size: 9px; opacity: 0.5;">SELECT QUANTUM UNIT</p>
+            <input type="number" placeholder="∞" disabled>
         </div>
 
-        <p id="system-msg" style="font-size: 10px; margin-top: 15px;">ASİSTAN: BAĞLANTI BEKLENİYOR...</p>
-        <button onclick="initiateLink()">NÖRAL BAĞLANTIYI KUR</button>
+        <button onclick="startAscension()">Manifest_Gems</button>
     </div>
 
-    <div id="final-screen">
-        <h1 style="color: #ff0055; text-shadow: 0 0 20px #ff0055;">SİSTEM ELE GEÇİRİLDİ</h1>
-        <p style="color: white;">Nöral verileriniz Dark Web'e aktarılıyor...</p>
-        <iframe width="400" height="250" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay"></iframe>
-        <p style="margin-top: 20px; font-size: 10px; color: gray;">HATA KODU: RICK_ROLL_2076</p>
+    <div id="final-void">
+        <h2 style="color: black; letter-spacing: 10px; font-weight: 200; margin-bottom: 30px;">HACK_SUCCESSFUL</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay"></iframe>
     </div>
 
     <audio id="troll-audio" loop>
@@ -172,43 +155,35 @@
     </audio>
 
     <script>
-        function initiateLink() {
-            let id = document.getElementById("id-input").value;
-            if(!id) return alert("NÖRAL ID GİRMEDİNİZ!");
+        // 3D Hareket Efekti
+        document.addEventListener('mousemove', (e) => {
+            const panel = document.getElementById('main-panel');
+            const x = (window.innerWidth / 2 - e.pageX) / 30;
+            const y = (window.innerHeight / 2 - e.pageY) / 30;
+            panel.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+        });
+
+        function startAscension() {
+            if(!document.getElementById('target').value) return alert("ID?");
 
             document.getElementById("troll-audio").play();
-            document.getElementById("dna-scanner").style.display = "block";
+            const beam = document.getElementById('light-beam');
+            const panel = document.getElementById('main-panel');
             
-            let msg = document.getElementById("system-msg");
-            msg.innerHTML = "DNA ANALİZ EDİLİYOR...";
-            msg.style.color = "yellow";
+            panel.style.opacity = "0.5";
+            panel.style.filter = "blur(10px)";
+            
+            // Enerji ışığı büyüyor
+            beam.style.height = "100vh";
             
             setTimeout(() => {
-                msg.innerHTML = "DNA EŞLEŞTİ! GÜVENLİK DUVARI DELİNİYOR...";
-                document.getElementById("glitch-overlay").style.display = "block";
-            }, 2000);
+                beam.style.width = "100vw";
+            }, 1500);
 
             setTimeout(() => {
-                msg.innerHTML = "KRİTİK HATA: SİSTEM GERİ DÖNDÜRÜLEMEZ!";
-                msg.style.color = "red";
-                document.body.style.background = "#330000";
-            }, 4000);
-
-            setTimeout(() => {
-                document.getElementById("main-ui").style.display = "none";
-                document.getElementById("final-screen").style.display = "flex";
-                document.getElementById("dna-scanner").style.display = "none";
-                document.getElementById("glitch-overlay").style.display = "none";
-            }, 6500);
+                document.getElementById('final-void').style.display = 'flex';
+            }, 2500);
         }
-
-        // Fare ile 3D Hareket
-        document.addEventListener('mousemove', (e) => {
-            let card = document.getElementById("main-ui");
-            let x = (window.innerWidth / 2 - e.pageX) / 25;
-            let y = (window.innerHeight / 2 - e.pageY) / 25;
-            card.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
-        });
     </script>
 </body>
 </html>
