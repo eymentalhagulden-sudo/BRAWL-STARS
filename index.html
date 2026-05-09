@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BRAWL_GEMS_NEURAL_2126</title>
+    <title>BRAWL_STARS_QUANTUM_GEN_2126</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        /* 
-           NEURAL SYSTEM 2126 - FIX VERSION
-        */
         :root {
             --neon-cyan: #00ffff;
-            --neon-magenta: #ff00ff;
             --hacker-red: #ff003c;
             --deep-space: #010108;
-            --glass: rgba(0, 255, 255, 0.05);
         }
 
         * { box-sizing: border-box; }
@@ -27,24 +22,23 @@
             overflow: hidden;
         }
 
-        /* Dinamik Arka Plan */
+        /* Dinamik Arka Plan Motoru */
         #canvas-bg {
             position: fixed; top: 0; left: 0; z-index: -1;
             background: radial-gradient(circle at center, #0a1128 0%, #010108 100%);
         }
 
-        /* Sahne ve Perspektif */
         .scene {
             width: 100vw; height: 100vh;
             display: flex; align-items: center; justify-content: center;
             perspective: 1500px;
         }
 
-        /* Ana Hologram Paneli */
+        /* 3D Hologram Kartı */
         .hologram-card {
             position: relative;
             width: 420px;
-            background: var(--glass);
+            background: rgba(0, 255, 255, 0.05);
             border: 1px solid rgba(0, 255, 255, 0.3);
             backdrop-filter: blur(15px);
             padding: 40px;
@@ -54,7 +48,6 @@
             z-index: 10;
         }
 
-        /* Köşe Süsleri */
         .corner {
             position: absolute; width: 15px; height: 15px;
             border: 2px solid var(--neon-cyan);
@@ -73,7 +66,7 @@
             margin-bottom: 25px;
             transform: translateZ(20px);
             position: relative;
-            z-index: 20; /* Tıklanabilir olması için önemli */
+            z-index: 20;
         }
 
         label {
@@ -89,21 +82,12 @@
             color: white;
             font-family: 'Share Tech Mono', monospace;
             outline: none;
-            transition: 0.3s;
             cursor: text;
         }
-
-        input:focus {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-        }
-
-        select { cursor: pointer; }
 
         button {
             width: 100%;
             padding: 20px;
-            margin-top: 20px;
             background: transparent;
             border: 2px solid var(--neon-cyan);
             color: var(--neon-cyan);
@@ -121,46 +105,34 @@
             box-shadow: 0 0 30px var(--neon-cyan);
         }
 
-        /* Sistem Logları */
-        #logs {
-            position: fixed; bottom: 20px; left: 20px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 11px; color: rgba(0, 255, 255, 0.4);
-            pointer-events: none;
-        }
-
-        /* HACK EKRANI (SİYAH & GLITCH) */
+        /* Siyah Hack Ekranı */
         #hack-void {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: black;
             display: none;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            align-items: center; justify-content: center;
             z-index: 10000;
-        }
-
-        .glitch-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://media.giphy.com/media/oEI9uWUicKgR6S7Lqz/giphy.gif');
-            opacity: 0.15; pointer-events: none;
         }
 
         .hacked-text {
             color: var(--hacker-red);
-            font-size: 60px; font-weight: 900;
+            font-size: 50px; font-weight: 900;
             text-shadow: 0 0 20px red;
-            margin-bottom: 20px;
             animation: blink 0.1s infinite;
-            z-index: 10001;
         }
 
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } }
 
-        iframe {
-            border: 2px solid var(--hacker-red);
-            z-index: 10002;
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+        .info-leak {
+            color: #00ff00;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            text-align: left;
+            margin: 20px 0;
+            background: rgba(0, 50, 0, 0.3);
+            padding: 15px;
+            border: 1px solid #00ff00;
         }
 
         .shake { animation: shake 0.1s infinite; }
@@ -171,7 +143,6 @@
 <body>
 
     <canvas id="canvas-bg"></canvas>
-    <div id="logs"></div>
 
     <div class="scene">
         <div class="hologram-card" id="card">
@@ -179,37 +150,37 @@
             <div class="corner bottom-right"></div>
             
             <p style="font-size: 8px; opacity: 0.4; letter-spacing: 2px;">NEURAL_STARS_v2126</p>
-            <h1>BRAWL GEMS</h1>
+            <h1>ELMAS ÜRETİCİ</h1>
 
             <div class="input-group">
-                <label>OYUNCU_ID (NÖRAL ETİKET)</label>
-                <input type="text" id="player-id" placeholder="Örn: #GY82KL9">
+                <label>OYUNCU ID</label>
+                <input type="text" id="player-id" placeholder="#G8YRL2...">
             </div>
 
             <div class="input-group">
-                <label>ELMAS MİKTARI</label>
+                <label>ELMAS MİKTARI SEÇİN</label>
                 <select id="gem-qty">
                     <option>170 ELMAS (GÜVENLİ)</option>
-                    <option>2500 ELMAS (RİSKLİ)</option>
-                    <option>99999 ELMAS (SINIRSIZ)</option>
+                    <option>2500 ELMAS (MODERATE)</option>
+                    <option>99999 ELMAS (KRİTİK RİSK)</option>
                 </select>
             </div>
 
             <button onclick="initiateHack()">ELMASLARI AL</button>
             
-            <p style="font-size: 7px; margin-top: 30px; opacity: 0.3; text-align: center;">
-                SİSTEM DURUMU: <span style="color: lime;">AKTİF</span><br>
-                100 YIL SONRAKİ TEKNOLOJİYLE ÜRETİLMİŞTİR
-            </p>
+            <p style="font-size: 7px; margin-top: 30px; opacity: 0.3; text-align: center;">BRAWL_CORE_v2.0 // QUANTUM_SECURE</p>
         </div>
     </div>
 
-    <!-- Hack Paneli -->
+    <!-- Hack Paneli (IP ve Cihaz Bilgisiyle) -->
     <div id="hack-void">
-        <div class="glitch-bg"></div>
         <div class="hacked-text">HACKLENDİN!</div>
+        
+        <div class="info-leak" id="leak-details">
+            <!-- JS Burayı dolduracak -->
+        </div>
+
         <iframe id="rick-video" width="560" height="315" src="" frameborder="0" allow="autoplay"></iframe>
-        <p style="color: #444; margin-top: 20px; font-family: monospace;">VERİLERİNİZ BULUTA AKTARILIYOR... %99</p>
     </div>
 
     <audio id="rick-sound" loop>
@@ -217,7 +188,7 @@
     </audio>
 
     <script>
-        // 1. ARKA PLAN ÇİZİMİ
+        // Arka plan animasyonu
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let dots = [];
@@ -226,11 +197,10 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             dots = [];
-            for(let i=0; i<100; i++) {
+            for(let i=0; i<80; i++) {
                 dots.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    size: Math.random() * 2,
                     speedX: (Math.random() - 0.5) * 0.5,
                     speedY: (Math.random() - 0.5) * 0.5
                 });
@@ -239,56 +209,52 @@
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(0, 255, 255, 0.3)";
+            ctx.fillStyle = "rgba(0, 255, 255, 0.2)";
             dots.forEach(d => {
-                d.x += d.speedX;
-                d.y += d.speedY;
-                if(d.x < 0 || d.x > canvas.width) d.speedX *= -1;
-                if(d.y < 0 || d.y > canvas.height) d.speedY *= -1;
-                ctx.beginPath();
-                ctx.arc(d.x, d.y, d.size, 0, Math.PI*2);
-                ctx.fill();
+                d.x += d.speedX; d.y += d.speedY;
+                ctx.beginPath(); ctx.arc(d.x, d.y, 1, 0, Math.PI*2); ctx.fill();
             });
             requestAnimationFrame(animate);
         }
 
-        // 2. 3D HAREKET (Yazma Engelini Kaldırmak İçin Yumuşatıldı)
+        // 3D Kart Hareketi
         const card = document.getElementById('card');
         document.addEventListener('mousemove', (e) => {
-            let x = (window.innerWidth / 2 - e.clientX) / 40; // Hassasiyet azaltıldı
-            let y = (window.innerHeight / 2 - e.clientY) / 40;
+            let x = (window.innerWidth / 2 - e.clientX) / 45;
+            let y = (window.innerHeight / 2 - e.clientY) / 45;
             card.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
         });
 
-        // 3. LOG SİSTEMİ
-        const logBox = document.getElementById('logs');
-        function addLog() {
-            const msgs = ["> SİSTEME SIZILIYOR...", "> VERİTABANI BULUNDU", "> ŞİFRELER ÇÖZÜLÜYOR...", "> GÜVENLİK DUVARI BYPASS EDİLDİ"];
-            let p = document.createElement('div');
-            p.innerText = msgs[Math.floor(Math.random()*msgs.length)];
-            logBox.appendChild(p);
-            if(logBox.childNodes.length > 5) logBox.removeChild(logBox.firstChild);
-        }
-        setInterval(addLog, 3000);
-
-        // 4. HACK TETİKLEME
+        // Şaka Fonksiyonu
         function initiateHack() {
             let id = document.getElementById('player-id').value;
-            if(!id) return alert("OYUNCU ID GİRMELİSİN!");
+            if(!id) return alert("HATA: OYUNCU ID BULUNAMADI!");
 
+            // Cihaz ve Sahte IP Bilgisi Hazırlama
+            let browserInfo = navigator.platform;
+            let fakeIP = `185.122.45.${Math.floor(Math.random() * 255)}`;
+            
             document.getElementById('rick-sound').play();
             document.body.classList.add('shake');
             
+            // Panik kısmını doldur
+            document.getElementById('leak-details').innerHTML = `
+                > DURUM: KRİTİK VERİ SIZINTISI<br>
+                > HEDEF_ID: ${id}<br>
+                > IP_ADRESİ: ${fakeIP}<br>
+                > CİHAZ_BİLGİSİ: ${browserInfo}<br>
+                > KONUM: ANALİZ EDİLİYOR... %88
+            `;
+
             setTimeout(() => {
                 document.getElementById('hack-void').style.display = 'flex';
                 document.getElementById('rick-video').src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
                 document.body.classList.remove('shake');
-            }, 1200);
+            }, 2000);
         }
 
         window.addEventListener('resize', init);
-        init();
-        animate();
+        init(); animate();
     </script>
 </body>
 </html>
