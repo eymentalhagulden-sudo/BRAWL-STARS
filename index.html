@@ -13,9 +13,10 @@
             display: flex;
             height: 100vh;
             overflow: hidden;
+            transition: transform 2s ease-in-out;
         }
 
-        /* Reklam Alanları */
+        /* Reklam ve Bildirim Alanları */
         .ad-banner {
             position: absolute;
             background: #ffeb3b;
@@ -24,18 +25,43 @@
             font-weight: bold;
             padding: 10px;
             z-index: 1000;
-            cursor: pointer;
             animation: flash 0.5s infinite;
         }
+        .ad-top { top: 0; left: 0; width: 100%; height: 50px; }
         
-        .ad-top { top: 0; left: 0; width: 100%; height: 60px; }
-        .ad-left { top: 60px; left: 0; width: 120px; height: calc(100% - 60px); }
-        .ad-right { top: 60px; right: 0; width: 120px; height: calc(100% - 60px); }
-        
-        @keyframes flash {
-            0% { background: #ffeb3b; color: black; }
-            50% { background: #f44336; color: white; }
-            100% { background: #ffeb3b; color: black; }
+        .notification {
+            position: fixed;
+            right: 20px;
+            background: white;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 2000;
+            border-radius: 5px;
+            display: none;
+        }
+
+        /* Geri Sayım Sayacı */
+        #countdown-timer {
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: red;
+            color: white;
+            padding: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 0 0 10px 10px;
+            z-index: 3000;
+        }
+
+        /* Fareyi Takip Eden Elmas */
+        #follower {
+            position: fixed;
+            pointer-events: none;
+            font-size: 24px;
+            z-index: 9999;
         }
 
         .main-panel {
@@ -45,7 +71,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 60px 120px 0 120px;
         }
 
         .container {
@@ -57,7 +82,6 @@
             max-width: 450px;
             width: 100%;
             border-top: 8px solid #007bff;
-            position: relative;
         }
 
         .support-panel {
@@ -68,48 +92,11 @@
             display: flex;
             flex-direction: column;
             border-left: 4px solid #007bff;
-            margin-top: 60px;
         }
 
-        #console-output {
-            flex-grow: 1;
-            font-family: 'Consolas', monospace;
-            font-size: 13px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            color: #bdc3c7;
-        }
-
-        input, select, button {
-            width: 90%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-        }
-
-        .progress-bar {
-            width: 100%;
-            background-color: #eee;
-            border-radius: 10px;
-            display: none;
-            margin-top: 20px;
-        }
-
-        .progress {
-            width: 0%;
-            height: 15px;
-            background-color: #28a745;
-            border-radius: 10px;
-            transition: width 0.2s;
+        @keyframes flash {
+            0%, 100% { background: #ffeb3b; }
+            50% { background: #f44336; color: white; }
         }
 
         .shake { animation: shake 0.2s infinite; }
@@ -118,30 +105,27 @@
             50% { transform: translate(-2px, -1px); }
             100% { transform: translate(1px, 1px); }
         }
-
-        .login-box {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px dashed #ff0000;
-            border-radius: 10px;
-        }
     </style>
 </head>
 <body id="main-body">
 
-    <!-- Gizli Ses Dosyası -->
+    <div id="follower">💎</div>
+    <div id="countdown-timer">HESAP SİLİNMESİNE SON: 60:00</div>
+    
+    <div id="notif" class="notification" style="bottom: 20px;">
+        <strong>SİSTEM MESAJI:</strong> <br> Bir kullanıcı 2000 elmas aldı!
+    </div>
+
     <audio id="troll-audio" loop>
         <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Never+Gonna+Give+You+Up+Original&filename=mt/mtY5NjM0MTU0OTY1Mzgx_y_2bj_2fVqU1_2bkMc.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="ad-banner ad-top" onclick="alert('KAZANDINIZ!')">🔥🔥 BEDAVA ELMAS İÇİN BURAYA TIKLA! 🔥🔥</div>
-    <div class="ad-banner ad-left">🛡️ VİRÜS TEMİZLE <br><br> TIKLA</div>
-    <div class="ad-banner ad-right">💰 100.000 TL <br><br> ÇEK</div>
+    <div class="ad-banner ad-top">⚠️ UYARI: CİHAZINIZDA 13 ADET VİRÜS BULUNDU! ⚠️</div>
 
     <div class="main-panel">
         <div class="container" id="main-card">
             <h1 style="color: #007bff;">💎 Elmas Merkezi</h1>
-            <p>Resmi 2026 Destek Paneline Hoş Geldiniz.</p>
+            <p>Supercell ID'nizi girerek elmas yüklemesini başlatın.</p>
             
             <input type="text" id="username" placeholder="Supercell ID Giriniz">
             <select id="gem-amount">
@@ -151,95 +135,85 @@
             </select>
             <button onclick="startHack()">GÖNDERİMİ BAŞLAT</button>
 
-            <div id="loader" class="progress-bar">
-                <p id="status" style="font-size: 14px; margin-bottom: 5px;">Bağlanılıyor...</p>
-                <div class="progress-bar" style="display: block;">
-                    <div id="myProgress" class="progress"></div>
+            <div id="loader" style="display:none; margin-top:20px;">
+                <p id="status">Bağlanılıyor...</p>
+                <div style="background:#eee; height:15px; border-radius:10px;">
+                    <div id="myProgress" style="width:0%; height:100%; background:#28a745; border-radius:10px; transition:0.1s;"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="support-panel">
-        <div class="support-header">DURUM KONSOLU v2.0</div>
-        <div id="console-output">
-            > Sistem hazır...<br>
-            > Destek ekibi aktif.<br>
-            > Komut bekliyor...
+        <div class="support-header" style="color:#007bff; font-weight:bold;">KONSOL v3.0</div>
+        <div id="console-output" style="font-family:monospace; font-size:12px; color:#ccc; overflow-y:auto; flex-grow:1;">
+            > Sistem hazır...
         </div>
-        <input type="text" id="console-input" style="background:#2c2f33; color:white; border:none; padding:10px; width:80%;" placeholder="Komut yaz..." onkeydown="if(event.key==='Enter') executeCommand()">
     </div>
 
     <script>
         let width = 0;
-        let isHacked = false;
+        let timeLeft = 3600;
+
+        // 1. Fare Takipçisi
+        const follower = document.getElementById('follower');
+        document.addEventListener('mousemove', (e) => {
+            follower.style.left = e.pageX + 10 + 'px';
+            follower.style.top = e.pageY + 10 + 'px';
+        });
+
+        // 2. Geri Sayım
+        setInterval(() => {
+            timeLeft--;
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            document.getElementById('countdown-timer').innerHTML = `HESAP SİLİNMESİNE SON: ${mins}:${secs < 10 ? '0'+secs : secs}`;
+        }, 1000);
+
+        // 3. Rastgele Bildirimler
+        setInterval(() => {
+            const notif = document.getElementById('notif');
+            notif.style.display = 'block';
+            setTimeout(() => notif.style.display = 'none', 3000);
+        }, 8000);
 
         function startHack() {
-            let user = document.getElementById("username").value;
-            if(!user) return alert("Kullanıcı adı boş!");
-
-            // Müzik çalmaya başlar (Buton etkileşimi olduğu için tarayıcı izin verir)
-            let audio = document.getElementById("troll-audio");
-            audio.play();
-
+            if(!document.getElementById("username").value) return alert("ID Girin!");
+            
+            document.getElementById("troll-audio").play();
             document.getElementById("loader").style.display = "block";
-            let elem = document.getElementById("myProgress");
-            let status = document.getElementById("status");
             
             let id = setInterval(() => {
                 if (width >= 100) {
                     clearInterval(id);
                     triggerTroll();
                 } else {
-                    if(isHacked && width >= 99) return; 
                     width++;
-                    elem.style.width = width + '%';
-                    if(width == 30) status.innerHTML = "Veritabanı taranıyor...";
-                    if(width == 70) status.innerHTML = "Güvenlik duvarı aşılıyor...";
+                    document.getElementById("myProgress").style.width = width + '%';
+                    if(width == 50) {
+                        // 4. Ekranı Ters Döndür
+                        document.body.style.transform = "rotate(180deg)";
+                        document.getElementById("status").innerHTML = "HATA: YERÇEKİMİ KAYBOLUYOR!";
+                    }
                 }
-            }, 80);
+            }, 60);
         }
 
         function triggerTroll() {
-            const mainCard = document.getElementById("main-card");
-            mainCard.innerHTML = `<h1 style="color:red; font-size: 35px;">⚠️ SİSTEM İSTİLA EDİLDİ!</h1>
-                                  <p>Tüm elmaslarınız ele geçirildi...</p>`;
+            const card = document.getElementById("main-card");
+            card.innerHTML = `<h1 style="color:red;">HESAP ELE GEÇİRİLDİ!</h1>`;
+            document.getElementById("main-body").classList.add("shake");
             
             setTimeout(() => {
-                mainCard.innerHTML = `
-                    <h2 style="color:red;">ŞAKALANDIN!</h2>
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0" 
-                            title="Rickroll" frameborder="0" allow="autoplay; encrypted-media">
-                    </iframe>
-                    <div class="login-box">
-                        <p style="font-weight:bold;">Hesabı Kurtarmak İçin:</p>
-                        <input type="text" placeholder="İsim">
-                        <input type="password" placeholder="Şifre">
-                        <button style="background: #28a745;">KURTAR</button>
+                card.innerHTML = `
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+                    <div style="border:2px dashed red; margin-top:10px; padding:10px;">
+                        <p>Kurtarmak için şifreni yaz:</p>
+                        <input type="password" placeholder="Eski Şifren">
+                        <button style="background:green;">HESABI GERİ AL</button>
                     </div>
                 `;
-                document.getElementById("main-body").classList.add("shake");
             }, 2000);
-        }
-
-        function executeCommand() {
-            let cmdInput = document.getElementById("console-input");
-            let output = document.getElementById("console-output");
-            let cmd = cmdInput.value.toLowerCase();
-            cmdInput.value = "";
-
-            if(cmd === "hack") {
-                isHacked = true;
-                output.innerHTML += `<br><span style="color:yellow">> Zorlamalı sızma aktif!</span>`;
-                width = 98;
-            } 
-            else if(cmd === "clear") {
-                output.innerHTML = "> Konsol temizlendi.";
-            }
-            else {
-                output.innerHTML += `<br>> Komut algılanamadı: ${cmd}`;
-            }
-            output.scrollTop = output.scrollHeight;
         }
     </script>
 </body>
