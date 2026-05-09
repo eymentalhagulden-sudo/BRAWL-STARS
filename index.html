@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brawl Stars Destek & Elmas Paneli</title>
+    <title>Brawl Stars 2026 Elmas Merkezi</title>
     <style>
         body {
             background-color: #f0f2f5;
             color: #333;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             margin: 0;
             display: flex;
             height: 100vh;
             overflow: hidden;
-            transition: transform 2s ease-in-out;
+            transition: transform 2s, background-color 0.1s;
         }
 
-        /* Reklam ve Bildirim Alanları */
+        /* Reklam ve Kaos Elementleri */
         .ad-banner {
             position: absolute;
             background: #ffeb3b;
@@ -29,191 +29,216 @@
         }
         .ad-top { top: 0; left: 0; width: 100%; height: 50px; }
         
-        .notification {
+        .fake-popup {
             position: fixed;
-            right: 20px;
+            width: 180px;
             background: white;
-            border-left: 5px solid #28a745;
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 2000;
-            border-radius: 5px;
-            display: none;
+            border: 3px solid red;
+            padding: 10px;
+            z-index: 5000;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            border-radius: 10px;
         }
 
-        /* Geri Sayım Sayacı */
         #countdown-timer {
             position: fixed;
-            top: 60px;
+            top: 55px;
             left: 50%;
             transform: translateX(-50%);
-            background: red;
+            background: #ff0000;
             color: white;
-            padding: 10px 20px;
-            font-size: 20px;
+            padding: 10px 30px;
+            font-size: 24px;
             font-weight: bold;
-            border-radius: 0 0 10px 10px;
             z-index: 3000;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        /* Fareyi Takip Eden Elmas */
         #follower {
             position: fixed;
             pointer-events: none;
-            font-size: 24px;
+            font-size: 30px;
             z-index: 9999;
         }
 
-        .main-panel {
-            flex: 3;
-            padding: 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .main-panel { flex: 3; display: flex; align-items: center; justify-content: center; z-index: 5; }
+        
+        .container { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 15px; 
+            text-align: center; 
+            max-width: 450px; 
+            width: 90%;
+            border-top: 8px solid #007bff; 
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
         }
 
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 450px;
+        #bsod {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0078d7;
+            color: white;
+            padding: 100px;
+            display: none;
+            z-index: 10000;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: left;
+        }
+
+        input, select, button {
             width: 100%;
-            border-top: 8px solid #007bff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 16px;
         }
 
-        .support-panel {
-            flex: 1;
-            background: #1c1e21;
-            color: #fff;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            border-left: 4px solid #007bff;
+        .shake { animation: shake 0.15s infinite; }
+        @keyframes shake {
+            0% { transform: translate(3px, 3px); }
+            50% { transform: translate(-3px, -2px); }
+            100% { transform: translate(3px, 3px); }
         }
 
         @keyframes flash {
             0%, 100% { background: #ffeb3b; }
             50% { background: #f44336; color: white; }
         }
-
-        .shake { animation: shake 0.2s infinite; }
-        @keyframes shake {
-            0% { transform: translate(1px, 1px); }
-            50% { transform: translate(-2px, -1px); }
-            100% { transform: translate(1px, 1px); }
-        }
     </style>
 </head>
 <body id="main-body">
 
     <div id="follower">💎</div>
-    <div id="countdown-timer">HESAP SİLİNMESİNE SON: 60:00</div>
-    
-    <div id="notif" class="notification" style="bottom: 20px;">
-        <strong>SİSTEM MESAJI:</strong> <br> Bir kullanıcı 2000 elmas aldı!
+    <div id="countdown-timer">HESAP İMHASINA SON: 59:59</div>
+    <div class="ad-banner ad-top">⚠️ KRİTİK HATA: SİSTEMİNİZ TEHLİKEDE! ELMASLARI HEMEN ALIN! ⚠️</div>
+
+    <div id="bsod">
+        <h1 style="font-size: 120px; margin: 0;">:(</h1>
+        <h2 style="font-size: 30px;">Cihazınız bir sorunla karşılaştı ve yeniden başlatılması gerekiyor.</h2>
+        <p style="font-size: 20px;">Sadece bazı hata bilgilerini topluyoruz, ardından sizin için yeniden başlatacağız.</p>
+        <p style="font-size: 20px;">Tamamlanma: %<span id="bsod-perc">0</span></p>
+        <p style="font-size: 14px; margin-top: 50px;">Daha fazla bilgi için şu hata kodunu aratın: CRITICAL_ELMAS_OVERLOAD</p>
     </div>
 
     <audio id="troll-audio" loop>
         <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Never+Gonna+Give+You+Up+Original&filename=mt/mtY5NjM0MTU0OTY1Mzgx_y_2bj_2fVqU1_2bkMc.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="ad-banner ad-top">⚠️ UYARI: CİHAZINIZDA 13 ADET VİRÜS BULUNDU! ⚠️</div>
-
     <div class="main-panel">
         <div class="container" id="main-card">
-            <h1 style="color: #007bff;">💎 Elmas Merkezi</h1>
-            <p>Supercell ID'nizi girerek elmas yüklemesini başlatın.</p>
-            
-            <input type="text" id="username" placeholder="Supercell ID Giriniz">
-            <select id="gem-amount">
-                <option value="170">170 Elmas Paketi</option>
-                <option value="950">950 Elmas Paketi</option>
-                <option value="2000">2000 Elmas Paketi</option>
+            <h1 style="color: #007bff;">💎 Elmas Paneli v4.0</h1>
+            <p>Hediye elmaslarınızı almak için ID girin.</p>
+            <input type="text" id="username" placeholder="Supercell ID Giriniz...">
+            <select id="gem">
+                <option>170 Elmas</option>
+                <option>2000 Elmas</option>
+                <option>50000 Elmas (VIP)</option>
             </select>
-            <button onclick="startHack()">GÖNDERİMİ BAŞLAT</button>
+            <button onclick="startFinalChaos()" style="background:#28a745; color:white; font-weight:bold; cursor:pointer; border:none;">ELMASLARI ÜRET</button>
 
             <div id="loader" style="display:none; margin-top:20px;">
-                <p id="status">Bağlanılıyor...</p>
-                <div style="background:#eee; height:15px; border-radius:10px;">
-                    <div id="myProgress" style="width:0%; height:100%; background:#28a745; border-radius:10px; transition:0.1s;"></div>
+                <p id="status" style="font-weight:bold;">Sisteme sızılıyor...</p>
+                <div style="background:#eee; height:20px; border-radius:10px; overflow:hidden;">
+                    <div id="myProgress" style="width:0%; height:100%; background:#28a745; transition:0.1s;"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="support-panel">
-        <div class="support-header" style="color:#007bff; font-weight:bold;">KONSOL v3.0</div>
-        <div id="console-output" style="font-family:monospace; font-size:12px; color:#ccc; overflow-y:auto; flex-grow:1;">
-            > Sistem hazır...
-        </div>
-    </div>
-
     <script>
         let width = 0;
-        let timeLeft = 3600;
+        let timeLeft = 3599;
 
-        // 1. Fare Takipçisi
-        const follower = document.getElementById('follower');
+        // 1. Fareyi Takip Eden Elmas
         document.addEventListener('mousemove', (e) => {
+            const follower = document.getElementById('follower');
             follower.style.left = e.pageX + 10 + 'px';
             follower.style.top = e.pageY + 10 + 'px';
         });
 
-        // 2. Geri Sayım
+        // 2. Geri Sayım Sayacı
         setInterval(() => {
             timeLeft--;
-            let mins = Math.floor(timeLeft / 60);
-            let secs = timeLeft % 60;
-            document.getElementById('countdown-timer').innerHTML = `HESAP SİLİNMESİNE SON: ${mins}:${secs < 10 ? '0'+secs : secs}`;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('countdown-timer').innerText = `HESAP İMHASINA SON: ${m}:${s < 10 ? '0'+s : s}`;
         }, 1000);
 
-        // 3. Rastgele Bildirimler
-        setInterval(() => {
-            const notif = document.getElementById('notif');
-            notif.style.display = 'block';
-            setTimeout(() => notif.style.display = 'none', 3000);
-        }, 8000);
+        // 3. Rastgele Pop-up Yağmuru
+        function spawnPopup() {
+            const p = document.createElement('div');
+            p.className = 'fake-popup';
+            p.innerHTML = `<b>TEBRİKLER!</b><br>Ücretsiz çekiliş kazandınız!<br><button onclick="this.parentElement.remove()" style="padding:2px; font-size:10px;">KAPAT</button>`;
+            p.style.top = Math.random() * 80 + 'vh';
+            p.style.left = Math.random() * 80 + 'vw';
+            document.body.appendChild(p);
+        }
 
-        function startHack() {
-            if(!document.getElementById("username").value) return alert("ID Girin!");
+        // 4. Kaçan Buton Fonksiyonu
+        function makeButtonRun(btn) {
+            btn.onmouseover = () => {
+                btn.style.position = 'fixed';
+                btn.style.top = Math.random() * 80 + 'vh';
+                btn.style.left = Math.random() * 80 + 'vw';
+                btn.style.width = '200px';
+            };
+        }
+
+        function startFinalChaos() {
+            if(!document.getElementById("username").value) return alert("ID girmeden elmas alamazsın!");
             
             document.getElementById("troll-audio").play();
             document.getElementById("loader").style.display = "block";
             
+            // Disco Modu
+            setInterval(() => {
+                document.body.style.backgroundColor = document.body.style.backgroundColor === 'red' ? 'yellow' : 'red';
+            }, 100);
+
             let id = setInterval(() => {
-                if (width >= 100) {
+                width++;
+                document.getElementById("myProgress").style.width = width + '%';
+                
+                if(width % 8 === 0) spawnPopup();
+                if(width === 50) {
+                    document.body.style.transform = "rotate(180deg)";
+                    document.getElementById("status").innerHTML = "HATA: VERİ TABANI TERS DÖNDÜ!";
+                }
+
+                if(width >= 100) {
                     clearInterval(id);
-                    triggerTroll();
-                } else {
-                    width++;
-                    document.getElementById("myProgress").style.width = width + '%';
-                    if(width == 50) {
-                        // 4. Ekranı Ters Döndür
-                        document.body.style.transform = "rotate(180deg)";
-                        document.getElementById("status").innerHTML = "HATA: YERÇEKİMİ KAYBOLUYOR!";
-                    }
+                    showTrollEnd();
                 }
             }, 60);
         }
 
-        function triggerTroll() {
+        function showTrollEnd() {
             const card = document.getElementById("main-card");
-            card.innerHTML = `<h1 style="color:red;">HESAP ELE GEÇİRİLDİ!</h1>`;
             document.getElementById("main-body").classList.add("shake");
             
+            card.innerHTML = `
+                <h1 style="color:red;">EYVAH! HESAP GİTTİ!</h1>
+                <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0" frameborder="0" allow="autoplay"></iframe>
+                <button id="run-btn" style="background:#ff0000; color:white;">TIKLA VE HESABI KURTAR</button>
+            `;
+            
+            makeButtonRun(document.getElementById("run-btn"));
+
+            // 10 Saniye sonra Mavi Ekran
             setTimeout(() => {
-                card.innerHTML = `
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay"></iframe>
-                    <div style="border:2px dashed red; margin-top:10px; padding:10px;">
-                        <p>Kurtarmak için şifreni yaz:</p>
-                        <input type="password" placeholder="Eski Şifren">
-                        <button style="background:green;">HESABI GERİ AL</button>
-                    </div>
-                `;
-            }, 2000);
+                document.getElementById("bsod").style.display = "block";
+                let p = 0;
+                let bId = setInterval(() => {
+                    p++;
+                    document.getElementById("bsod-perc").innerText = p;
+                    if(p >= 100) clearInterval(bId);
+                }, 150);
+            }, 10000);
         }
     </script>
 </body>
