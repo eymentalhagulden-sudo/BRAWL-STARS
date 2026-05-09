@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURAL_OVERRIDE_v2126_ULTIMATE</title>
+    <title>BRAWL_GEMS_NEURAL_2126</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         /* 
-           NEURAL SYSTEM 2126 - CORE STYLESHEET
-           Designed for Quantum Consciousness Interfaces
+           NEURAL SYSTEM 2126 - FIX VERSION
         */
         :root {
             --neon-cyan: #00ffff;
             --neon-magenta: #ff00ff;
             --hacker-red: #ff003c;
-            --deep-space: #010105;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(0, 255, 255, 0.2);
+            --deep-space: #010108;
+            --glass: rgba(0, 255, 255, 0.05);
         }
 
-        * { box-sizing: border-box; cursor: none; }
+        * { box-sizing: border-box; }
 
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
@@ -27,303 +25,270 @@
             color: var(--neon-cyan);
             font-family: 'Orbitron', sans-serif;
             overflow: hidden;
-            perspective: 2000px;
-        }
-
-        /* Özel İmleç */
-        #custom-cursor {
-            position: fixed;
-            width: 20px; height: 20px;
-            border: 1px solid var(--neon-cyan);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transition: transform 0.1s;
-            mix-blend-mode: difference;
         }
 
         /* Dinamik Arka Plan */
         #canvas-bg {
             position: fixed; top: 0; left: 0; z-index: -1;
-            filter: blur(1px);
+            background: radial-gradient(circle at center, #0a1128 0%, #010108 100%);
         }
 
-        /* Sistem Log Ekranı (Sol Alt) */
-        #system-logs {
-            position: fixed; bottom: 20px; left: 20px;
-            width: 300px; height: 150px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 10px;
-            color: rgba(0, 255, 255, 0.5);
-            overflow: hidden;
-            pointer-events: none;
+        /* Sahne ve Perspektif */
+        .scene {
+            width: 100vw; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            perspective: 1500px;
+        }
+
+        /* Ana Hologram Paneli */
+        .hologram-card {
+            position: relative;
+            width: 420px;
+            background: var(--glass);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            transform-style: preserve-3d;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.1);
+            transition: transform 0.1s ease-out;
             z-index: 10;
         }
 
-        /* Ana 3D Hologram */
-        .viewport {
-            display: flex; align-items: center; justify-content: center;
-            width: 100vw; height: 100vh;
-            transform-style: preserve-3d;
-        }
-
-        .hologram-card {
-            position: relative;
-            width: 450px; height: 600px;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(20px);
-            padding: 40px;
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
-            box-shadow: 0 0 100px rgba(0, 255, 255, 0.05);
-        }
-
-        /* Dekoratif Köşeler */
-        .hologram-card::before, .hologram-card::after {
-            content: ''; position: absolute; width: 20px; height: 20px;
+        /* Köşe Süsleri */
+        .corner {
+            position: absolute; width: 15px; height: 15px;
             border: 2px solid var(--neon-cyan);
         }
-        .hologram-card::before { top: -5px; left: -5px; border-right: none; border-bottom: none; }
-        .hologram-card::after { bottom: -5px; right: -5px; border-left: none; border-top: none; }
-
-        .scanline {
-            width: 100%; height: 2px;
-            background: rgba(0, 255, 255, 0.1);
-            position: absolute; top: 0; left: 0;
-            animation: scan 4s linear infinite;
-        }
-
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        .top-left { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
 
         h1 {
-            text-align: center; font-weight: 900; letter-spacing: 8px;
-            font-size: 26px; margin-bottom: 50px;
+            text-align: center; font-weight: 900; letter-spacing: 5px;
+            font-size: 24px; margin-bottom: 40px;
             text-shadow: 0 0 15px var(--neon-cyan);
-            transform: translateZ(100px);
+            transform: translateZ(30px);
         }
 
         .input-group {
-            margin-bottom: 30px;
-            transform: translateZ(50px);
+            margin-bottom: 25px;
+            transform: translateZ(20px);
+            position: relative;
+            z-index: 20; /* Tıklanabilir olması için önemli */
         }
 
         label {
-            display: block; font-size: 9px; letter-spacing: 2px;
-            margin-bottom: 10px; opacity: 0.7;
+            display: block; font-size: 10px; margin-bottom: 8px;
+            letter-spacing: 2px; opacity: 0.8;
         }
 
         input, select {
-            width: 100%; background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border);
-            padding: 15px; color: var(--neon-cyan);
-            font-family: inherit; outline: none;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            padding: 15px;
+            color: white;
+            font-family: 'Share Tech Mono', monospace;
+            outline: none;
             transition: 0.3s;
+            cursor: text;
         }
 
-        input:focus { border-color: var(--neon-magenta); box-shadow: 0 0 15px rgba(255, 0, 255, 0.2); }
+        input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
 
-        .btn-container { transform: translateZ(80px); margin-top: 50px; }
+        select { cursor: pointer; }
 
         button {
-            width: 100%; padding: 20px;
-            background: transparent; border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan); font-weight: bold;
-            letter-spacing: 5px; text-transform: uppercase;
-            cursor: none; overflow: hidden; position: relative;
+            width: 100%;
+            padding: 20px;
+            margin-top: 20px;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            letter-spacing: 3px;
+            cursor: pointer;
             transition: 0.4s;
+            transform: translateZ(40px);
         }
 
         button:hover {
-            background: var(--neon-cyan); color: black;
-            box-shadow: 0 0 40px var(--neon-cyan);
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 30px var(--neon-cyan);
         }
 
-        /* Final Kaos Ekranı */
-        #chaos-mode {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; display: none; z-index: 100000;
-            flex-direction: column; align-items: center; justify-content: center;
-        }
-
-        .alert-box {
-            position: absolute; padding: 20px;
-            background: red; color: white; font-weight: bold;
-            border: 4px solid white; animation: pop 0.2s forwards;
+        /* Sistem Logları */
+        #logs {
+            position: fixed; bottom: 20px; left: 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px; color: rgba(0, 255, 255, 0.4);
             pointer-events: none;
         }
 
-        @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
-
-        .glitch-text {
-            font-size: 80px; color: var(--hacker-red);
-            font-weight: 900; animation: shake 0.1s infinite;
+        /* HACK EKRANI (SİYAH & GLITCH) */
+        #hack-void {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: black;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
         }
 
-        @keyframes shake {
-            0% { transform: translate(5px, 5px); }
-            50% { transform: translate(-5px, -5px); }
-            100% { transform: translate(5px, -5px); }
+        .glitch-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://media.giphy.com/media/oEI9uWUicKgR6S7Lqz/giphy.gif');
+            opacity: 0.15; pointer-events: none;
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            .hologram-card { width: 90%; padding: 20px; }
+        .hacked-text {
+            color: var(--hacker-red);
+            font-size: 60px; font-weight: 900;
+            text-shadow: 0 0 20px red;
+            margin-bottom: 20px;
+            animation: blink 0.1s infinite;
+            z-index: 10001;
         }
+
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } }
+
+        iframe {
+            border: 2px solid var(--hacker-red);
+            z-index: 10002;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+        }
+
+        .shake { animation: shake 0.1s infinite; }
+        @keyframes shake { 0% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } }
+
     </style>
 </head>
 <body>
 
-    <div id="custom-cursor"></div>
     <canvas id="canvas-bg"></canvas>
+    <div id="logs"></div>
 
-    <div id="system-logs"></div>
-
-    <div class="viewport">
+    <div class="scene">
         <div class="hologram-card" id="card">
-            <div class="scanline"></div>
-            <p style="font-size: 8px; opacity: 0.5;">[SECURE_SHELL_ESTABLISHED]</p>
-            <h1>QUANTUM_GEMS</h1>
+            <div class="corner top-left"></div>
+            <div class="corner bottom-right"></div>
+            
+            <p style="font-size: 8px; opacity: 0.4; letter-spacing: 2px;">NEURAL_STARS_v2126</p>
+            <h1>BRAWL GEMS</h1>
 
             <div class="input-group">
-                <label>NEURAL_ID_TAG</label>
-                <input type="text" id="target-id" placeholder="ID_0087-B">
+                <label>OYUNCU_ID (NÖRAL ETİKET)</label>
+                <input type="text" id="player-id" placeholder="Örn: #GY82KL9">
             </div>
 
             <div class="input-group">
-                <label>GEMS_PACKAGE_SIZE</label>
-                <select id="gem-amount">
-                    <option>170 QUANTUM_GEMS</option>
-                    <option>2000 NEURAL_UNITS</option>
-                    <option>INF_GALAXY_ENERGY</option>
+                <label>ELMAS MİKTARI</label>
+                <select id="gem-qty">
+                    <option>170 ELMAS (GÜVENLİ)</option>
+                    <option>2500 ELMAS (RİSKLİ)</option>
+                    <option>99999 ELMAS (SINIRSIZ)</option>
                 </select>
             </div>
 
-            <div class="btn-container">
-                <button onclick="startInfection()">MANIFEST_DATA</button>
-            </div>
-
-            <div style="margin-top: 40px; font-size: 7px; opacity: 0.3; line-height: 1.5;">
-                WARNING: This process modifies neural pathways. 
-                Quantum extraction is permanent. 
-                v2126.9.15 CORE ACCESS
-            </div>
+            <button onclick="initiateHack()">ELMASLARI AL</button>
+            
+            <p style="font-size: 7px; margin-top: 30px; opacity: 0.3; text-align: center;">
+                SİSTEM DURUMU: <span style="color: lime;">AKTİF</span><br>
+                100 YIL SONRAKİ TEKNOLOJİYLE ÜRETİLMİŞTİR
+            </p>
         </div>
     </div>
 
-    <!-- HACK EKRANI -->
-    <div id="chaos-mode">
-        <div class="glitch-text">CRITICAL_FAIL</div>
-        <iframe id="video" width="600" height="400" src="" frameborder="0" allow="autoplay"></iframe>
-        <div style="color: white; margin-top: 20px; font-family: monospace;">ENCRYPTING_YOUR_SOUL... 88%</div>
+    <!-- Hack Paneli -->
+    <div id="hack-void">
+        <div class="glitch-bg"></div>
+        <div class="hacked-text">HACKLENDİN!</div>
+        <iframe id="rick-video" width="560" height="315" src="" frameborder="0" allow="autoplay"></iframe>
+        <p style="color: #444; margin-top: 20px; font-family: monospace;">VERİLERİNİZ BULUTA AKTARILIYOR... %99</p>
     </div>
 
-    <audio id="audio-rick">
+    <audio id="rick-sound" loop>
         <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Never+Gonna+Give+You+Up+Original&filename=mt/mtY5NjM0MTU0OTY1Mzgx_y_2bj_2fVqU1_2bkMc.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        // 1. CANAVAR ARKA PLAN MOTORU
+        // 1. ARKA PLAN ÇİZİMİ
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
-        let points = [];
+        let dots = [];
 
-        function initCanvas() {
+        function init() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            points = [];
-            for(let i=0; i<80; i++) {
-                points.push({
+            dots = [];
+            for(let i=0; i<100; i++) {
+                dots.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 1.5,
-                    vy: (Math.random() - 0.5) * 1.5
+                    size: Math.random() * 2,
+                    speedX: (Math.random() - 0.5) * 0.5,
+                    speedY: (Math.random() - 0.5) * 0.5
                 });
             }
         }
 
-        function draw() {
-            ctx.clearRect(0,0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'rgba(0, 255, 255, 0.1)';
-            ctx.beginPath();
-            for(let i=0; i<points.length; i++) {
-                let p = points[i];
-                p.x += p.vx; p.y += p.vy;
-                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                
-                ctx.moveTo(p.x, p.y);
-                points.forEach(p2 => {
-                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if(dist < 150) ctx.lineTo(p2.x, p2.y);
-                });
-            }
-            ctx.stroke();
-            requestAnimationFrame(draw);
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(0, 255, 255, 0.3)";
+            dots.forEach(d => {
+                d.x += d.speedX;
+                d.y += d.speedY;
+                if(d.x < 0 || d.x > canvas.width) d.speedX *= -1;
+                if(d.y < 0 || d.y > canvas.height) d.speedY *= -1;
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, d.size, 0, Math.PI*2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
         }
 
-        // 2. 3D FİZİK VE CURSOR
+        // 2. 3D HAREKET (Yazma Engelini Kaldırmak İçin Yumuşatıldı)
         const card = document.getElementById('card');
-        const cursor = document.getElementById('custom-cursor');
-
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-
-            let x = (window.innerWidth / 2 - e.clientX) / 15;
-            let y = (window.innerHeight / 2 - e.clientY) / 15;
+            let x = (window.innerWidth / 2 - e.clientX) / 40; // Hassasiyet azaltıldı
+            let y = (window.innerHeight / 2 - e.clientY) / 40;
             card.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
-            
-            // Loglara ekle
-            if(Math.random() > 0.95) addLog(`PTR_MOVE: ${e.clientX},${e.clientY}`);
         });
 
         // 3. LOG SİSTEMİ
-        const logs = document.getElementById('system-logs');
-        function addLog(txt) {
-            let div = document.createElement('div');
-            div.innerHTML = `> ${txt}`;
-            logs.appendChild(div);
-            if(logs.childNodes.length > 10) logs.removeChild(logs.firstChild);
+        const logBox = document.getElementById('logs');
+        function addLog() {
+            const msgs = ["> SİSTEME SIZILIYOR...", "> VERİTABANI BULUNDU", "> ŞİFRELER ÇÖZÜLÜYOR...", "> GÜVENLİK DUVARI BYPASS EDİLDİ"];
+            let p = document.createElement('div');
+            p.innerText = msgs[Math.floor(Math.random()*msgs.length)];
+            logBox.appendChild(p);
+            if(logBox.childNodes.length > 5) logBox.removeChild(logBox.firstChild);
         }
+        setInterval(addLog, 3000);
 
-        setInterval(() => {
-            const status = ["CALIBRATING_NEURAL_LINK...", "BYPASSING_SUPERCELL_FIREWALL...", "QUANTUM_SYNC_ACTIVE", "SCANNING_ID_DATABASE..."];
-            addLog(status[Math.floor(Math.random()*status.length)]);
-        }, 2000);
+        // 4. HACK TETİKLEME
+        function initiateHack() {
+            let id = document.getElementById('player-id').value;
+            if(!id) return alert("OYUNCU ID GİRMELİSİN!");
 
-        // 4. FINAL HACK TETİKLEYİCİ
-        function startInfection() {
-            if(!document.getElementById('target-id').value) {
-                alert("ACCESS_DENIED: NO_ID_PROVIDED");
-                return;
-            }
-
-            document.getElementById('audio-rick').play();
-            addLog("!! SECURITY_BREACH_DETECTED !!");
-            addLog("INITIATING_SYSTEM_WIPE...");
+            document.getElementById('rick-sound').play();
+            document.body.classList.add('shake');
             
-            // Sahte pencereler fışkırt
-            for(let i=0; i<15; i++) {
-                setTimeout(() => {
-                    let win = document.createElement('div');
-                    win.className = 'alert-box';
-                    win.style.left = Math.random() * 80 + '%';
-                    win.style.top = Math.random() * 80 + '%';
-                    win.innerHTML = "HACKED_BY_2126_CORE";
-                    document.body.appendChild(win);
-                }, i * 100);
-            }
-
             setTimeout(() => {
-                document.getElementById('chaos-mode').style.display = 'flex';
-                document.getElementById('video').src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
-            }, 1800);
+                document.getElementById('hack-void').style.display = 'flex';
+                document.getElementById('rick-video').src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
+                document.body.classList.remove('shake');
+            }, 1200);
         }
 
-        window.addEventListener('resize', initCanvas);
-        initCanvas();
-        draw();
+        window.addEventListener('resize', init);
+        init();
+        animate();
     </script>
 </body>
 </html>
