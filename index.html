@@ -3,96 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURAL_CORE_2126_ULTRA</title>
+    <title>BRAWL_CORE_2126</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-cyan: #00ffff;
-            --hacker-red: #ff0033;
-            --deep-space: #010103;
+            --neon-blue: #00f3ff;
+            --hacker-red: #ff003c;
+            --bg-dark: #020205;
         }
 
-        body {
-            background-color: var(--deep-space);
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
+        body, html {
             margin: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            color: var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
             overflow: hidden;
-            perspective: 1500px;
+            perspective: 2000px;
         }
 
-        /* Arka Plan Parçacıkları */
-        #bg-canvas {
+        /* Arka Plan Enerji Parçacıkları */
+        #stars {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0a0a20 0%, #020205 100%);
             z-index: -1;
-            background: radial-gradient(circle at center, #0a0a1a 0%, #010103 100%);
         }
 
-        /* 100 Yıl Sonrası Kristal Panel */
-        .crystal-panel {
-            width: 380px;
-            padding: 50px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(0, 255, 255, 0.1);
-            backdrop-filter: blur(30px);
+        /* 3D Hologram Panel */
+        .holo-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+            width: 400px;
+            padding: 60px;
+            background: rgba(0, 243, 255, 0.03);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            backdrop-filter: blur(20px);
             text-align: center;
             transform-style: preserve-3d;
-            transition: transform 0.1s ease-out, opacity 0.5s;
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
+            transition: transform 0.1s ease-out;
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.1);
         }
 
         h1 {
-            font-weight: 100;
-            letter-spacing: 12px;
-            color: var(--neon-cyan);
-            text-shadow: 0 0 20px var(--neon-cyan);
-            margin-bottom: 30px;
-            transform: translateZ(60px);
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 10px;
+            margin-bottom: 40px;
+            text-shadow: 0 0 20px var(--neon-blue);
+            transform: translateZ(80px);
         }
 
-        .input-ui {
-            transform: translateZ(40px);
-            margin: 20px 0;
+        .input-box {
+            transform: translateZ(50px);
+            margin-bottom: 25px;
         }
 
         input, select {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            color: white;
             width: 100%;
-            padding: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            padding: 15px;
+            font-family: 'Orbitron', sans-serif;
             text-align: center;
-            font-family: inherit;
             outline: none;
-            cursor: crosshair;
+            text-transform: uppercase;
         }
 
         button {
             margin-top: 30px;
+            width: 100%;
+            padding: 20px;
             background: transparent;
-            border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 15px 30px;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            font-weight: bold;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-size: 11px;
-            transform: translateZ(50px);
+            letter-spacing: 5px;
             transition: 0.3s;
+            transform: translateZ(60px);
         }
 
         button:hover {
-            background: var(--neon-cyan);
+            background: var(--neon-blue);
             color: black;
-            box-shadow: 0 0 30px var(--neon-cyan);
+            box-shadow: 0 0 40px var(--neon-blue);
         }
 
-        /* Hacklenmiş Siyah Glitch Ekranı */
-        #hacker-void {
+        /* Hack Siyah Ekranı */
+        #hack-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: black;
@@ -100,89 +105,92 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 5000;
+            z-index: 10000;
         }
 
-        .glitch-overlay {
+        .glitch-effect {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://media.giphy.com/media/oEI9uWUicKgR6S7Lqz/giphy.gif');
-            opacity: 0.3;
+            opacity: 0.2;
             pointer-events: none;
         }
 
-        #error-msg {
+        .hack-text {
             color: var(--hacker-red);
-            font-family: monospace;
-            font-size: 18px;
-            text-shadow: 0 0 10px var(--hacker-red);
-            z-index: 5001;
+            font-size: 50px;
+            font-weight: 900;
+            text-shadow: 0 0 20px var(--hacker-red);
             margin-bottom: 20px;
+            z-index: 10001;
+            animation: blink 0.1s infinite;
         }
 
-        .shake { animation: shake 0.1s infinite; }
-        @keyframes shake { 0% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 100% { transform: translate(2px, 2px); } }
+        @keyframes blink { 
+            0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } 
+        }
 
+        .shake { animation: shakeEffect 0.1s infinite; }
+        @keyframes shakeEffect {
+            0% { transform: translate(3px, 3px); }
+            50% { transform: translate(-3px, -3px); }
+        }
     </style>
 </head>
 <body>
 
-    <div id="bg-canvas"></div>
+    <div id="stars"></div>
 
-    <div class="crystal-panel" id="main-panel">
-        <div style="font-size: 9px; opacity: 0.3; letter-spacing: 3px; margin-bottom: 10px;">CORE_CONNECTION_v99.0</div>
-        <h1>GEN_GEMS</h1>
+    <div class="holo-container" id="panel">
+        <div style="font-size: 10px; opacity: 0.5; margin-bottom: 20px;">ACCESSING_GEN_5_CORE...</div>
+        <h1>GEMS_2126</h1>
         
-        <div class="input-ui">
-            <input type="text" id="user-id" placeholder="NEURAL_CONSCIOUSNESS_ID">
+        <div class="input-box">
+            <input type="text" id="id" placeholder="USER_CONSCIOUSNESS_ID">
         </div>
-        
-        <div class="input-ui">
-            <p style="font-size: 8px; opacity: 0.5; margin-bottom: 5px;">ELMAS MİKTARI SEÇİN</p>
-            <select id="gem-select">
-                <option value="1">170 QUANTUM GEMS</option>
-                <option value="2">2500 MEGA UNITS</option>
-                <option value="3">INF_CORE_ELMAS</option>
+
+        <div class="input-box">
+            <select id="amount">
+                <option>170 QUANTUM GEMS</option>
+                <option>2500 NEURAL GEMS</option>
+                <option>INF_GEMS (SINGULARITY)</option>
             </select>
         </div>
 
-        <button onclick="triggerHack()">MANIFEST_GEMS</button>
+        <button onclick="startHack()">ACTIVATE_MANIFEST</button>
     </div>
 
-    <!-- Siyah Glitchli Hack Ekranı -->
-    <div id="hacker-void">
-        <div class="glitch-overlay"></div>
-        <div id="error-msg">> CRITICAL_ERROR: SYSTEM_INJECTION_DETECTED<br>> DATA_LEAK_STARTED...</div>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay" style="z-index: 5002;"></iframe>
-        <p style="color: gray; font-size: 10px; margin-top: 20px;">ACCESSING_LOCAL_FILES... %84</p>
+    <!-- Final Hack Ekranı -->
+    <div id="hack-overlay">
+        <div class="glitch-effect"></div>
+        <div class="hack-text">HACKLENDİN!</div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+        <p style="color: gray; margin-top: 20px; font-size: 12px;">SYSTEM_BREACH: 100% | DATA_LEAK: ACTIVE</p>
     </div>
 
-    <audio id="troll-audio" loop>
+    <audio id="rick-audio" loop>
         <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Never+Gonna+Give+You+Up+Original&filename=mt/mtY5NjM0MTU0OTY1Mzgx_y_2bj_2fVqU1_2bkMc.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        // 3D Hareket
+        // 3D Hareket Sistemi
         document.addEventListener('mousemove', (e) => {
-            const panel = document.getElementById('main-panel');
-            const x = (window.innerWidth / 2 - e.pageX) / 25;
-            const y = (window.innerHeight / 2 - e.pageY) / 25;
-            panel.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+            const panel = document.getElementById('panel');
+            const x = (window.innerWidth / 2 - e.pageX) / 20;
+            const y = (window.innerHeight / 2 - e.pageY) / 20;
+            panel.style.transform = `translate(-50%, -50%) rotateX(${y}deg) rotateY(${-x}deg)`;
         });
 
-        function triggerHack() {
-            if(!document.getElementById('user-id').value) return alert("ID GEREKLİ.");
+        function startHack() {
+            if(!document.getElementById('id').value) return alert("ID GEREKLİ!");
 
-            document.getElementById("troll-audio").play();
-            const panel = document.getElementById('main-panel');
-            
-            // Bozulma efekti
-            panel.style.opacity = "0";
-            document.body.classList.add("shake");
+            document.getElementById('rick-audio').play();
+            document.body.classList.add('shake');
             
             setTimeout(() => {
-                document.getElementById('hacker-void').style.display = 'flex';
-                document.body.classList.remove("shake");
+                document.getElementById('panel').style.display = 'none';
+                document.getElementById('hack-overlay').style.display = 'flex';
+                document.body.classList.remove('shake');
             }, 1000);
         }
     </script>
