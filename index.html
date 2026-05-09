@@ -8,7 +8,7 @@
         body {
             background-color: #f0f2f5;
             color: #333;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
             display: flex;
             height: 100vh;
@@ -16,7 +16,36 @@
             transition: transform 2s, background-color 0.1s;
         }
 
-        /* Reklam ve Kaos Elementleri */
+        /* Sahte Kamera Kutusu */
+        #fake-cam {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 150px;
+            height: 100px;
+            background: black;
+            border: 2px solid #00ff00;
+            z-index: 6000;
+            color: #00ff00;
+            font-size: 10px;
+            display: none;
+            text-align: center;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        /* Sahte Windows Hataları */
+        .window-error {
+            position: fixed;
+            width: 300px;
+            background: #f0f0f0;
+            border: 2px solid #0078d7;
+            padding: 15px;
+            z-index: 7000;
+            box-shadow: 10px 10px 40px rgba(0,0,0,0.5);
+            text-align: center;
+            font-family: 'Tahoma', sans-serif;
+        }
+
         .ad-banner {
             position: absolute;
             background: #ffeb3b;
@@ -28,54 +57,30 @@
             animation: flash 0.5s infinite;
         }
         .ad-top { top: 0; left: 0; width: 100%; height: 50px; }
-        
-        .fake-popup {
-            position: fixed;
-            width: 180px;
-            background: white;
-            border: 3px solid red;
-            padding: 10px;
-            z-index: 5000;
-            box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
-            border-radius: 10px;
-        }
 
         #countdown-timer {
             position: fixed;
             top: 55px;
             left: 50%;
             transform: translateX(-50%);
-            background: #ff0000;
+            background: red;
             color: white;
-            padding: 10px 30px;
-            font-size: 24px;
+            padding: 10px 25px;
+            font-size: 22px;
             font-weight: bold;
             z-index: 3000;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-radius: 0 0 15px 15px;
         }
 
         #follower {
             position: fixed;
             pointer-events: none;
-            font-size: 30px;
+            font-size: 28px;
             z-index: 9999;
         }
 
         .main-panel { flex: 3; display: flex; align-items: center; justify-content: center; z-index: 5; }
-        
-        .container { 
-            background: white; 
-            padding: 40px; 
-            border-radius: 15px; 
-            text-align: center; 
-            max-width: 450px; 
-            width: 90%;
-            border-top: 8px solid #007bff; 
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-        }
+        .container { background: white; padding: 40px; border-radius: 15px; text-align: center; max-width: 450px; border-top: 8px solid #007bff; position: relative;}
 
         #bsod {
             position: fixed;
@@ -85,65 +90,48 @@
             padding: 100px;
             display: none;
             z-index: 10000;
-            font-family: 'Segoe UI', sans-serif;
-            text-align: left;
+            font-family: sans-serif;
         }
 
-        input, select, button {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
-
-        .shake { animation: shake 0.15s infinite; }
-        @keyframes shake {
-            0% { transform: translate(3px, 3px); }
-            50% { transform: translate(-3px, -2px); }
-            100% { transform: translate(3px, 3px); }
-        }
-
-        @keyframes flash {
-            0%, 100% { background: #ffeb3b; }
-            50% { background: #f44336; color: white; }
-        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes flash { 0% { background: #ffeb3b; } 50% { background: #f44336; color: white; } }
+        .shake { animation: shake 0.1s infinite; }
+        @keyframes shake { 0% { transform: translate(2px, 2px); } 50% { transform: translate(-3px, -2px); } }
     </style>
 </head>
 <body id="main-body">
 
     <div id="follower">💎</div>
     <div id="countdown-timer">HESAP İMHASINA SON: 59:59</div>
-    <div class="ad-banner ad-top">⚠️ KRİTİK HATA: SİSTEMİNİZ TEHLİKEDE! ELMASLARI HEMEN ALIN! ⚠️</div>
+    
+    <div id="fake-cam">
+        <div style="background:red; width:10px; height:10px; border-radius:50%; margin:5px auto; animation: blink 0.5s infinite;"></div>
+        CANLI KAYIT AKTİF<br>IP: 192.168.1.108<br>VERİLER POLİSE GÖNDERİLİYOR...
+    </div>
 
     <div id="bsod">
-        <h1 style="font-size: 120px; margin: 0;">:(</h1>
-        <h2 style="font-size: 30px;">Cihazınız bir sorunla karşılaştı ve yeniden başlatılması gerekiyor.</h2>
-        <p style="font-size: 20px;">Sadece bazı hata bilgilerini topluyoruz, ardından sizin için yeniden başlatacağız.</p>
-        <p style="font-size: 20px;">Tamamlanma: %<span id="bsod-perc">0</span></p>
-        <p style="font-size: 14px; margin-top: 50px;">Daha fazla bilgi için şu hata kodunu aratın: CRITICAL_ELMAS_OVERLOAD</p>
+        <h1 style="font-size: 100px;">:(</h1>
+        <h2>Cihazınız bir sorunla karşılaştı.</h2>
+        <p>Hata Kodu: ELMAS_HACK_DETECTED</p>
+        <p>Tamamlanma: %<span id="bsod-perc">0</span></p>
     </div>
 
     <audio id="troll-audio" loop>
         <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Never+Gonna+Give+You+Up+Original&filename=mt/mtY5NjM0MTU0OTY1Mzgx_y_2bj_2fVqU1_2bkMc.mp3" type="audio/mpeg">
     </audio>
 
+    <div class="ad-banner ad-top">⚠️ KRİTİK UYARI: HESABINIZI KURTARMAK İÇİN ELMAS GÖNDERİMİNİ BAŞLATIN! ⚠️</div>
+
     <div class="main-panel">
         <div class="container" id="main-card">
-            <h1 style="color: #007bff;">💎 Elmas Paneli v4.0</h1>
-            <p>Hediye elmaslarınızı almak için ID girin.</p>
-            <input type="text" id="username" placeholder="Supercell ID Giriniz...">
-            <select id="gem">
-                <option>170 Elmas</option>
-                <option>2000 Elmas</option>
-                <option>50000 Elmas (VIP)</option>
-            </select>
-            <button onclick="startFinalChaos()" style="background:#28a745; color:white; font-weight:bold; cursor:pointer; border:none;">ELMASLARI ÜRET</button>
+            <h1 style="color: #007bff;">💎 Elmas Merkezi 2026</h1>
+            <p>Supercell ID'nizi girerek işlemi başlatın.</p>
+            <input type="text" id="username" placeholder="Supercell ID Gir">
+            <button onclick="startFinalChaos()" style="background:#007bff; color:white; padding:15px; width:100%; cursor:pointer; font-weight:bold; border:none; border-radius:10px;">ELMASLARI YÜKLE</button>
 
             <div id="loader" style="display:none; margin-top:20px;">
-                <p id="status" style="font-weight:bold;">Sisteme sızılıyor...</p>
-                <div style="background:#eee; height:20px; border-radius:10px; overflow:hidden;">
+                <p id="status">Sisteme sızılıyor...</p>
+                <div style="background:#eee; height:15px; border-radius:10px; overflow:hidden;">
                     <div id="myProgress" style="width:0%; height:100%; background:#28a745; transition:0.1s;"></div>
                 </div>
             </div>
@@ -154,14 +142,14 @@
         let width = 0;
         let timeLeft = 3599;
 
-        // 1. Fareyi Takip Eden Elmas
+        // Fare Takipçisi
         document.addEventListener('mousemove', (e) => {
             const follower = document.getElementById('follower');
             follower.style.left = e.pageX + 10 + 'px';
             follower.style.top = e.pageY + 10 + 'px';
         });
 
-        // 2. Geri Sayım Sayacı
+        // Geri Sayım
         setInterval(() => {
             timeLeft--;
             let m = Math.floor(timeLeft / 60);
@@ -169,33 +157,34 @@
             document.getElementById('countdown-timer').innerText = `HESAP İMHASINA SON: ${m}:${s < 10 ? '0'+s : s}`;
         }, 1000);
 
-        // 3. Rastgele Pop-up Yağmuru
-        function spawnPopup() {
-            const p = document.createElement('div');
-            p.className = 'fake-popup';
-            p.innerHTML = `<b>TEBRİKLER!</b><br>Ücretsiz çekiliş kazandınız!<br><button onclick="this.parentElement.remove()" style="padding:2px; font-size:10px;">KAPAT</button>`;
-            p.style.top = Math.random() * 80 + 'vh';
-            p.style.left = Math.random() * 80 + 'vw';
-            document.body.appendChild(p);
+        // Hata Mesajları Fonksiyonu
+        function spawnError() {
+            const errors = ["System32 Silindi!", "Kullanıcı Verileri Sızdırıldı!", "IP Adresi Tespit Edildi!", "Polis Birimleri Bilgilendirildi!"];
+            const err = document.createElement('div');
+            err.className = 'window-error';
+            err.innerHTML = `<h3>⚠️ GÜVENLİK İHLALİ</h3><p>${errors[Math.floor(Math.random()*errors.length)]}</p><button onclick="spawnError(); this.parentElement.remove();">KAPAT</button>`;
+            err.style.top = Math.random() * 70 + '%';
+            err.style.left = Math.random() * 70 + '%';
+            document.body.appendChild(err);
         }
 
-        // 4. Kaçan Buton Fonksiyonu
+        // Kaçan Buton
         function makeButtonRun(btn) {
             btn.onmouseover = () => {
                 btn.style.position = 'fixed';
                 btn.style.top = Math.random() * 80 + 'vh';
                 btn.style.left = Math.random() * 80 + 'vw';
-                btn.style.width = '200px';
             };
         }
 
         function startFinalChaos() {
-            if(!document.getElementById("username").value) return alert("ID girmeden elmas alamazsın!");
+            if(!document.getElementById("username").value) return alert("ID Gir!");
             
             document.getElementById("troll-audio").play();
             document.getElementById("loader").style.display = "block";
-            
-            // Disco Modu
+            document.getElementById("fake-cam").style.display = "block";
+
+            // Disco Efekti
             setInterval(() => {
                 document.body.style.backgroundColor = document.body.style.backgroundColor === 'red' ? 'yellow' : 'red';
             }, 100);
@@ -204,41 +193,38 @@
                 width++;
                 document.getElementById("myProgress").style.width = width + '%';
                 
-                if(width % 8 === 0) spawnPopup();
-                if(width === 50) {
-                    document.body.style.transform = "rotate(180deg)";
-                    document.getElementById("status").innerHTML = "HATA: VERİ TABANI TERS DÖNDÜ!";
-                }
+                if(width % 15 === 0) spawnError(); // Belirli aralıklarla hata mesajı
+                if(width === 50) document.body.style.transform = "rotate(180deg)"; // Ters dönme
 
                 if(width >= 100) {
                     clearInterval(id);
-                    showTrollEnd();
+                    triggerFinalTroll();
                 }
             }, 60);
         }
 
-        function showTrollEnd() {
+        function triggerFinalTroll() {
             const card = document.getElementById("main-card");
-            document.getElementById("main-body").classList.add("shake");
-            
             card.innerHTML = `
-                <h1 style="color:red;">EYVAH! HESAP GİTTİ!</h1>
-                <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0" frameborder="0" allow="autoplay"></iframe>
-                <button id="run-btn" style="background:#ff0000; color:white;">TIKLA VE HESABI KURTAR</button>
+                <h1 style="color:red;">SİSTEM ÇÖKTÜ!</h1>
+                <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+                <button id="run-btn" style="background:green; color:white; padding:10px; margin-top:10px; border:none; border-radius:5px;">HESABI GERİ AL</button>
             `;
-            
             makeButtonRun(document.getElementById("run-btn"));
+            document.getElementById("main-body").classList.add("shake");
 
-            // 10 Saniye sonra Mavi Ekran
+            // Şeytani Gülüş
+            setTimeout(() => {
+                let laugh = new Audio('https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Evil+Laugh&filename=mt/mtY5NjkzNzE2OTU2OTM5_p_2b_2bmG_2bjY7U.mp3');
+                laugh.play();
+            }, 2000);
+
+            // Mavi Ekran Finali
             setTimeout(() => {
                 document.getElementById("bsod").style.display = "block";
                 let p = 0;
-                let bId = setInterval(() => {
-                    p++;
-                    document.getElementById("bsod-perc").innerText = p;
-                    if(p >= 100) clearInterval(bId);
-                }, 150);
-            }, 10000);
+                setInterval(() => { if(p < 100) p++; document.getElementById("bsod-perc").innerText = p; }, 150);
+            }, 12000);
         }
     </script>
 </body>
