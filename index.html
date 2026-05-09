@@ -3,93 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURAL_CORE_2126</title>
+    <title>NEURAL_CORE_2126_ULTRA</title>
     <style>
         :root {
-            --core-white: rgba(255, 255, 255, 0.8);
             --neon-cyan: #00ffff;
-            --deep-space: #020205;
+            --hacker-red: #ff0033;
+            --deep-space: #010103;
         }
 
         body {
             background-color: var(--deep-space);
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            perspective: 2000px;
+            perspective: 1500px;
         }
 
-        /* Kuantum Parçacık Arka Planı */
-        #particles {
+        /* Arka Plan Parçacıkları */
+        #bg-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at center, #1a1a2e 0%, #020205 100%);
+            background: radial-gradient(circle at center, #0a0a1a 0%, #010103 100%);
         }
 
-        /* 3D Kristal Kart */
+        /* 100 Yıl Sonrası Kristal Panel */
         .crystal-panel {
-            width: 400px;
-            padding: 60px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(25px);
-            border-radius: 2px;
+            width: 380px;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            backdrop-filter: blur(30px);
             text-align: center;
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.05);
             transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
+            transition: transform 0.1s ease-out, opacity 0.5s;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
         }
 
         h1 {
-            font-weight: 200;
-            letter-spacing: 15px;
-            text-transform: uppercase;
-            font-size: 24px;
-            margin-bottom: 40px;
-            transform: translateZ(50px);
+            font-weight: 100;
+            letter-spacing: 12px;
             color: var(--neon-cyan);
-            text-shadow: 0 0 15px var(--neon-cyan);
+            text-shadow: 0 0 20px var(--neon-cyan);
+            margin-bottom: 30px;
+            transform: translateZ(60px);
         }
 
-        .input-group {
-            transform: translateZ(30px);
-            margin-bottom: 20px;
+        .input-ui {
+            transform: translateZ(40px);
+            margin: 20px 0;
         }
 
-        input {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        input, select {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.2);
             color: white;
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             font-family: inherit;
-            letter-spacing: 3px;
             outline: none;
-            transition: 0.3s;
+            cursor: crosshair;
         }
 
-        input:focus { border-bottom: 1px solid var(--neon-cyan); }
-
         button {
-            margin-top: 40px;
+            margin-top: 30px;
             background: transparent;
             border: 1px solid var(--neon-cyan);
             color: var(--neon-cyan);
-            padding: 15px 40px;
+            padding: 15px 30px;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            font-size: 10px;
-            transition: 0.4s;
-            transform: translateZ(40px);
+            letter-spacing: 4px;
+            font-size: 11px;
+            transform: translateZ(50px);
+            transition: 0.3s;
         }
 
         button:hover {
@@ -98,56 +91,70 @@
             box-shadow: 0 0 30px var(--neon-cyan);
         }
 
-        /* Sistem Yükleniyor Işığı */
-        #light-beam {
-            position: fixed;
-            width: 2px;
-            height: 0;
-            background: var(--neon-cyan);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 100px var(--neon-cyan);
-            transition: height 2s, width 1s;
-            z-index: 1000;
-        }
-
-        /* Final Beyaz Ekran */
-        #final-void {
+        /* Hacklenmiş Siyah Glitch Ekranı */
+        #hacker-void {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
+            background: black;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 2000;
+            z-index: 5000;
         }
+
+        .glitch-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://media.giphy.com/media/oEI9uWUicKgR6S7Lqz/giphy.gif');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        #error-msg {
+            color: var(--hacker-red);
+            font-family: monospace;
+            font-size: 18px;
+            text-shadow: 0 0 10px var(--hacker-red);
+            z-index: 5001;
+            margin-bottom: 20px;
+        }
+
+        .shake { animation: shake 0.1s infinite; }
+        @keyframes shake { 0% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 100% { transform: translate(2px, 2px); } }
+
     </style>
 </head>
 <body>
 
-    <div id="particles"></div>
-    <div id="light-beam"></div>
+    <div id="bg-canvas"></div>
 
     <div class="crystal-panel" id="main-panel">
-        <div style="font-size: 8px; margin-bottom: 20px; opacity: 0.4; letter-spacing: 2px;">NEURAL_LINK_ESTABLISHED</div>
-        <h1>Gems_2126</h1>
+        <div style="font-size: 9px; opacity: 0.3; letter-spacing: 3px; margin-bottom: 10px;">CORE_CONNECTION_v99.0</div>
+        <h1>GEN_GEMS</h1>
         
-        <div class="input-group">
-            <input type="text" id="target" placeholder="USER_CONSCIOUSNESS_ID">
+        <div class="input-ui">
+            <input type="text" id="user-id" placeholder="NEURAL_CONSCIOUSNESS_ID">
         </div>
         
-        <div class="input-group">
-            <p style="font-size: 9px; opacity: 0.5;">SELECT QUANTUM UNIT</p>
-            <input type="number" placeholder="∞" disabled>
+        <div class="input-ui">
+            <p style="font-size: 8px; opacity: 0.5; margin-bottom: 5px;">ELMAS MİKTARI SEÇİN</p>
+            <select id="gem-select">
+                <option value="1">170 QUANTUM GEMS</option>
+                <option value="2">2500 MEGA UNITS</option>
+                <option value="3">INF_CORE_ELMAS</option>
+            </select>
         </div>
 
-        <button onclick="startAscension()">Manifest_Gems</button>
+        <button onclick="triggerHack()">MANIFEST_GEMS</button>
     </div>
 
-    <div id="final-void">
-        <h2 style="color: black; letter-spacing: 10px; font-weight: 200; margin-bottom: 30px;">HACK_SUCCESSFUL</h2>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+    <!-- Siyah Glitchli Hack Ekranı -->
+    <div id="hacker-void">
+        <div class="glitch-overlay"></div>
+        <div id="error-msg">> CRITICAL_ERROR: SYSTEM_INJECTION_DETECTED<br>> DATA_LEAK_STARTED...</div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay" style="z-index: 5002;"></iframe>
+        <p style="color: gray; font-size: 10px; margin-top: 20px;">ACCESSING_LOCAL_FILES... %84</p>
     </div>
 
     <audio id="troll-audio" loop>
@@ -155,34 +162,28 @@
     </audio>
 
     <script>
-        // 3D Hareket Efekti
+        // 3D Hareket
         document.addEventListener('mousemove', (e) => {
             const panel = document.getElementById('main-panel');
-            const x = (window.innerWidth / 2 - e.pageX) / 30;
-            const y = (window.innerHeight / 2 - e.pageY) / 30;
+            const x = (window.innerWidth / 2 - e.pageX) / 25;
+            const y = (window.innerHeight / 2 - e.pageY) / 25;
             panel.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
         });
 
-        function startAscension() {
-            if(!document.getElementById('target').value) return alert("ID?");
+        function triggerHack() {
+            if(!document.getElementById('user-id').value) return alert("ID GEREKLİ.");
 
             document.getElementById("troll-audio").play();
-            const beam = document.getElementById('light-beam');
             const panel = document.getElementById('main-panel');
             
-            panel.style.opacity = "0.5";
-            panel.style.filter = "blur(10px)";
-            
-            // Enerji ışığı büyüyor
-            beam.style.height = "100vh";
+            // Bozulma efekti
+            panel.style.opacity = "0";
+            document.body.classList.add("shake");
             
             setTimeout(() => {
-                beam.style.width = "100vw";
-            }, 1500);
-
-            setTimeout(() => {
-                document.getElementById('final-void').style.display = 'flex';
-            }, 2500);
+                document.getElementById('hacker-void').style.display = 'flex';
+                document.body.classList.remove("shake");
+            }, 1000);
         }
     </script>
 </body>
