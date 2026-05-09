@@ -24,19 +24,26 @@
             font-weight: bold;
             padding: 10px;
             z-index: 1000;
-            cursor: pointer;
             animation: flash 0.5s infinite;
         }
-        
-        .ad-top { top: 0; left: 0; width: 100%; height: 60px; }
-        .ad-left { top: 60px; left: 0; width: 120px; height: calc(100% - 60px); }
-        .ad-right { top: 60px; right: 0; width: 120px; height: calc(100% - 60px); }
+        .ad-top { top: 0; left: 0; width: 100%; height: 50px; }
         
         @keyframes flash {
             0% { background: #ffeb3b; color: black; }
             50% { background: #f44336; color: white; }
             100% { background: #ffeb3b; color: black; }
         }
+
+        /* Glitch (Cızırtı) Animasyonu */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); }
+            60% { transform: translate(5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+            100% { transform: translate(0); }
+        }
+        .glitch-active { animation: glitch 0.1s linear infinite; }
 
         /* Ana Panel */
         .main-panel {
@@ -46,7 +53,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 60px 120px 0 120px;
+            z-index: 2;
         }
 
         .container {
@@ -60,45 +67,39 @@
             border-top: 8px solid #007bff;
         }
 
+        /* Hacker Mavi Ekranı */
+        #hacker-bsod {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0000aa;
+            color: #00ff00; /* Hacker yeşili */
+            padding: 50px;
+            display: none;
+            z-index: 9999;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
         .support-panel {
             flex: 1;
-            background: #1c1e21;
-            color: #fff;
+            background: #000;
+            color: #00ff00;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            border-left: 4px solid #007bff;
-            margin-top: 60px;
+            border-left: 2px solid #00ff00;
         }
 
         #console-output {
             flex-grow: 1;
             font-family: 'Consolas', monospace;
-            font-size: 13px;
+            font-size: 12px;
             overflow-y: auto;
-            margin-bottom: 10px;
-            color: #bdc3c7;
-        }
-
-        input, select, button {
-            width: 90%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
+            color: #00ff00;
         }
 
         .progress-bar {
             width: 100%;
-            background-color: #eee;
+            background-color: #333;
             border-radius: 10px;
             display: none;
             margin-top: 20px;
@@ -107,51 +108,45 @@
         .progress {
             width: 0%;
             height: 15px;
-            background-color: #28a745;
-            border-radius: 10px;
-        }
-
-        .shake { animation: shake 0.2s infinite; }
-        @keyframes shake {
-            0% { transform: translate(1px, 1px); }
-            50% { transform: translate(-2px, -1px); }
-            100% { transform: translate(1px, 1px); }
-        }
-
-        .login-box {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px dashed #ff0000;
+            background-color: #00ff00;
             border-radius: 10px;
         }
     </style>
 </head>
 <body id="main-body">
 
-    <!-- Arka Plan Müziği -->
+    <!-- Hacker Mavi Ekranı -->
+    <div id="hacker-bsod">
+        <h1>:( SYSTEM_HALTED</h1>
+        <p>Hata Kodu: 0x000000DEAD</p>
+        <p>HATA: ELMAS SIZINTISI TESPİT EDİLDİ. VERİLERİNİZ SİLİNİYOR...</p>
+        <p>Gelişmiş Hacker Ekibi Cihazınıza Sızdı.</p>
+        <br>
+        <div id="matrix-code">> %12 sızılıyor...<br>> %45 dosyalar kopyalanıyor...</div>
+    </div>
+
     <audio id="troll-audio" loop>
         <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Never+Gonna+Give+You+Up+Original&filename=mt/mtY5NjM0MTU0OTY1Mzgx_y_2bj_2fVqU1_2bkMc.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="ad-banner ad-top">🔥🔥 BEDAVA ELMAS PAKETİ KAZANDINIZ! 🔥🔥</div>
-    <div class="ad-banner ad-left">🛡️ VİRÜS <br> TEMİZLE</div>
-    <div class="ad-banner ad-right">💰 PARA <br> ÇEK</div>
+    <div class="ad-banner ad-top">⚠️ UYARI: SUPERCELL HESABINIZ RİSK ALTINDA! ELMASLARI KURTARIN! ⚠️</div>
 
     <div class="main-panel">
+        <marquee id="scary-text" style="display:none; color:red; font-weight:bold; position:fixed; top:60px;">VERİLERİNİZ DIŞA AKTARILIYOR... IP ADRESİNİZ: 192.168.1.102 ... KONUMUNUZ TESPİT EDİLDİ...</marquee>
+        
         <div class="container" id="main-card">
-            <h1 style="color: #007bff;">💎 Elmas Merkezi</h1>
-            <p>Resmi 2026 Destek Paneline Hoş Geldiniz.</p>
+            <h1 style="color: #007bff;">💎 Elmas Paneli v5.0</h1>
+            <p>Hangi hesaba elmas gönderilecek?</p>
             
             <input type="text" id="username" placeholder="Supercell ID Giriniz">
             <select id="gem-amount">
-                <option value="170">170 Elmas Paketi</option>
-                <option value="950">950 Elmas Paketi</option>
                 <option value="2000">2000 Elmas Paketi</option>
+                <option value="5000">5000 Elmas Paketi</option>
             </select>
-            <button onclick="startHack()">GÖNDERİMİ BAŞLAT</button>
+            <button onclick="startHack()" id="start-btn">GÖNDERİMİ BAŞLAT</button>
 
             <div id="loader" class="progress-bar">
-                <p id="status" style="font-size: 14px; margin-bottom: 5px;">Bağlanılıyor...</p>
+                <p id="status" style="font-size: 14px; margin-bottom: 5px; color:#00ff00;">Bağlanılıyor...</p>
                 <div class="progress-bar" style="display: block;">
                     <div id="myProgress" class="progress"></div>
                 </div>
@@ -160,26 +155,31 @@
     </div>
 
     <div class="support-panel">
-        <div class="support-header">DURUM KONSOLU v2.0</div>
+        <div style="font-weight:bold; margin-bottom:10px;">HACK_CONSOLE_v3</div>
         <div id="console-output">
-            > Sistem hazır...<br>
-            > Destek ekibi aktif.
+            > Beklemede...<br>
         </div>
-        <input type="text" id="console-input" style="background:#2c2f33; color:white; border:none; padding:10px;" placeholder="Komut yaz..." onkeydown="if(event.key==='Enter') executeCommand()">
     </div>
 
     <script>
         let width = 0;
-        let isHacked = false;
+        const consoleMsgs = [
+            "Bypassing Supercell Firewall...",
+            "Accessing Database_Gems_Final...",
+            "Decrypting RSA-2048 Tokens...",
+            "Injecting Trojan.BrawlStars.exe...",
+            "Stealing local_storage_data...",
+            "Sending data to C://Remote/Hacker..."
+        ];
 
         function startHack() {
             let user = document.getElementById("username").value;
-            if(!user) return alert("Kullanıcı adı boş!");
+            if(!user) return alert("ID boş bırakılamaz!");
 
             document.getElementById("troll-audio").play();
             document.getElementById("loader").style.display = "block";
-            let elem = document.getElementById("myProgress");
-            let status = document.getElementById("status");
+            document.getElementById("scary-text").style.display = "block";
+            document.getElementById("start-btn").disabled = true;
             
             let id = setInterval(() => {
                 if (width >= 100) {
@@ -187,42 +187,47 @@
                     triggerTroll();
                 } else {
                     width++;
-                    elem.style.width = width + '%';
-                    if(width == 30) status.innerHTML = "Veritabanı taranıyor...";
-                    if(width == 70) status.innerHTML = "Token oluşturuluyor...";
+                    document.getElementById("myProgress").style.width = width + '%';
+                    
+                    // Rastgele konsol mesajları
+                    if(width % 15 === 0) {
+                        let msg = consoleMsgs[Math.floor(Math.random()*consoleMsgs.length)];
+                        document.getElementById("console-output").innerHTML += `<br><span style="color:red">> ${msg}</span>`;
+                        document.getElementById("console-output").scrollTop = 9999;
+                    }
+
+                    // Anlık Glitch Efekti
+                    if(width === 40 || width === 80) {
+                        document.body.classList.add("glitch-active");
+                        setTimeout(() => document.body.classList.remove("glitch-active"), 500);
+                    }
                 }
             }, 80);
         }
 
         function triggerTroll() {
             const mainCard = document.getElementById("main-card");
-            mainCard.innerHTML = `<h1 style="color:red; font-size: 35px;">⚠️ HESABINIZ ÇALINDI!</h1>
-                                  <p>Veriler uzak sunucuya aktarıldı...</p>`;
+            mainCard.innerHTML = `<h1 style="color:red; font-size: 35px;">⚠️ HESAP ELE GEÇİRİLDİ!</h1>
+                                  <p>Güvenlik protokolleri çiğnendi.</p>`;
             
             setTimeout(() => {
                 mainCard.innerHTML = `
-                    <h2 style="color:red;">GEÇMİŞ OLSUN!</h2>
+                    <h2 style="color:red;">ŞAKALANDINIZ!</h2>
                     <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" 
-                            title="Rickroll" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+                            title="Rickroll" frameborder="0" allow="autoplay" allowfullscreen>
                     </iframe>
-                    <div class="login-box">
-                        <p style="font-weight:bold;">Kurtarmak İçin Giriş Yap:</p>
-                        <input type="text" placeholder="E-posta">
-                        <input type="password" placeholder="Şifre">
-                        <button style="background: #28a745;">KURTARMAYI DENE</button>
+                    <div style="border:1px solid red; margin-top:10px; padding:10px;">
+                        <p>Hesabı Kurtarmak İçin Eski Şifreyi Gir:</p>
+                        <input type="password" placeholder="Eski Şifre">
+                        <button style="background: green; color:white;">KURTARMAYI DENE</button>
                     </div>
                 `;
-                document.getElementById("main-body").classList.add("shake");
             }, 2000);
-        }
 
-        function executeCommand() {
-            let cmdInput = document.getElementById("console-input");
-            let output = document.getElementById("console-output");
-            let cmd = cmdInput.value.toLowerCase();
-            cmdInput.value = "";
-            output.innerHTML += `<br>> ${cmd}`;
-            output.scrollTop = output.scrollHeight;
+            // 10 Saniye sonra Hacker Mavi Ekranı
+            setTimeout(() => {
+                document.getElementById("hacker-bsod").style.display = "block";
+            }, 10000);
         }
     </script>
 </body>
