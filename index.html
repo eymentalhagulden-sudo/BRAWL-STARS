@@ -3,232 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brawl Stars Destek & Elmas Paneli</title>
+    <title>NEURAL-LINK: BRAWL GEN 5</title>
     <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-purple: #bc13fe;
+            --dark-bg: #050505;
+        }
+
         body {
-            background-color: #f0f2f5;
-            color: #333;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--neon-blue);
+            font-family: 'Orbitron', sans-serif; /* Gelecek temalı font */
             margin: 0;
             display: flex;
             height: 100vh;
             overflow: hidden;
+            perspective: 1000px;
         }
 
-        /* Reklam Alanları */
-        .ad-banner {
-            position: absolute;
-            background: #ffeb3b;
-            border: 2px solid #f44336;
-            text-align: center;
-            font-weight: bold;
-            padding: 10px;
-            z-index: 1000;
-            animation: flash 0.5s infinite;
-        }
-        .ad-top { top: 0; left: 0; width: 100%; height: 50px; }
-        
-        @keyframes flash {
-            0% { background: #ffeb3b; color: black; }
-            50% { background: #f44336; color: white; }
-            100% { background: #ffeb3b; color: black; }
+        /* Arka Plan Hareketli Çizgiler */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 200%; height: 200%;
+            background-image: linear-gradient(0deg, transparent 24%, rgba(0, 243, 255, .05) 25%, rgba(0, 243, 255, .05) 26%, transparent 27%, transparent 74%, rgba(0, 243, 255, .05) 75%, rgba(0, 243, 255, .05) 76%, transparent 77%, transparent),
+                              linear-gradient(90deg, transparent 24%, rgba(0, 243, 255, .05) 25%, rgba(0, 243, 255, .05) 26%, transparent 27%, transparent 74%, rgba(0, 243, 255, .05) 75%, rgba(0, 243, 255, .05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+            z-index: -1;
         }
 
-        /* Glitch (Cızırtı) Animasyonu */
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-5px, 5px); }
-            40% { transform: translate(-5px, -5px); }
-            60% { transform: translate(5px, 5px); }
-            80% { transform: translate(5px, -5px); }
-            100% { transform: translate(0); }
+        @keyframes moveGrid {
+            from { transform: translateY(0); }
+            to { transform: translateY(-50px); }
         }
-        .glitch-active { animation: glitch 0.1s linear infinite; }
 
-        /* Ana Panel */
-        .main-panel {
-            flex: 3;
+        /* Ana Hologram Konteyner */
+        .hologram-card {
+            margin: auto;
+            background: rgba(0, 243, 255, 0.05);
+            border: 2px solid var(--neon-blue);
             padding: 50px;
+            border-radius: 5px;
+            box-shadow: 0 0 20px var(--neon-blue), inset 0 0 15px var(--neon-blue);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            max-width: 500px;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        /* 2076 Tarzı Inputlar */
+        input, select {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--neon-purple);
+            color: var(--neon-blue);
+            padding: 15px;
+            margin: 15px 0;
+            width: 100%;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        button {
+            background: var(--neon-purple);
+            color: white;
+            border: none;
+            padding: 20px;
+            width: 110%;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 0 15px var(--neon-purple);
+            transition: 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--neon-purple);
+        }
+
+        /* AI Ses Dalgası */
+        .ai-wave {
             display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 20px;
+        }
+        .bar {
+            width: 3px;
+            height: 20px;
+            background: var(--neon-blue);
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 40px; }
+        }
+
+        /* Kaos Efektleri */
+        .glitch-text {
+            animation: glitch 0.3s infinite;
+            display: none;
+            color: #ff0055;
+            font-size: 12px;
+        }
+
+        #final-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: black;
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 2;
-        }
-
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 450px;
-            width: 100%;
-            border-top: 8px solid #007bff;
-        }
-
-        /* Hacker Mavi Ekranı */
-        #hacker-bsod {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #0000aa;
-            color: #00ff00; /* Hacker yeşili */
-            padding: 50px;
-            display: none;
-            z-index: 9999;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .support-panel {
-            flex: 1;
-            background: #000;
-            color: #00ff00;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            border-left: 2px solid #00ff00;
-        }
-
-        #console-output {
-            flex-grow: 1;
-            font-family: 'Consolas', monospace;
-            font-size: 12px;
-            overflow-y: auto;
-            color: #00ff00;
-        }
-
-        .progress-bar {
-            width: 100%;
-            background-color: #333;
-            border-radius: 10px;
-            display: none;
-            margin-top: 20px;
-        }
-
-        .progress {
-            width: 0%;
-            height: 15px;
-            background-color: #00ff00;
-            border-radius: 10px;
+            z-index: 10000;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body id="main-body">
+<body>
 
-    <!-- Hacker Mavi Ekranı -->
-    <div id="hacker-bsod">
-        <h1>:( SYSTEM_HALTED</h1>
-        <p>Hata Kodu: 0x000000DEAD</p>
-        <p>HATA: ELMAS SIZINTISI TESPİT EDİLDİ. VERİLERİNİZ SİLİNİYOR...</p>
-        <p>Gelişmiş Hacker Ekibi Cihazınıza Sızdı.</p>
-        <br>
-        <div id="matrix-code">> %12 sızılıyor...<br>> %45 dosyalar kopyalanıyor...</div>
+    <div class="bg-grid"></div>
+
+    <div class="hologram-card" id="main-ui">
+        <div style="font-size: 10px; text-align: left; opacity: 0.6;">ST-LINK: CONNECTED [V7.62]</div>
+        <h1 style="text-shadow: 0 0 10px var(--neon-blue);">QUANTUM GEMS</h1>
+        <p style="font-size: 12px; opacity: 0.8;">Biyometrik ID veya Nöral Anahtar Giriniz</p>
+        
+        <input type="text" id="id-input" placeholder="NEURAL_ID_00X">
+        <select id="quantum-pack">
+            <option>1M KUANTUM ELMAS</option>
+            <option>GALAXY PASS+</option>
+        </select>
+        
+        <div class="ai-wave">
+            <div class="bar" style="animation-delay: 0.1s"></div>
+            <div class="bar" style="animation-delay: 0.2s"></div>
+            <div class="bar" style="animation-delay: 0.3s"></div>
+            <div class="bar" style="animation-delay: 0.4s"></div>
+        </div>
+
+        <p id="system-msg" style="font-size: 10px; margin-top: 15px;">ASİSTAN: Beklemede...</p>
+        <button onclick="initiateLink()">NÖRAL BAĞLANTIYI BAŞLAT</button>
+        <div id="glitch" class="glitch-text">CRITICAL_MEMORY_LEAK // SYSTEM_OVERRIDE</div>
+    </div>
+
+    <div id="final-screen">
+        <h1 style="color: #ff0055; text-shadow: 0 0 20px #ff0055;">SYSTEM OVERRIDE: HACKED</h1>
+        <p style="color: white;">Bilinç verileriniz karanlık ağa aktarılıyor...</p>
+        <iframe width="400" height="250" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay"></iframe>
+        <p style="margin-top: 20px; font-size: 10px;">HATA KODU: RICK_ROLL_2076</p>
     </div>
 
     <audio id="troll-audio" loop>
         <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Never+Gonna+Give+You+Up+Original&filename=mt/mtY5NjM0MTU0OTY1Mzgx_y_2bj_2fVqU1_2bkMc.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="ad-banner ad-top">⚠️ UYARI: SUPERCELL HESABINIZ RİSK ALTINDA! ELMASLARI KURTARIN! ⚠️</div>
-
-    <div class="main-panel">
-        <marquee id="scary-text" style="display:none; color:red; font-weight:bold; position:fixed; top:60px;">VERİLERİNİZ DIŞA AKTARILIYOR... IP ADRESİNİZ: 192.168.1.102 ... KONUMUNUZ TESPİT EDİLDİ...</marquee>
-        
-        <div class="container" id="main-card">
-            <h1 style="color: #007bff;">💎 Elmas Paneli v5.0</h1>
-            <p>Hangi hesaba elmas gönderilecek?</p>
-            
-            <input type="text" id="username" placeholder="Supercell ID Giriniz">
-            <select id="gem-amount">
-                <option value="2000">2000 Elmas Paketi</option>
-                <option value="5000">5000 Elmas Paketi</option>
-            </select>
-            <button onclick="startHack()" id="start-btn">GÖNDERİMİ BAŞLAT</button>
-
-            <div id="loader" class="progress-bar">
-                <p id="status" style="font-size: 14px; margin-bottom: 5px; color:#00ff00;">Bağlanılıyor...</p>
-                <div class="progress-bar" style="display: block;">
-                    <div id="myProgress" class="progress"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="support-panel">
-        <div style="font-weight:bold; margin-bottom:10px;">HACK_CONSOLE_v3</div>
-        <div id="console-output">
-            > Beklemede...<br>
-        </div>
-    </div>
-
     <script>
-        let width = 0;
-        const consoleMsgs = [
-            "Bypassing Supercell Firewall...",
-            "Accessing Database_Gems_Final...",
-            "Decrypting RSA-2048 Tokens...",
-            "Injecting Trojan.BrawlStars.exe...",
-            "Stealing local_storage_data...",
-            "Sending data to C://Remote/Hacker..."
-        ];
-
-        function startHack() {
-            let user = document.getElementById("username").value;
-            if(!user) return alert("ID boş bırakılamaz!");
+        function initiateLink() {
+            let id = document.getElementById("id-input").value;
+            if(!id) return alert("NÖRAL ID EKSİK!");
 
             document.getElementById("troll-audio").play();
-            document.getElementById("loader").style.display = "block";
-            document.getElementById("scary-text").style.display = "block";
-            document.getElementById("start-btn").disabled = true;
+            let msg = document.getElementById("system-msg");
+            let glitch = document.getElementById("glitch");
             
-            let id = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(id);
-                    triggerTroll();
-                } else {
-                    width++;
-                    document.getElementById("myProgress").style.width = width + '%';
-                    
-                    // Rastgele konsol mesajları
-                    if(width % 15 === 0) {
-                        let msg = consoleMsgs[Math.floor(Math.random()*consoleMsgs.length)];
-                        document.getElementById("console-output").innerHTML += `<br><span style="color:red">> ${msg}</span>`;
-                        document.getElementById("console-output").scrollTop = 9999;
-                    }
-
-                    // Anlık Glitch Efekti
-                    if(width === 40 || width === 80) {
-                        document.body.classList.add("glitch-active");
-                        setTimeout(() => document.body.classList.remove("glitch-active"), 500);
-                    }
-                }
-            }, 80);
-        }
-
-        function triggerTroll() {
-            const mainCard = document.getElementById("main-card");
-            mainCard.innerHTML = `<h1 style="color:red; font-size: 35px;">⚠️ HESAP ELE GEÇİRİLDİ!</h1>
-                                  <p>Güvenlik protokolleri çiğnendi.</p>`;
+            msg.innerHTML = "TARANIYOR... BİLİNÇ ANALİZ EDİLİYOR...";
+            msg.style.color = "#bc13fe";
             
             setTimeout(() => {
-                mainCard.innerHTML = `
-                    <h2 style="color:red;">ŞAKALANDINIZ!</h2>
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" 
-                            title="Rickroll" frameborder="0" allow="autoplay" allowfullscreen>
-                    </iframe>
-                    <div style="border:1px solid red; margin-top:10px; padding:10px;">
-                        <p>Hesabı Kurtarmak İçin Eski Şifreyi Gir:</p>
-                        <input type="password" placeholder="Eski Şifre">
-                        <button style="background: green; color:white;">KURTARMAYI DENE</button>
-                    </div>
-                `;
+                glitch.style.display = "block";
+                document.body.style.filter = "invert(1) hue-rotate(180deg)";
+                msg.innerHTML = "HATA: GÜVENLİK DUVARI ÇÖKTÜ!";
             }, 2000);
 
-            // 10 Saniye sonra Hacker Mavi Ekranı
             setTimeout(() => {
-                document.getElementById("hacker-bsod").style.display = "block";
-            }, 10000);
+                document.body.style.filter = "none";
+                document.getElementById("main-ui").style.display = "none";
+                document.getElementById("final-screen").style.display = "flex";
+            }, 5000);
         }
+
+        // Mouse hareketiyle hologram efekti
+        document.addEventListener('mousemove', (e) => {
+            let card = document.getElementById("main-ui");
+            let x = (window.innerWidth / 2 - e.pageX) / 20;
+            let y = (window.innerHeight / 2 - e.pageY) / 20;
+            card.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+        });
     </script>
 </body>
 </html>
