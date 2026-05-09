@@ -14,15 +14,16 @@
         body {
             background-color: var(--dark-bg);
             color: var(--neon-blue);
-            font-family: 'Orbitron', sans-serif; /* Gelecek temalı font */
+            font-family: 'Orbitron', sans-serif;
             margin: 0;
             display: flex;
             height: 100vh;
             overflow: hidden;
             perspective: 1000px;
+            transition: background 0.5s;
         }
 
-        /* Arka Plan Hareketli Çizgiler */
+        /* Arka Plan Grid */
         .bg-grid {
             position: fixed;
             top: 0; left: 0; width: 200%; height: 200%;
@@ -33,12 +34,34 @@
             z-index: -1;
         }
 
-        @keyframes moveGrid {
-            from { transform: translateY(0); }
-            to { transform: translateY(-50px); }
-        }
+        @keyframes moveGrid { from { transform: translateY(0); } to { transform: translateY(-50px); } }
 
-        /* Ana Hologram Konteyner */
+        /* DNA Tarayıcı */
+        #dna-scanner {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 120px;
+            height: 120px;
+            border: 2px solid var(--neon-blue);
+            border-radius: 50%;
+            display: none;
+            overflow: hidden;
+            background: rgba(0,0,0,0.7);
+            z-index: 5000;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        .scan-line {
+            width: 100%;
+            height: 2px;
+            background: var(--neon-blue);
+            position: absolute;
+            animation: scan 2s linear infinite;
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+
+        /* Hologram Kartı */
         .hologram-card {
             margin: auto;
             background: rgba(0, 243, 255, 0.05);
@@ -51,9 +74,9 @@
             max-width: 500px;
             position: relative;
             transform-style: preserve-3d;
+            transition: transform 0.1s;
         }
 
-        /* 2076 Tarzı Inputlar */
         input, select {
             background: rgba(0, 0, 0, 0.7);
             border: 1px solid var(--neon-purple);
@@ -63,7 +86,6 @@
             width: 100%;
             font-family: inherit;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
         button {
@@ -75,41 +97,24 @@
             cursor: pointer;
             font-weight: bold;
             box-shadow: 0 0 15px var(--neon-purple);
-            transition: 0.3s;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
 
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px var(--neon-purple);
-        }
-
-        /* AI Ses Dalgası */
-        .ai-wave {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin-top: 20px;
-        }
-        .bar {
-            width: 3px;
-            height: 20px;
-            background: var(--neon-blue);
-            animation: wave 1s ease-in-out infinite;
-        }
-
-        @keyframes wave {
-            0%, 100% { height: 10px; }
-            50% { height: 40px; }
-        }
-
-        /* Kaos Efektleri */
-        .glitch-text {
-            animation: glitch 0.3s infinite;
+        /* Glitch Katmanı */
+        #glitch-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://media.giphy.com/media/oEI9uWUicKgR6S7Lqz/giphy.gif');
+            opacity: 0.15;
+            pointer-events: none;
             display: none;
-            color: #ff0055;
-            font-size: 12px;
+            z-index: 8000;
         }
+
+        /* AI Dalga */
+        .ai-wave { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
+        .bar { width: 3px; height: 20px; background: var(--neon-blue); animation: wave 1s infinite; }
+        @keyframes wave { 0%, 100% { height: 10px; } 50% { height: 40px; } }
 
         #final-screen {
             position: fixed;
@@ -127,35 +132,39 @@
 <body>
 
     <div class="bg-grid"></div>
+    <div id="glitch-overlay"></div>
+    
+    <div id="dna-scanner">
+        <div class="scan-line"></div>
+        <div style="font-size:8px; color:white; text-align:center; margin-top:40px;">BİYOMETRİK<br>TARANIYOR...</div>
+    </div>
 
     <div class="hologram-card" id="main-ui">
-        <div style="font-size: 10px; text-align: left; opacity: 0.6;">ST-LINK: CONNECTED [V7.62]</div>
+        <div style="font-size: 10px; text-align: left; opacity: 0.6;">SYSTEM: ONLINE [V7.62]</div>
         <h1 style="text-shadow: 0 0 10px var(--neon-blue);">QUANTUM GEMS</h1>
-        <p style="font-size: 12px; opacity: 0.8;">Biyometrik ID veya Nöral Anahtar Giriniz</p>
+        <p style="font-size: 12px;">Nöral Bağlantı İçin ID Giriniz</p>
         
         <input type="text" id="id-input" placeholder="NEURAL_ID_00X">
-        <select id="quantum-pack">
-            <option>1M KUANTUM ELMAS</option>
-            <option>GALAXY PASS+</option>
+        <select>
+            <option>1.000.000 KUANTUM ELMAS</option>
+            <option>SINIRSIZ GALAXY PASS</option>
         </select>
         
         <div class="ai-wave">
             <div class="bar" style="animation-delay: 0.1s"></div>
-            <div class="bar" style="animation-delay: 0.2s"></div>
             <div class="bar" style="animation-delay: 0.3s"></div>
-            <div class="bar" style="animation-delay: 0.4s"></div>
+            <div class="bar" style="animation-delay: 0.5s"></div>
         </div>
 
-        <p id="system-msg" style="font-size: 10px; margin-top: 15px;">ASİSTAN: Beklemede...</p>
-        <button onclick="initiateLink()">NÖRAL BAĞLANTIYI BAŞLAT</button>
-        <div id="glitch" class="glitch-text">CRITICAL_MEMORY_LEAK // SYSTEM_OVERRIDE</div>
+        <p id="system-msg" style="font-size: 10px; margin-top: 15px;">ASİSTAN: BAĞLANTI BEKLENİYOR...</p>
+        <button onclick="initiateLink()">NÖRAL BAĞLANTIYI KUR</button>
     </div>
 
     <div id="final-screen">
-        <h1 style="color: #ff0055; text-shadow: 0 0 20px #ff0055;">SYSTEM OVERRIDE: HACKED</h1>
-        <p style="color: white;">Bilinç verileriniz karanlık ağa aktarılıyor...</p>
+        <h1 style="color: #ff0055; text-shadow: 0 0 20px #ff0055;">SİSTEM ELE GEÇİRİLDİ</h1>
+        <p style="color: white;">Nöral verileriniz Dark Web'e aktarılıyor...</p>
         <iframe width="400" height="250" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay"></iframe>
-        <p style="margin-top: 20px; font-size: 10px;">HATA KODU: RICK_ROLL_2076</p>
+        <p style="margin-top: 20px; font-size: 10px; color: gray;">HATA KODU: RICK_ROLL_2076</p>
     </div>
 
     <audio id="troll-audio" loop>
@@ -165,33 +174,39 @@
     <script>
         function initiateLink() {
             let id = document.getElementById("id-input").value;
-            if(!id) return alert("NÖRAL ID EKSİK!");
+            if(!id) return alert("NÖRAL ID GİRMEDİNİZ!");
 
             document.getElementById("troll-audio").play();
-            let msg = document.getElementById("system-msg");
-            let glitch = document.getElementById("glitch");
+            document.getElementById("dna-scanner").style.display = "block";
             
-            msg.innerHTML = "TARANIYOR... BİLİNÇ ANALİZ EDİLİYOR...";
-            msg.style.color = "#bc13fe";
+            let msg = document.getElementById("system-msg");
+            msg.innerHTML = "DNA ANALİZ EDİLİYOR...";
+            msg.style.color = "yellow";
             
             setTimeout(() => {
-                glitch.style.display = "block";
-                document.body.style.filter = "invert(1) hue-rotate(180deg)";
-                msg.innerHTML = "HATA: GÜVENLİK DUVARI ÇÖKTÜ!";
+                msg.innerHTML = "DNA EŞLEŞTİ! GÜVENLİK DUVARI DELİNİYOR...";
+                document.getElementById("glitch-overlay").style.display = "block";
             }, 2000);
 
             setTimeout(() => {
-                document.body.style.filter = "none";
+                msg.innerHTML = "KRİTİK HATA: SİSTEM GERİ DÖNDÜRÜLEMEZ!";
+                msg.style.color = "red";
+                document.body.style.background = "#330000";
+            }, 4000);
+
+            setTimeout(() => {
                 document.getElementById("main-ui").style.display = "none";
                 document.getElementById("final-screen").style.display = "flex";
-            }, 5000);
+                document.getElementById("dna-scanner").style.display = "none";
+                document.getElementById("glitch-overlay").style.display = "none";
+            }, 6500);
         }
 
-        // Mouse hareketiyle hologram efekti
+        // Fare ile 3D Hareket
         document.addEventListener('mousemove', (e) => {
             let card = document.getElementById("main-ui");
-            let x = (window.innerWidth / 2 - e.pageX) / 20;
-            let y = (window.innerHeight / 2 - e.pageY) / 20;
+            let x = (window.innerWidth / 2 - e.pageX) / 25;
+            let y = (window.innerHeight / 2 - e.pageY) / 25;
             card.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
         });
     </script>
