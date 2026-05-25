@@ -3,258 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BRAWL_STARS_QUANTUM_GEN_2126</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>LifeSteal Sunucu Portalı</title>
+    <!-- FontAwesome ikonları için -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --neon-cyan: #00ffff;
-            --hacker-red: #ff003c;
-            --deep-space: #010108;
+            --bg-color: #0f0c1b;
+            --card-bg: #1a162e;
+            --accent-color: #ff3344; /* LifeSteal kırmızısı */
+            --text-color: #ffffff;
+            --text-muted: #a0aec0;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            background: var(--deep-space);
-            color: var(--neon-cyan);
-            font-family: 'Orbitron', sans-serif;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             overflow: hidden;
-        }
-
-        /* Dinamik Arka Plan Motoru */
-        #canvas-bg {
-            position: fixed; top: 0; left: 0; z-index: -1;
-            background: radial-gradient(circle at center, #0a1128 0%, #010108 100%);
-        }
-
-        .scene {
-            width: 100vw; height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            perspective: 1500px;
-        }
-
-        /* 3D Hologram Kartı */
-        .hologram-card {
             position: relative;
-            width: 420px;
-            background: rgba(0, 255, 255, 0.05);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            backdrop-filter: blur(15px);
-            padding: 40px;
-            transform-style: preserve-3d;
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.1);
-            transition: transform 0.1s ease-out;
+        }
+
+        /* Arka plan efekti */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            top: 20%;
+            left: 30%;
+            z-index: 0;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 51, 68, 0.1);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        .server-logo {
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        h1 span {
+            color: var(--accent-color);
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        /* IP Kopyalama Alanı */
+        .ip-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px dashed rgba(255, 51, 68, 0.3);
+            padding: 1rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ip-box:hover {
+            border-color: var(--accent-color);
+            background: rgba(255, 51, 68, 0.05);
+        }
+
+        .ip-text {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .ip-icon {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        /* Butonlar alanı */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0.8rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: transform 0.2s, filter 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.2);
+        }
+
+        .btn-discord {
+            background-color: #5865F2;
+        }
+
+        .btn-youtube {
+            background-color: #FF0000;
+        }
+
+        /* Bildirim kutusu (Kopyalandı yazısı için) */
+        .toast {
+            position: fixed;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2e7d32;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: bottom 0.3s ease;
             z-index: 10;
         }
 
-        .corner {
-            position: absolute; width: 15px; height: 15px;
-            border: 2px solid var(--neon-cyan);
-        }
-        .top-left { top: -2px; left: -2px; border-right: none; border-bottom: none; }
-        .bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
-
-        h1 {
-            text-align: center; font-weight: 900; letter-spacing: 5px;
-            font-size: 24px; margin-bottom: 40px;
-            text-shadow: 0 0 15px var(--neon-cyan);
-            transform: translateZ(30px);
+        .toast.show {
+            bottom: 30px;
         }
 
-        .input-group {
-            margin-bottom: 25px;
-            transform: translateZ(20px);
-            position: relative;
-            z-index: 20;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
-
-        label {
-            display: block; font-size: 10px; margin-bottom: 8px;
-            letter-spacing: 2px; opacity: 0.8;
-        }
-
-        input, select {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(0, 255, 255, 0.4);
-            padding: 15px;
-            color: white;
-            font-family: 'Share Tech Mono', monospace;
-            outline: none;
-            cursor: text;
-        }
-
-        button {
-            width: 100%;
-            padding: 20px;
-            background: transparent;
-            border: 2px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            letter-spacing: 3px;
-            cursor: pointer;
-            transition: 0.4s;
-            transform: translateZ(40px);
-        }
-
-        button:hover {
-            background: var(--neon-cyan);
-            color: black;
-            box-shadow: 0 0 30px var(--neon-cyan);
-        }
-
-        /* Siyah Hack Ekranı */
-        #hack-void {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: black;
-            display: none;
-            flex-direction: column;
-            align-items: center; justify-content: center;
-            z-index: 10000;
-        }
-
-        .hacked-text {
-            color: var(--hacker-red);
-            font-size: 50px; font-weight: 900;
-            text-shadow: 0 0 20px red;
-            animation: blink 0.1s infinite;
-        }
-
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } }
-
-        .info-leak {
-            color: #00ff00;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 14px;
-            text-align: left;
-            margin: 20px 0;
-            background: rgba(0, 50, 0, 0.3);
-            padding: 15px;
-            border: 1px solid #00ff00;
-        }
-
-        .shake { animation: shake 0.1s infinite; }
-        @keyframes shake { 0% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } }
-
     </style>
 </head>
 <body>
 
-    <canvas id="canvas-bg"></canvas>
+    <div class="container">
+        <!-- Sunucu İkonu (Kalp sembolü LifeSteal'i temsil eder) -->
+        <div class="server-logo">
+            <i class="fa-solid fa-heart-pulse"></i>
+        </div>
 
-    <div class="scene">
-        <div class="hologram-card" id="card">
-            <div class="corner top-left"></div>
-            <div class="corner bottom-right"></div>
+        <h1>GHOST<span>LIFESTEAL</span></h1>
+        <p class="tagline">Kalplerini koru, rakiplerini yok et!</p>
+
+        <!-- IP Kopyalama Alanı -->
+        <div class="ip-box" onclick="copyIP()">
+            <span class="ip-text" id="serverIP">play.ghostlifesteal.com</span>
+            <span class="ip-icon"><i class="fa-regular fa-copy"></i> Kopyala</span>
+        </div>
+
+        <!-- Sosyal Medya Linkleri -->
+        <div class="links-container">
+            <!-- Discord Linki (href kısmına kendi davet linkini yaz) -->
+            <a href="https://discord.gg/davetkodu" target="_blank" class="btn btn-discord">
+                <i class="fa-brands fa-discord"></i> Discord Sunucumuza Katıl
+            </a>
             
-            <p style="font-size: 8px; opacity: 0.4; letter-spacing: 2px;">NEURAL_STARS_v2126</p>
-            <h1>ELMAS ÜRETİCİ</h1>
-
-            <div class="input-group">
-                <label>OYUNCU ID</label>
-                <input type="text" id="player-id" placeholder="#G8YRL2...">
-            </div>
-
-            <div class="input-group">
-                <label>ELMAS MİKTARI SEÇİN</label>
-                <select id="gem-qty">
-                    <option>170 ELMAS (GÜVENLİ)</option>
-                    <option>2500 ELMAS (MODERATE)</option>
-                    <option>99999 ELMAS (KRİTİK RİSK)</option>
-                </select>
-            </div>
-
-            <button onclick="initiateHack()">ELMASLARI AL</button>
-            
-            <p style="font-size: 7px; margin-top: 30px; opacity: 0.3; text-align: center;">BRAWL_CORE_v2.0 // QUANTUM_SECURE</p>
+            <!-- YouTube Linki (href kısmına kanal linkini yaz) -->
+            <a href="https://youtube.com/kanallinki" target="_blank" class="btn btn-youtube">
+                <i class="fa-brands fa-youtube"></i> YouTube Kanalımız
+            </a>
         </div>
     </div>
 
-    <!-- Hack Paneli (IP ve Cihaz Bilgisiyle) -->
-    <div id="hack-void">
-        <div class="hacked-text">HACKLENDİN!</div>
-        
-        <div class="info-leak" id="leak-details">
-            <!-- JS Burayı dolduracak -->
-        </div>
-
-        <iframe id="rick-video" width="560" height="315" src="" frameborder="0" allow="autoplay"></iframe>
-    </div>
-
-    <audio id="rick-sound" loop>
-        <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Never+Gonna+Give+You+Up+Original&filename=mt/mtY5NjM0MTU0OTY1Mzgx_y_2bj_2fVqU1_2bkMc.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Kopyalandı Bildirimi -->
+    <div id="toast" class="toast">IP Adresi Başarıyla Kopyalandı!</div>
 
     <script>
-        // Arka plan animasyonu
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let dots = [];
-
-        function init() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            dots = [];
-            for(let i=0; i<80; i++) {
-                dots.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    speedX: (Math.random() - 0.5) * 0.5,
-                    speedY: (Math.random() - 0.5) * 0.5
-                });
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(0, 255, 255, 0.2)";
-            dots.forEach(d => {
-                d.x += d.speedX; d.y += d.speedY;
-                ctx.beginPath(); ctx.arc(d.x, d.y, 1, 0, Math.PI*2); ctx.fill();
+        function copyIP() {
+            const ipText = document.getElementById('serverIP').innerText;
+            navigator.clipboard.writeText(ipText).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error('Kopyalama başarısız oldu: ', err);
             });
-            requestAnimationFrame(animate);
         }
-
-        // 3D Kart Hareketi
-        const card = document.getElementById('card');
-        document.addEventListener('mousemove', (e) => {
-            let x = (window.innerWidth / 2 - e.clientX) / 45;
-            let y = (window.innerHeight / 2 - e.clientY) / 45;
-            card.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
-        });
-
-        // Şaka Fonksiyonu
-        function initiateHack() {
-            let id = document.getElementById('player-id').value;
-            if(!id) return alert("HATA: OYUNCU ID BULUNAMADI!");
-
-            // Cihaz ve Sahte IP Bilgisi Hazırlama
-            let browserInfo = navigator.platform;
-            let fakeIP = `185.122.45.${Math.floor(Math.random() * 255)}`;
-            
-            document.getElementById('rick-sound').play();
-            document.body.classList.add('shake');
-            
-            // Panik kısmını doldur
-            document.getElementById('leak-details').innerHTML = `
-                > DURUM: KRİTİK VERİ SIZINTISI<br>
-                > HEDEF_ID: ${id}<br>
-                > IP_ADRESİ: ${fakeIP}<br>
-                > CİHAZ_BİLGİSİ: ${browserInfo}<br>
-                > KONUM: ANALİZ EDİLİYOR... %88
-            `;
-
-            setTimeout(() => {
-                document.getElementById('hack-void').style.display = 'flex';
-                document.getElementById('rick-video').src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1";
-                document.body.classList.remove('shake');
-            }, 2000);
-        }
-
-        window.addEventListener('resize', init);
-        init(); animate();
     </script>
 </body>
 </html>
