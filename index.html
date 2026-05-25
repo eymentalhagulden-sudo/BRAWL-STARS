@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KaceNetwork | Resmi Web Sitesi</title>
-    <!-- İkonlar için FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #0b0914;
-            --bg-card: #131124;
-            --accent: #ff2a4b; /* LifeSteal Kırmızısı */
-            --accent-glow: rgba(255, 42, 75, 0.4);
+            --bg-dark: #070913;
+            --bg-card: #0f1124;
+            --accent: #0088ff; /* Kırmızı yerine modern Neon Mavi */
+            --accent-glow: rgba(0, 136, 255, 0.4);
             --text-main: #ffffff;
             --text-sub: #a6a4b8;
             --discord-color: #5865F2;
@@ -38,7 +37,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 10%;
-            background: rgba(11, 9, 20, 0.8);
+            background: rgba(7, 9, 19, 0.8);
             backdrop-filter: blur(10px);
             position: fixed;
             width: 100%;
@@ -84,7 +83,7 @@
             text-align: center;
             padding: 0 1rem;
             position: relative;
-            background: radial-gradient(circle at center, rgba(255, 42, 75, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(0, 136, 255, 0.15) 0%, transparent 70%);
         }
 
         .hero h1 {
@@ -109,7 +108,7 @@
         /* IP Kopyalama Kutusu */
         .ip-container {
             background: var(--bg-card);
-            border: 2px solid rgba(255, 42, 75, 0.2);
+            border: 2px solid rgba(0, 136, 255, 0.2);
             padding: 1rem 2rem;
             border-radius: 50px;
             display: flex;
@@ -182,7 +181,7 @@
 
         .card:hover {
             transform: translateY(-5px);
-            border-color: rgba(255, 42, 75, 0.3);
+            border-color: rgba(0, 136, 255, 0.3);
         }
 
         .card i {
@@ -250,7 +249,7 @@
         footer {
             text-align: center;
             padding: 2rem;
-            background: #06050c;
+            background: #04050a;
             color: var(--text-sub);
             font-size: 0.9rem;
             border-top: 1px solid rgba(255, 255, 255, 0.02);
@@ -279,7 +278,7 @@
         /* Mobil Uyumluluk */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* Mobilde sadelik için menüyü gizledik */
+            .nav-links { display: none; }
             .ip-container { padding: 0.8rem 1.5rem; }
             .ip-text { font-size: 1rem; }
         }
@@ -287,7 +286,6 @@
 </head>
 <body>
 
-    <!-- NAVİGASYON -->
     <nav>
         <div class="logo">KACE<span>NETWORK</span></div>
         <ul class="nav-links">
@@ -297,19 +295,16 @@
         </ul>
     </nav>
 
-    <!-- GİRİŞ BÖLÜMÜ -->
     <section class="hero" id="home">
         <h1>KACE<span>NETWORK</span> LIFESTEAL</h1>
         <p>Rakiplerinin kalplerini sök al, kendi krallığını kur! Adaletin kılıcın kadar keskin olduğu en hardcore hayatta kalma deneyimi burada başlıyor.</p>
         
-        <!-- IP Kopyalama Kutusu -->
         <div class="ip-container" onclick="copyIP()">
             <span class="ip-text" id="serverIP">kacenetwork.com</span>
             <div class="ip-btn"><i class="fa-regular fa-copy"></i> Tıkla Kopyala</div>
         </div>
     </section>
 
-    <!-- ÖZELLİKLER BÖLÜMÜ -->
     <section class="features" id="features">
         <h2 class="section-title">Neden KaceNetwork?</h2>
         <div class="grid">
@@ -326,37 +321,31 @@
             <div class="card">
                 <i class="fa-solid fa-gem"></i>
                 <h3>Dinamik Ekonomi</h3>
-                <p>Kendi aranızda ticaret yapın, özel eşyalar kazanın ve sunucunun en zengin savaşçısı siz olun.</p>
+                <p>Keni aranızda ticaret yapın, özel eşyalar kazanın ve sunucunun en zengin savaşçısı siz olun.</p>
             </div>
         </div>
     </section>
 
-    <!-- SOSYAL MEDYA BÖLÜMÜ -->
     <section class="socials" id="socials">
         <h2 class="section-title">Topluluğumuza Katıl</h2>
         <p style="color: var(--text-sub); margin-bottom: 2rem;">Etkinlikleri kaçırmamak, videolara göz atmak ve klanını kurmak için bize katıl!</p>
         
         <div class="social-buttons">
-            <!-- Discord -->
             <a href="https://discord.gg/hYraR6fg" target="_blank" class="social-btn social-btn-dc">
                 <i class="fa-brands fa-discord"></i> Discord Sunucusu
             </a>
-            <!-- YouTube -->
             <a href="https://www.youtube.com/@kaceplay" target="_blank" class="social-btn social-btn-yt">
                 <i class="fa-brands fa-youtube"></i> YouTube Kanalı
             </a>
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
         <p>&copy; 2026 KaceNetwork. Tüm hakları saklıdır. Minecraft ile doğrudan bir bağı bulunmamaktadır.</p>
     </footer>
 
-    <!-- Kopyalandı Bildirimi -->
     <div id="toast" class="toast"><i class="fa-solid fa-check"></i> IP Adresi Panoya Kopyalandı!</div>
 
-    <!-- JS KODU -->
     <script>
         function copyIP() {
             const ipText = document.getElementById('serverIP').innerText;
