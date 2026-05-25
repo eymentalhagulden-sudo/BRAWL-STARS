@@ -3,211 +3,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeSteal Sunucu Portalı</title>
-    <!-- FontAwesome ikonları için -->
+    <title>KaceNetwork | Resmi Web Sitesi</title>
+    <!-- İkonlar için FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #0f0c1b;
-            --card-bg: #1a162e;
-            --accent-color: #ff3344; /* LifeSteal kırmızısı */
-            --text-color: #ffffff;
-            --text-muted: #a0aec0;
+            --bg-dark: #0b0914;
+            --bg-card: #131124;
+            --accent: #ff2a4b; /* LifeSteal Kırmızısı */
+            --accent-glow: rgba(255, 42, 75, 0.4);
+            --text-main: #ffffff;
+            --text-sub: #a6a4b8;
+            --discord-color: #5865F2;
+            --youtube-color: #FF0000;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
         }
 
-        /* Arka plan efekti */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            filter: blur(150px);
-            opacity: 0.15;
-            top: 20%;
-            left: 30%;
-            z-index: 0;
-        }
-
-        .container {
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 51, 68, 0.1);
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            z-index: 1;
-            backdrop-filter: blur(10px);
-        }
-
-        .server-logo {
-            font-size: 4rem;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-            animation: pulse 2s infinite;
-        }
-
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-        }
-
-        h1 span {
-            color: var(--accent-color);
-        }
-
-        .tagline {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-        }
-
-        /* IP Kopyalama Alanı */
-        .ip-box {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px dashed rgba(255, 51, 68, 0.3);
-            padding: 1rem;
-            border-radius: 12px;
+        /* --- NAVİGASYON BAR --- */
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            padding: 1.5rem 10%;
+            background: rgba(11, 9, 20, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* --- GİRİŞ (HERO) BÖLÜMÜ --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(255, 42, 75, 0.1) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-sub);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* IP Kopyalama Kutusu */
+        .ip-container {
+            background: var(--bg-card);
+            border: 2px solid rgba(255, 42, 75, 0.2);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
             cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
             transition: all 0.3s ease;
         }
 
-        .ip-box:hover {
-            border-color: var(--accent-color);
-            background: rgba(255, 51, 68, 0.05);
+        .ip-container:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: scale(1.03);
         }
 
         .ip-text {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
-        .ip-icon {
-            color: var(--accent-color);
-            font-size: 1.2rem;
+        .ip-btn {
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        /* Butonlar alanı */
-        .links-container {
+        /* --- ÖZELLİKLER (HAKKIMIZDA) BÖLÜMÜ --- */
+        .features {
+            padding: 6rem 10%;
+            background-color: rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 42, 75, 0.3);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* --- SOSYAL MEDYA BÖLÜMÜ --- */
+        .socials {
+            padding: 6rem 10%;
+            text-align: center;
+        }
+
+        .social-buttons {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
         }
 
-        .btn {
+        .social-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 0.8rem;
-            border-radius: 10px;
+            gap: 15px;
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
             text-decoration: none;
-            color: #fff;
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: transform 0.2s, filter 0.2s;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            min-width: 250px;
+            justify-content: center;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.2);
+        .social-btn-dc {
+            background: var(--discord-color);
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.3);
         }
 
-        .btn-discord {
-            background-color: #5865F2;
+        .social-btn-yt {
+            background: var(--youtube-color);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
         }
 
-        .btn-youtube {
-            background-color: #FF0000;
+        .social-btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
         }
 
-        /* Bildirim kutusu (Kopyalandı yazısı için) */
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #06050c;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        /* --- TOAST BİLDİRİMİ --- */
         .toast {
             position: fixed;
-            bottom: -50px;
+            bottom: -60px;
             left: 50%;
             transform: translateX(-50%);
             background: #2e7d32;
             color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: 500;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             transition: bottom 0.3s ease;
-            z-index: 10;
+            z-index: 1000;
         }
 
         .toast.show {
-            bottom: 30px;
+            bottom: 40px;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        /* Mobil Uyumluluk */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Mobilde sadelik için menüyü gizledik */
+            .ip-container { padding: 0.8rem 1.5rem; }
+            .ip-text { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Sunucu İkonu (Kalp sembolü LifeSteal'i temsil eder) -->
-        <div class="server-logo">
-            <i class="fa-solid fa-heart-pulse"></i>
+    <!-- NAVİGASYON -->
+    <nav>
+        <div class="logo">KACE<span>NETWORK</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Ana Sayfa</a></li>
+            <li><a href="#features">Özellikler</a></li>
+            <li><a href="#socials">Topluluk</a></li>
+        </ul>
+    </nav>
+
+    <!-- GİRİŞ BÖLÜMÜ -->
+    <section class="hero" id="home">
+        <h1>KACE<span>NETWORK</span> LIFESTEAL</h1>
+        <p>Rakiplerinin kalplerini sök al, kendi krallığını kur! Adaletin kılıcın kadar keskin olduğu en hardcore hayatta kalma deneyimi burada başlıyor.</p>
+        
+        <!-- IP Kopyalama Kutusu -->
+        <div class="ip-container" onclick="copyIP()">
+            <span class="ip-text" id="serverIP">kacenetwork.com</span>
+            <div class="ip-btn"><i class="fa-regular fa-copy"></i> Tıkla Kopyala</div>
         </div>
+    </section>
 
-        <h1>GHOST<span>LIFESTEAL</span></h1>
-        <p class="tagline">Kalplerini koru, rakiplerini yok et!</p>
-
-        <!-- IP Kopyalama Alanı -->
-        <div class="ip-box" onclick="copyIP()">
-            <span class="ip-text" id="serverIP">play.ghostlifesteal.com</span>
-            <span class="ip-icon"><i class="fa-regular fa-copy"></i> Kopyala</span>
+    <!-- ÖZELLİKLER BÖLÜMÜ -->
+    <section class="features" id="features">
+        <h2 class="section-title">Neden KaceNetwork?</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fa-solid fa-heart-crack"></i>
+                <h3>Gelişmiş LifeSteal</h3>
+                <p>Oyuncuları alt ederek kalplerini çalın. Kalpleriniz biterse elenirsiniz! Hayatta kalmak için savaşın.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>Kusursuz Altyapı</h3>
+                <p>0 Gecikme (Lag) ve optimize edilmiş Paper altyapısı ile pürüzsüz pvp keyfini sonuna kadar yaşayın.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-gem"></i>
+                <h3>Dinamik Ekonomi</h3>
+                <p>Kendi aranızda ticaret yapın, özel eşyalar kazanın ve sunucunun en zengin savaşçısı siz olun.</p>
+            </div>
         </div>
+    </section>
 
-        <!-- Sosyal Medya Linkleri -->
-        <div class="links-container">
-            <!-- Discord Linki (href kısmına kendi davet linkini yaz) -->
-            <a href="https://discord.gg/davetkodu" target="_blank" class="btn btn-discord">
-                <i class="fa-brands fa-discord"></i> Discord Sunucumuza Katıl
+    <!-- SOSYAL MEDYA BÖLÜMÜ -->
+    <section class="socials" id="socials">
+        <h2 class="section-title">Topluluğumuza Katıl</h2>
+        <p style="color: var(--text-sub); margin-bottom: 2rem;">Etkinlikleri kaçırmamak, videolara göz atmak ve klanını kurmak için bize katıl!</p>
+        
+        <div class="social-buttons">
+            <!-- Discord -->
+            <a href="https://discord.gg/hYraR6fg" target="_blank" class="social-btn social-btn-dc">
+                <i class="fa-brands fa-discord"></i> Discord Sunucusu
             </a>
-            
-            <!-- YouTube Linki (href kısmına kanal linkini yaz) -->
-            <a href="https://youtube.com/kanallinki" target="_blank" class="btn btn-youtube">
-                <i class="fa-brands fa-youtube"></i> YouTube Kanalımız
+            <!-- YouTube -->
+            <a href="https://www.youtube.com/@kaceplay" target="_blank" class="social-btn social-btn-yt">
+                <i class="fa-brands fa-youtube"></i> YouTube Kanalı
             </a>
         </div>
-    </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 KaceNetwork. Tüm hakları saklıdır. Minecraft ile doğrudan bir bağı bulunmamaktadır.</p>
+    </footer>
 
     <!-- Kopyalandı Bildirimi -->
-    <div id="toast" class="toast">IP Adresi Başarıyla Kopyalandı!</div>
+    <div id="toast" class="toast"><i class="fa-solid fa-check"></i> IP Adresi Panoya Kopyalandı!</div>
 
+    <!-- JS KODU -->
     <script>
         function copyIP() {
             const ipText = document.getElementById('serverIP').innerText;
@@ -216,9 +365,9 @@
                 toast.classList.add('show');
                 setTimeout(() => {
                     toast.classList.remove('show');
-                }, 2000);
+                }, 2500);
             }).catch(err => {
-                console.error('Kopyalama başarısız oldu: ', err);
+                console.error('Kopyalanamadı: ', err);
             });
         }
     </script>
