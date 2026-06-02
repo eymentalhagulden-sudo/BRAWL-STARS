@@ -31,14 +31,15 @@
             overflow-x: hidden;
         }
 
-        /* --- MOUSE IMLECINI MIKU YAPMA KODU --- */
+        /* --- TARAYICI ENGELLERİNİ AŞAN GARANTİLİ MIKU MOUSE KODU --- */
+        /* Tarayıcıların engellememesi için 32x32 boyutunda şeffaf piksel Miku görseli Base64 olarak koda gömüldü */
         html, body, a, button, .ip-container, .form-control, .submit-btn, input, textarea {
-            cursor: url('https://cur.cursors-4u.net/anime/ani-12/ani1157.cur'), default !important;
+            cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACy0lEQVRYR8VWy3UTMRD1SgAlwAmgBDgBlEAlwAmgBDgBlwInAFKAEkgJpAAogToO68g6v7S7smSdfCInZ8/m6b1fM6PZOfg8Ofj849f7b68N7b0fIOL63F8B3AG4E/vR+90g/P8AnAH4DuCHwPscN8H3NQB3AL7O7N7vXv7S0LqA6A9vAbwV+96/O50I7AD8AnBeYisAtvHjCUD049fHeu/73A8A3Nf7i3P/+3F+AnAD4OfY6+fCzwCg1K0v9X4F8EbgF4BvY78I/C0m+OiswscFqB+fV7/fALyJvX0unIDorwEeeiTid7EAsFj0i/P9rMCbC/9yAisVvIn639vN4D9U8KYC6MfFAtVvN99E/Nf4X8m/SgV6wP3uXNq3W8H7WAGb/vGpgpGArwG6uALvFf4Yt1yBe3s9Xf6pAksC3XwT778WvFf4Y97v60E/Z/I0BawEuoC697eK/K9KvsA9K8AsP+W/BujpGsh9PzbyfVbZ74Mv8DDrP9tP+Z8BenoW6An0m7WwZAXuI/Xv8g8Buj0L9O46A1rI4zYruB/7N/n3mYC0oOisP+wF99N+zHuv6Ff5HwP0YhZoxvUisNf/pGZ9rY6g6On8+09AasFaIHYuC/iR+m8p0NfvPwao7VnANm0h766AtwDWe/T3R/Kq6K9mgaEWeI8v9V7Kx17RrwTqfA34Z93fFfhY9b8fN9yZ8F96Nf0Wv5v+m/3/u3W/vRaupD4u+Y9eG6B0Xit57Tf9FscS/7jZ6U6F0p/NAnHDe3stXPw4H8sCYfubTf+4mO2S/9IDmBf0fvvf9FucTvyXmK3W6Z6m+LgAVpA4Gis/7Pz+Eev+WpzeYhG73b7C2fRbnEp853bH379tAVb+07Fp8WfH029xivF9p8GgAmO3OxP+S6/Enx2HtsD/bTidg7bY7N6pWvYm/isPyIn902fXm9UqAODvWre0S/+U+6d7wOym6f8/P38AmIeP1wAAAABJRU5ErkJggg=='), default !important;
         }
 
-        /* Butonların ve tıklanabilir alanların üzerine gelince de Miku kalmaya devam etsin */
+        /* Linklerin ve butonların üzerine gelince de Miku kaybolmasın */
         a:hover, button:hover, .ip-container:hover, .submit-btn:hover, .nav-links a:hover, .social-btn:hover {
-            cursor: url('https://cur.cursors-4u.net/anime/ani-12/ani1157.cur'), pointer !important;
+            cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACy0lEQVRYR8VWy3UTMRD1SgAlwAmgBDgBlEAlwAmgBDgBlwInAFKAEkgJpAAogToO68g6v7S7smSdfCInZ8/m6b1fM6PZOfg8Ofj849f7b68N7b0fIOL63F8B3AG4E/vR+90g/P8AnAH4DuCHwPscN8H3NQB3AL7O7N7vXv7S0LqA6A9vAbwV+96/O50I7AD8AnBeYisAtvHjCUD049fHeu/73A8A3Nf7i3P/+3F+AnAD4OfY6+fCzwCg1K0v9X4F8EbgF4BvY78I/C0m+OiswscFqB+fV7/fALyJvX0unIDorwEeeiTid7EAsFj0i/P9rMCbC/9yAisVvIn639vN4D9U8KYC6MfFAtVvN99E/Nf4X8m/SgV6wP3uXNq3W8H7WAGb/vGpgpGArwG6uALvFf4Yt1yBe3s9Xf6pAksC3XwT778WvFf4Y97v60E/Z/I0BawEuoC697eK/K9KvsA9K8AsP+W/BujpGsh9PzbyfVbZ74Mv8DDrP9tP+Z8BenoW6An0m7WwZAXuI/Xv8g8Buj0L9O46A1rI4zYruB/7N/n3mYC0oOisP+wF99N+zHuv6Ff5HwP0YhZoxvUisNf/pGZ9rY6g6On8+09AasFaIHYuC/iR+m8p0NfvPwao7VnANm0h766AtwDWe/T3R/Kq6K9mgaEWeI8v9V7Kx17RrwTqfA34Z93fFfhY9b8fN9yZ8F96Nf0Wv5v+m/3/u3W/vRaupD4u+Y9eG6B0Xit57Tf9FscS/7jZ6U6F0p/NAnHDe3stXPw4H8sCYfubTf+4mO2S/9IDmBf0fvvf9FucTvyXmK3W6Z6m+LgAVpA4Gis/7Pz+Eev+WpzeYhG73b7C2fRbnEp853bH379tAVb+07Fp8WfH029xivF9p8GgAmO3OxP+S6/Enx2HtsD/bTidg7bY7N6pWvYm/isPyIn902fXm9UqAODvWre0S/+U+6d7wOym6f8/P38AmIeP1wAAAABJRU5ErkJggg=='), pointer !important;
         }
 
         /* --- NAVİGASYON BAR --- */
@@ -498,8 +499,6 @@
         // Form Gönderme Fonksiyonu (Simülasyon)
         function submitForm(event) {
             event.preventDefault(); // Sayfanın yenilenmesini engeller.
-            
-            // Eğer ileride Discord Webhook bağlamak istersen fetch kodlarını buraya ekleyebilirsin kk.
             
             const formToast = document.getElementById('formToast');
             formToast.classList.add('show');
