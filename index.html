@@ -201,6 +201,87 @@
             line-height: 1.6;
         }
 
+        /* --- BAŞVURU FORMU BÖLÜMÜ --- */
+        .application {
+            padding: 6rem 10%;
+            background-color: rgba(7, 9, 19, 0.5);
+            text-align: center;
+        }
+
+        .form-container {
+            background: var(--bg-card);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: var(--text-main);
+        }
+
+        .form-group label i {
+            color: var(--accent);
+            margin-right: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(7, 9, 19, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(0, 136, 255, 0.2);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 136, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--accent-glow);
+            filter: brightness(1.1);
+        }
+
         /* --- SOSYAL MEDYA BÖLÜMÜ --- */
         .socials {
             padding: 6rem 10%;
@@ -274,6 +355,10 @@
         .toast.show {
             bottom: 40px;
         }
+        
+        .toast.toast-error {
+            background: #c62828;
+        }
 
         /* Mobil Uyumluluk */
         @media (max-width: 768px) {
@@ -281,6 +366,7 @@
             .nav-links { display: none; }
             .ip-container { padding: 0.8rem 1.5rem; }
             .ip-text { font-size: 1rem; }
+            .form-container { padding: 2rem 1.2rem; }
         }
     </style>
 </head>
@@ -291,6 +377,7 @@
         <ul class="nav-links">
             <li><a href="#home">Ana Sayfa</a></li>
             <li><a href="#features">Özellikler</a></li>
+            <li><a href="#apply">Yetkili Başvurusu</a></li>
             <li><a href="#socials">Topluluk</a></li>
         </ul>
     </nav>
@@ -321,8 +408,46 @@
             <div class="card">
                 <i class="fa-solid fa-gem"></i>
                 <h3>Dinamik Ekonomi</h3>
-                <p>Keni aranızda ticaret yapın, özel eşyalar kazanın ve sunucunun en zengin savaşçısı siz olun.</p>
+                <p>Kendi aranızda ticaret yapın, özel eşyalar kazanın ve sunucunun en zengin savaşçısı siz olun.</p>
             </div>
+        </div>
+    </section>
+
+    <section class="application" id="apply">
+        <h2 class="section-title">Ekibimize Katıl</h2>
+        <p style="color: var(--text-sub); margin-bottom: 3rem;">KaceNetwork yönetim kadrosunda yer almak ve sunucuyu büyütmemize yardımcı olmak ister misin? Formu eksiksiz doldur!</p>
+        
+        <div class="form-container">
+            <form id="staffForm" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-user"></i> Adınız ve Oyundaki Kullanıcı Adınız (IGN)</label>
+                    <input type="text" id="formName" class="form-control" placeholder="Örn: Ahmet / KacePlay" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-brands fa-discord"></i> Discord Kullanıcı Adınız</label>
+                    <input type="text" id="formDiscord" class="form-control" placeholder="Örn: kaceplay_dc" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-hourglass-half"></i> Sunucumuzda Günlük Kaç Saat Aktif Olabilirsiniz?</label>
+                    <input type="text" id="formHours" class="form-control" placeholder="Örn: Hafta içi 4 saat, Hafta sonu 6-7 saat" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-graduation-cap"></i> Daha Önceki Yetkililik Deneyimleriniz Nelerdir?</label>
+                    <textarea id="formExperience" class="form-control" placeholder="Daha önce hangi sunucularda, hangi rütbelerde görev aldınız? Detaylıca açıklayın..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-wand-magic-sparkles"></i> Sizi Neden Ekibe Seçmeliyiz? Farkınız Nedir?</label>
+                    <textarea id="formWhyMe" class="form-control" placeholder="Sunucuya ne gibi katkılarınız olabilir? Oyuncularla iletişiminiz nasıldır?..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fa-solid fa-paper-plane"></i> Başvuruyu Gönder
+                </button>
+            </form>
         </div>
     </section>
 
@@ -345,8 +470,10 @@
     </footer>
 
     <div id="toast" class="toast"><i class="fa-solid fa-check"></i> IP Adresi Panoya Kopyalandı!</div>
+    <div id="formToast" class="toast"><i class="fa-solid fa-circle-check"></i> Başvurunuz Başarıyla Alındı!</div>
 
     <script>
+        // IP Kopyalama Fonksiyonu
         function copyIP() {
             const ipText = document.getElementById('serverIP').innerText;
             navigator.clipboard.writeText(ipText).then(() => {
@@ -358,6 +485,23 @@
             }).catch(err => {
                 console.error('Kopyalanamadı: ', err);
             });
+        }
+
+        // Form Gönderme Fonksiyonu (Simülasyon)
+        function submitForm(event) {
+            event.preventDefault(); // Sayfanın yenilenmesini engeller.
+            
+            // Buraya ileride başvuruları Discord Webhook'una veya veritabanına bağlamak istersen kod ekleyebilirsin.
+            
+            const formToast = document.getElementById('formToast');
+            formToast.classList.add('show');
+            
+            // Formu temizle
+            document.getElementById('staffForm').reset();
+            
+            setTimeout(() => {
+                formToast.classList.remove('show');
+            }, 3500);
         }
     </script>
 </body>
