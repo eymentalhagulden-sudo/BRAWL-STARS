@@ -31,6 +31,16 @@
             overflow-x: hidden;
         }
 
+        /* --- MOUSE IMLECINI MIKU YAPMA KODU --- */
+        html, body, a, button, .ip-container, .form-control, .submit-btn, input, textarea {
+            cursor: url('https://cur.cursors-4u.net/anime/ani-12/ani1157.cur'), default !important;
+        }
+
+        /* Butonların ve tıklanabilir alanların üzerine gelince de Miku kalmaya devam etsin */
+        a:hover, button:hover, .ip-container:hover, .submit-btn:hover, .nav-links a:hover, .social-btn:hover {
+            cursor: url('https://cur.cursors-4u.net/anime/ani-12/ani1157.cur'), pointer !important;
+        }
+
         /* --- NAVİGASYON BAR --- */
         nav {
             display: flex;
@@ -355,10 +365,6 @@
         .toast.show {
             bottom: 40px;
         }
-        
-        .toast.toast-error {
-            background: #c62828;
-        }
 
         /* Mobil Uyumluluk */
         @media (max-width: 768px) {
@@ -413,6 +419,7 @@
         </div>
     </section>
 
+    <!-- --- YETKİLİ BAŞVURU FORMU BÖLÜMÜ --- -->
     <section class="application" id="apply">
         <h2 class="section-title">Ekibimize Katıl</h2>
         <p style="color: var(--text-sub); margin-bottom: 3rem;">KaceNetwork yönetim kadrosunda yer almak ve sunucuyu büyütmemize yardımcı olmak ister misin? Formu eksiksiz doldur!</p>
@@ -452,7 +459,7 @@
     </section>
 
     <section class="socials" id="socials">
-        <h2 class="section-title">Topluluğumuza Katıl</h2>
+        <h2 class="section-title">Topluluk</h2>
         <p style="color: var(--text-sub); margin-bottom: 2rem;">Etkinlikleri kaçırmamak, videolara göz atmak ve klanını kurmak için bize katıl!</p>
         
         <div class="social-buttons">
@@ -469,6 +476,7 @@
         <p>&copy; 2026 KaceNetwork. Tüm hakları saklıdır. Minecraft ile doğrudan bir bağı bulunmamaktadır.</p>
     </footer>
 
+    <!-- Bildirim Kutuları -->
     <div id="toast" class="toast"><i class="fa-solid fa-check"></i> IP Adresi Panoya Kopyalandı!</div>
     <div id="formToast" class="toast"><i class="fa-solid fa-circle-check"></i> Başvurunuz Başarıyla Alındı!</div>
 
@@ -491,7 +499,7 @@
         function submitForm(event) {
             event.preventDefault(); // Sayfanın yenilenmesini engeller.
             
-            // Buraya ileride başvuruları Discord Webhook'una veya veritabanına bağlamak istersen kod ekleyebilirsin.
+            // Eğer ileride Discord Webhook bağlamak istersen fetch kodlarını buraya ekleyebilirsin kk.
             
             const formToast = document.getElementById('formToast');
             formToast.classList.add('show');
