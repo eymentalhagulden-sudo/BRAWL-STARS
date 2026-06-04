@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KaceNetwork - Yetkili Başvuru Formu</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a1a1a; color: #fff; padding: 20px; }
+        .form-container { max-width: 500px; margin: 0 auto; background: #2a2a2a; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h2 { text-align: center; color: #00adb5; }
+        label { display: block; margin-top: 15px; color: #ccc; }
+        input, textarea { width: 100%; padding: 10px; margin-top: 5px; background: #333; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; margin-top: 20px; background: #00adb5; border: none; color: white; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #007c82; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Yetkili Başvuru Formu</h2>
+    <form id="applyForm">
+        <label>Discord Kullanıcı Adı:</label>
+        <input type="text" id="discordName" required placeholder="Örn: ghost_user">
+
+        <label>Yaşınız:</label>
+        <input type="number" id="age" required min="13" max="99">
+
+        <label>Günlük Aktiflik Süreniz (Saat):</label>
+        <input type="number" id="activity" required min="1" max="24">
+
+        <label>Neden Seni Seçmeliyiz? / Deneyimleriniz:</label>
+        <textarea id="reason" rows="4" required placeholder="Kendinizden bahsedin..."></textarea>
+
+        <button type="submit">Başvuruyu Gönder</button>
+    </form>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Senin Firebase Bilgilerin
+    const firebaseConfig = {
+        apiKey: "AIzaSyDCdKrL0esnV6mTr3EpySxtHr7nN1I7zhY",
+        authDomain: "planning-with-ai-fc541.firebaseapp.com",
+        projectId: "planning-with-ai-fc541",
+        storageBucket: "planning-with-ai-fc541.firebasestorage.app",
+        messagingSenderId: "1066085977551",
+        appId: "1:1066085977551:web:d6fb2102d7261ca2c9d6ba"
+    };
+
+    // Firebase'i Başlat
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Form Gönderme İşlemi
+    document.getElementById('applyForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const data = {
+            discord: document.getElementById('discordName').value,
+            age: document.getElementById('age').value,
+            activity: document.getElementById('activity').value,
+            reason: document.getElementById('reason').value,
+            date: new Date().toLocaleString('tr-TR'),
+            status: "Bekliyor"
+        };
+
+        try {
+            // Firebase'de 'basvurular' adında bir tabloya veriyi ekliyoruz
+            await addDoc(collection(db, "basvurular"), data);
+            alert("Başvurunuz başarıyla ekibe iletildi!");
+            document.getElementById('applyForm').reset();
+        } catch (error) {
+            console.error("Hata oluştu: ", error);
+            alert("Bir hata oluştu, lütfen tekrar deneyin.");
+        }
+    });
+</script>
+
+</body>
+</html>
