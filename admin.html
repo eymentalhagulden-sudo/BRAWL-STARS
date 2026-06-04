@@ -3,109 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KaceNetwork - Yönetim ve Başvuru Takip Paneli</title>
+    <title>KaceNetwork - Başvuru Takip Paneli</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #fff; padding: 30px; margin: 0; }
-        .container { max-width: 1100px; margin: 0 auto; }
-        h2 { color: #00adb5; border-bottom: 2px solid #222; padding-bottom: 15px; margin-top: 0; display: flex; justify-content: space-between; align-items: center; }
-        .refresh-btn { background: #00adb5; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .refresh-btn:hover { background: #007c82; }
-        
-        /* Şifre Giriş Kutusu */
-        .login-box { max-width: 380px; margin: 100px auto; background: #1e1e1e; padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); border: 1px solid #2a2a2a; }
-        .login-box h3 { margin-top: 0; color: #00adb5; }
-        .login-box input { width: 100%; padding: 12px; margin: 20px 0; background: #2a2a2a; border: 1px solid #3a3a3a; color: #fff; border-radius: 4px; box-sizing: border-box; font-size: 16px; text-align: center; }
-        .login-box button { width: 100%; padding: 12px; background: #00adb5; border: none; color: white; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 16px; }
-        
-        /* Ana Panel Alanı */
-        .panel { display: none; }
-        #loading { text-align: center; font-size: 18px; color: #888; padding: 40px; }
-        .no-data { text-align: center; font-size: 18px; color: #ffc107; padding: 40px; background: #1e1e1e; border-radius: 6px; }
-        
-        /* Başvuru Kartları Tasarımı */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; margin-top: 20px; }
-        .card { background: #1e1e1e; border: 1px solid #2a2a2a; padding: 20px; border-radius: 8px; border-top: 4px solid #00adb5; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: 0.3s; }
-        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
-        .card p { margin: 10px 0; font-size: 14px; line-height: 1.5; color: #ccc; }
-        .card b { color: #00adb5; font-size: 15px; }
-        .card .date { font-size: 12px; color: #666; position: absolute; top: 15px; right: 20px; }
-        
-        /* Butonlar */
-        .actions { margin-top: 20px; display: flex; justify-content: flex-end; border-top: 1px solid #2a2a2a; padding-top: 15px; }
-        .btn-delete { background: #ff4757; color: white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 4px; font-weight: bold; font-size: 13px; transition: 0.3s; }
-        .btn-delete:hover { background: #ff6b81; }
+        body { font-family: sans-serif; background: #121212; color: #fff; padding: 30px; }
+        h2 { color: #00adb5; border-bottom: 2px solid #222; padding-bottom: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .card { background: #1e1e1e; border: 1px solid #2a2a2a; padding: 20px; border-radius: 8px; border-top: 4px solid #00adb5; position: relative; }
+        .card p { margin: 10px 0; font-size: 14px; color: #ccc; }
+        .card b { color: #00adb5; }
+        .date { font-size: 12px; color: #666; position: absolute; top: 15px; right: 20px; }
+        .btn-delete { background: #ff4757; color: white; border: none; padding: 8px 16px; cursor: pointer; border-radius: 4px; font-weight: bold; margin-top: 15px; float: right; }
+        #loading { text-align: center; font-size: 18px; color: #888; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Şifre Giriş Ekranı -->
-    <div class="login-box" id="loginBox">
-        <h3>KaceNetwork Yönetim Girişi</h3>
-        <input type="password" id="adminPassword" placeholder="Giriş Şifresini Yazın">
-        <button id="loginBtn">Sisteme Giriş Yap</button>
-    </div>
+    <h2>Gelen Yetkili Başvuruları</h2>
+    <div id="loading">Veri tabanına bağlanılıyor ve başvurular çekiliyor...</div>
+    <div class="grid" id="appsContainer"></div>
 
-    <!-- Başvuru Listesi -->
-    <div class="panel" id="adminPanel">
-        <h2>
-            <span>Gelen Yetkili Başvuruları</span>
-            <button class="refresh-btn" id="refreshBtn">Listeyi Yenile</button>
-        </h2>
-        
-        <div id="loading">Veri tabanına bağlanılıyor ve başvurular çekiliyor...</div>
-        <div class="grid" id="appsContainer"></div>
-    </div>
-</div>
-
-<!-- Firebase Entegrasyonu (Tek Parça) -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // Senin Firebase Veri Tabanı Bilgilerin
+    // Senin bana yolladığın EN GÜNCEL yeni kodlar:
     const firebaseConfig = {
         apiKey: "AIzaSyDCdKrL0esnV6mTr3EpySxtHr7nN1I7zhY",
         authDomain: "planning-with-ai-fc541.firebaseapp.com",
         projectId: "planning-with-ai-fc541",
         storageBucket: "planning-with-ai-fc541.firebasestorage.app",
         messagingSenderId: "1066085977551",
-        appId: "1:1066085977551:web:d6fb2102d7261ca2c9d6ba"
+        appId: "1:1066085977551:web:174943ced9f771b1c9d6ba"
     };
 
-    // Sistemi Başlat
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // PANEL GİRİŞ ŞİFREN (İstersen burayı değiştirebilirsin)
-    const SECRET_PASSWORD = "KaceAdmin123";
-
-    // Şifre Kontrol Fonksiyonu
-    function checkPassword() {
-        const input = document.getElementById('adminPassword').value;
-        if(input === SECRET_PASSWORD) {
-            document.getElementById('loginBox').style.style.display = 'none'; // Giriş kutusunu gizle
-            document.getElementById('adminPanel').style.display = 'block'; // Paneli aç
-            loadApplications(); // Verileri yükle
-        } else {
-            alert("Hatalı şifre girdiniz! Lütfen tekrar deneyin.");
-        }
-    }
-
-    // Başvuruları Firebase'den Çeken Ana Fonksiyon
     async function loadApplications() {
         const container = document.getElementById('appsContainer');
         const loading = document.getElementById('loading');
         
-        loading.style.display = 'block';
-        container.innerHTML = "";
-        
         try {
             const querySnapshot = await getDocs(collection(db, "basvurular"));
             loading.style.display = 'none';
+            container.innerHTML = "";
 
             if (querySnapshot.empty) {
-                container.innerHTML = `<div class="no-data" style="grid-column: 1/-1;">Henüz yapılmış herhangi bir yetkili başvurusu bulunmuyor.</div>`;
+                container.innerHTML = "<p style='grid-column:1/-1; text-align:center;'>Henüz yapılmış bir başvuru yok.</p>";
                 return;
             }
 
@@ -115,54 +59,31 @@
 
                 container.innerHTML += `
                     <div class="card" id="card-${id}">
-                        <div class="date">${data.date || 'Bilinmeyen Tarih'}</div>
-                        <p><b>Discord Adı:</b> ${data.discord || 'Girilmedi'}</p>
+                        <div class="date">${data.date || 'Tarih Yok'}</div>
+                        <p><b>Discord:</b> ${data.discord || 'Girilmedi'}</p>
                         <p><b>Yaş:</b> ${data.age || 'Girilmedi'}</p>
-                        <p><b>Günlük Aktiflik:</b> ${data.activity || '0'} Saat</p>
-                        <p style="background: #252525; padding: 10px; border-radius: 4px; margin-top: 15px; word-break: break-word;">
-                            <b>Açıklama/Deneyim:</b><br>${data.reason || 'Boş bırakıldı.'}
-                        </p>
-                        <div class="actions">
-                            <button class="btn-delete" onclick="deleteApplication('${id}')">Başvuruyu Sil</button>
-                        </div>
+                        <p><b>Aktiflik:</b> ${data.activity || '0'} Saat</p>
+                        <p style="background:#252525; padding:8px; border-radius:4px;"><b>Açıklama:</b><br>${data.reason || 'Boş'}</p>
+                        <button class="btn-delete" onclick="deleteApplication('${id}')">Sil</button>
+                        <div style="clear:both;"></div>
                     </div>
                 `;
             });
         } catch (error) {
-            loading.innerHTML = `<span style="color:#ff4757;">Hata: Veriler veri tabanından çekilemedi! Kuralları kontrol edin.</span>`;
-            console.error("Firebase Hatası: ", error);
+            loading.innerHTML = "<span style='color:red;'>Hata: Veriler çekilemedi. Firebase Firestore Kurallarını (Rules) 'Test Modu' yaptığından emin ol!</span>";
+            console.error(error);
         }
     }
 
-    // Başvuru Silme Fonksiyonu (Dışarıdan erişilebilsin diye window objesine bağlıyoruz)
     window.deleteApplication = async function(id) {
-        if(confirm("Bu yetkili başvurusunu tamamen silmek istediğinize emin misiniz?")) {
-            try {
-                await deleteDoc(doc(db, "basvurular", id));
-                const card = document.getElementById(`card-${id}`);
-                if(card) card.remove();
-                alert("Başvuru silindi.");
-                
-                // Eğer kart kalmadıysa boş yazısını tetikle
-                if(document.getElementById('appsContainer').children.length === 0) {
-                    document.getElementById('appsContainer').innerHTML = `<div class="no-data" style="grid-column: 1/-1;">Henüz yapılmış herhangi bir yetkili başvurusu bulunmuyor.</div>`;
-                }
-            } catch (error) {
-                alert("Silme işlemi sırasında hata oluştu!");
-            }
+        if(confirm("Bu başvuruyu silmek istiyor musun?")) {
+            await deleteDoc(doc(db, "basvurular", id));
+            document.getElementById(`card-${id}`).remove();
         }
     }
 
-    // Buton Dinleyicilerini Bağlama
-    document.getElementById('loginBtn').addEventListener('click', checkPassword);
-    document.getElementById('refreshBtn').addEventListener('click', loadApplications);
-    
-    // Şifre kutusunda Enter'a basınca giriş yapma
-    document.getElementById('adminPassword').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            checkPassword();
-        }
-    });
+    // Sayfa açılır açılmaz şifresiz yükle
+    loadApplications();
 </script>
 
 </body>
