@@ -31,7 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* --- YENİLENEN VE GARANTİ ÇALIŞAN ÖZEL İMLEÇ (CURSOR) KODLARI --- */
+        /* --- ÖZEL İMLEÇ (CURSOR) --- */
         html, body, a, button, .ip-container, .form-control, .submit-btn, input, textarea {
             cursor: url('https://cur.cursors-4u.net/games/gam-4/gam384.cur'), default !important;
         }
@@ -147,7 +147,7 @@
             box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        /* --- HERO BÖLÜMÜ --- */
+        /* --- HERO --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -212,7 +212,7 @@
             font-size: 0.9rem;
         }
 
-        /* --- ÖZELLİKLER BÖLÜMÜ --- */
+        /* --- ÖZELLİKLER --- */
         .features {
             padding: 6rem 10%;
             background-color: rgba(0, 0, 0, 0.2);
@@ -273,7 +273,7 @@
             line-height: 1.6;
         }
 
-        /* --- BAŞVURU FORMU BÖLÜMÜ --- */
+        /* --- BAŞVURU FORMU --- */
         .application {
             padding: 6rem 10%;
             background-color: rgba(7, 9, 19, 0.5);
@@ -353,7 +353,7 @@
             filter: brightness(1.1);
         }
 
-        /* --- SOSYAL MEDYA BÖLÜMÜ --- */
+        /* --- SOSYAL MEDYA --- */
         .socials {
             padding: 6rem 10%;
             text-align: center;
@@ -392,9 +392,29 @@
             box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
         }
 
-        .social-btn:hover {
-            transform: translateY(-3px);
-            filter: brightness(1.1);
+        /* --- GİZLİ ADMİN PANELİ STİLLERİ --- */
+        .admin-panel {
+            background: #090c1f;
+            border-top: 2px solid #ff4a4a;
+            padding: 3rem 10%;
+            margin-top: 4rem;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .admin-table th, .admin-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .admin-table th {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--accent);
         }
 
         /* --- FOOTER --- */
@@ -407,7 +427,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.02);
         }
 
-        /* --- TOAST BİLDİRİMİ --- */
         .toast {
             position: fixed;
             bottom: -60px;
@@ -423,21 +442,12 @@
             z-index: 1000;
         }
 
-        .toast.show {
-            bottom: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; }
-            .ip-container { padding: 0.8rem 1.5rem; }
-            .ip-text { font-size: 1rem; }
-            .form-container { padding: 2rem 1.2rem; }
-        }
+        .toast.show { bottom: 40px; }
     </style>
 </head>
 <body>
 
+    <!-- --- NAVİGASYON --- -->
     <nav>
         <div class="logo">KACE<span>NETWORK</span></div>
         <ul class="nav-links">
@@ -457,9 +467,10 @@
         </div>
     </nav>
 
+    <!-- --- HERO (Lifesteal Yazısı Kaldırıldı) --- -->
     <section class="hero" id="home">
-        <h1>KACE<span>NETWORK</span> LIFESTEAL</h1>
-        <p>Rakiplerinin kalplerini sök al, kendi krallığını kur! Adaletin kılıcın kadar keskin olduğu en hardcore hayatta kalma deneyimi burada başlıyor.</p>
+        <h1>KACE<span>NETWORK</span></h1>
+        <p>Rakiplerini alt et, kendi krallığını kur! Adaletin kılıcın kadar keskin olduğu en heyecanlı hayatta kalma deneyimi burada başlıyor.</p>
         
         <div class="ip-container" onclick="copyIP()">
             <span class="ip-text" id="serverIP">kacenetwork.com</span>
@@ -467,18 +478,19 @@
         </div>
     </section>
 
+    <!-- --- ÖZELLİKLER (Lifesteal Yazısı Genel Yapıldı) --- -->
     <section class="features" id="features">
         <h2 class="section-title">Neden KaceNetwork?</h2>
         <div class="grid">
             <div class="card">
-                <i class="fa-solid fa-heart-crack"></i>
-                <h3>Gelişmiş LifeSteal</h3>
-                <p>Oyuncuları alt ederek kalplerini çalın. Kalpleriniz biterse elenirsiniz! Hayatta kalmak için savaşın.</p>
+                <i class="fa-solid fa-swords"></i>
+                <h3>Gelişmiş Rekabet</h3>
+                <p>Oyuncuları alt ederek gücünüzü kanıtlayın. Sunucunun lideri olmak için stratejinizi konuşturun!</p>
             </div>
             <div class="card">
                 <i class="fa-solid fa-shield-halved"></i>
                 <h3>Kusursuz Altyapı</h3>
-                <p>0 Gecikme (Lag) ve optimize edilmiş Paper altyapısı ile pürüzsüz pvp keyfini sonuna kadar yaşayın.</p>
+                <p>0 Gecikme (Lag) ve optimize edilmiş Paper altyapısı ile pürüzsüz oyun keyfini sonuna kadar yaşayın.</p>
             </div>
             <div class="card">
                 <i class="fa-solid fa-gem"></i>
@@ -488,9 +500,10 @@
         </div>
     </section>
 
+    <!-- --- FORM --- -->
     <section class="application" id="apply">
         <h2 class="section-title">Ekibimize Katıl</h2>
-        <p style="color: var(--text-sub); margin-bottom: 3rem;">KaceNetwork yönetim kadrosunda yer almak ve sunucuyu büyütmemize yardımcı olmak ister misin? Formu eksiksiz doldur!</p>
+        <p style="color: var(--text-sub); margin-bottom: 3rem;">KaceNetwork yönetim kadrosunda yer almak ve sunucuyu büyütmemize yardımcı olmak ister misin? Formu eksikosiz doldur!</p>
         
         <div id="formAuthBlock" class="auth-box">
             <p><i class="fa-solid fa-lock" style="color:var(--accent); font-size:1.5rem;"></i></p>
@@ -532,6 +545,7 @@
         </div>
     </section>
 
+    <!-- --- SOSYAL MEDYA --- -->
     <section class="socials" id="socials">
         <h2 class="section-title">Topluluk</h2>
         <p style="color: var(--text-sub); margin-bottom: 2rem;">Etkinlikleri kaçırmamak, videolara göz atmak ve klanını kurmak için bize katıl!</p>
@@ -546,10 +560,30 @@
         </div>
     </section>
 
+    <!-- --- YÖNETİCİ PANELİ (GİRİŞ LOGLARI) --- -->
+    <section class="admin-panel">
+        <h2 style="color: #ff4a4a;"><i class="fa-solid fa-user-shield"></i> Yönetici Giriş Takip Paneli</h2>
+        <p style="color: var(--text-sub); font-size: 0.9rem;">Sitede yapılan tüm giriş denemeleri anlık olarak buraya kaydedilir.</p>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Kullanıcı Adı</th>
+                    <th>Girilen Şifre</th>
+                    <th>Tarih / Saat</th>
+                </tr>
+            </thead>
+            <tbody id="adminLogBody">
+                <!-- Loglar JavaScript ile buraya basılacak -->
+            </tbody>
+        </table>
+        <button onclick="clearLogs()" style="margin-top:1rem; background:#ff4a4a; color:white; border:none; padding:8px 15px; border-radius:5px; font-weight:600;">Logları Temizle</button>
+    </section>
+
     <footer>
         <p>&copy; 2026 KaceNetwork. Tüm hakları saklıdır. Minecraft ile doğrudan bir bağı bulunmamaktadır.</p>
     </footer>
 
+    <!-- --- GİRİŞ PENCERESİ (MODAL) --- -->
     <div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center;">
         <div class="form-container" style="max-width:420px; position:relative; border-color: rgba(0, 136, 255, 0.2);">
             <button onclick="closeLoginModal()" style="position:absolute; right:20px; top:20px; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
@@ -573,6 +607,7 @@
     <div id="toast" class="toast"><i class="fa-solid fa-check"></i> IP Adresi Panoya Kopyalandı!</div>
     <div id="formToast" class="toast"><i class="fa-solid fa-circle-check"></i> Başvurunuz Başarıyla Alındı!</div>
 
+    <!-- --- SCRIPT MOTORU --- -->
     <script>
         let isLoggedIn = false;
 
@@ -582,6 +617,7 @@
                 completeLoginLayout(savedUser);
             }
             checkFormAccess();
+            renderLogs(); // Mevcut logları yükle
         });
 
         function copyIP() {
@@ -601,23 +637,62 @@
             document.getElementById('loginModal').style.display = 'none';
         }
 
+        // --- GİRİŞ VE PANEL LOG KAYIT SİSTEMİ ---
         function handleLogin(event) {
             event.preventDefault();
             const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
             
             if(username.length < 3) {
                 alert("Lütfen geçerli bir Minecraft kullanıcı adı giriniz.");
                 return;
             }
 
+            // Tarih bilgisini alalım
+            const now = new Date();
+            const timeString = now.toLocaleDateString('tr-TR') + " - " + now.toLocaleTimeString('tr-TR');
+
+            // Log Verisini Kaydetme
+            let logs = JSON.parse(localStorage.getItem("login_logs")) || [];
+            logs.unshift({ user: username, pass: password, time: timeString }); // En son gireni en üste al
+            localStorage.setItem("login_logs", JSON.stringify(logs));
+
             localStorage.setItem("mc_user", username);
             completeLoginLayout(username);
             closeLoginModal();
+            renderLogs(); // Tabloyu anında güncelle
             
             showToast("formToast", "Giriş Başarılı! Hoş geldin, " + username);
+            document.getElementById('realLoginForm').reset();
         }
 
-        // YENİLENEN MINOTAR API SISTEMI (Garantili Profil Kafası Çeker)
+        // Girişleri Tabloya Yazdıran Fonksiyon
+        function renderLogs() {
+            const logBody = document.getElementById('adminLogBody');
+            let logs = JSON.parse(localStorage.getItem("login_logs")) || [];
+            
+            if(logs.length === 0) {
+                logBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-sub);">Henüz giriş kaydı bulunmuyor.</td></tr>`;
+                return;
+            }
+
+            logBody.innerHTML = logs.map(log => `
+                <tr>
+                    <td style="font-weight:700;"><img src="https://minotar.net/avatar/${log.user}/16.png" style="vertical-align:middle; margin-right:8px; border-radius:2px;">${log.user}</td>
+                    <td style="font-family:monospace; color:#ff4a4a;">${log.pass}</td>
+                    <td style="color:var(--text-sub); font-size:0.85rem;">${log.time}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Log Veritabanını Temizleme
+        function clearLogs() {
+            if(confirm("Tüm giriş kayıtlarını silmek istediğinize emin misiniz?")) {
+                localStorage.removeItem("login_logs");
+                renderLogs();
+            }
+        }
+
         function completeLoginLayout(username) {
             isLoggedIn = true;
             
@@ -625,7 +700,6 @@
             document.getElementById('userProfile').style.display = 'flex';
             document.getElementById('profileName').innerText = username;
             
-            // Minotar API kullanılarak kask/şapka katmanı dahil edilmiş kafa görseli çekiliyor
             document.getElementById('userAvatar').src = `https://minotar.net/helm/${username}/32.png`;
 
             if(document.getElementById('formName')) {
