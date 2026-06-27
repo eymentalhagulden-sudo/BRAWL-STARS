@@ -31,7 +31,6 @@
             overflow-x: hidden;
         }
 
-        /* --- ÖZEL İMLEÇ (CURSOR) --- */
         html, body, a, button, .ip-container, .form-control, .submit-btn, input, textarea {
             cursor: url('https://cur.cursors-4u.net/games/gam-4/gam384.cur'), default !important;
         }
@@ -40,7 +39,6 @@
             cursor: url('https://cur.cursors-4u.net/games/gam-4/gam384.cur'), pointer !important;
         }
 
-        /* --- NAVİGASYON BAR --- */
         nav {
             display: flex;
             justify-content: space-between;
@@ -142,7 +140,6 @@
             box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        /* --- HERO --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -207,7 +204,6 @@
             font-size: 0.9rem;
         }
 
-        /* --- ÖZELLİKLER --- */
         .features {
             padding: 6rem 10%;
             background-color: rgba(0, 0, 0, 0.2);
@@ -268,7 +264,6 @@
             line-height: 1.6;
         }
 
-        /* --- BAŞVURU FORMU --- */
         .application {
             padding: 6rem 10%;
             background-color: rgba(7, 9, 19, 0.5);
@@ -346,7 +341,6 @@
             filter: brightness(1.1);
         }
 
-        /* --- SOSYAL MEDYA --- */
         .socials {
             padding: 6rem 10%;
             text-align: center;
@@ -385,7 +379,6 @@
             box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
         }
 
-        /* --- KORUMALI VE MERKEZİ YÖNETİCİ PANELİ STİLLERİ --- */
         .admin-panel {
             background: #090c1f;
             border-top: 2px solid var(--accent);
@@ -410,7 +403,6 @@
             color: var(--accent);
         }
 
-        /* --- FOOTER --- */
         footer {
             text-align: center;
             padding: 2rem;
@@ -454,7 +446,7 @@
             <div id="userProfile" class="profile-card">
                 <img id="userAvatar" src="" alt="Skin" class="profile-avatar">
                 <span id="profileName" class="profile-name">Oyuncu</span>
-                <button class="logout-btn" onclick="logout()" title="Çıkış Yap"><i class="fa-solid fa-right-from-bracket"></i></button>
+                <button class="logout-btn" id="logoutBtn" title="Çıkış Yap"><i class="fa-solid fa-right-from-bracket"></i></button>
             </div>
         </div>
     </nav>
@@ -554,16 +546,14 @@
 
     <!-- --- KORUMALI VE MERKEZİ YÖNETİCİ PANELİ --- -->
     <section class="admin-panel">
-        <h2 style="color: #ff4a4a;"><i class="fa-solid fa-user-shield"></i> Yönetici Giriş Takip Paneli</h2>
-        <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1rem;">Bu bölüm şifre korumalıdır ve tüm dünyadaki anlık girişleri listeler.</p>
+        <h2 style="color: #ff4a4a;"><i class="fa-solid fa-user-shield"></i> Yönetici Giriş Takip Paneli (Realtime DB)</h2>
+        <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1rem;">Bu bölüm şifre korumalıdır ve Realtime DB üzerindeki canlı anlık girişleri listeler.</p>
         
-        <!-- Şifre Doğrulama Alanı -->
         <div id="adminAuthArea" style="display: block; max-width: 300px;">
             <input type="password" id="adminPanelKey" class="form-control" placeholder="Yönetici Şifresini Girin" style="margin-bottom: 0.5rem;">
             <button onclick="verifyAdmin()" class="submit-btn" style="padding: 0.6rem; font-size: 0.95rem;">Paneli Aç</button>
         </div>
 
-        <!-- Gizli Tablo Alanı -->
         <div id="adminDataArea" style="display: none;">
             <table class="admin-table">
                 <thead>
@@ -573,9 +563,7 @@
                         <th>Tarih / Saat</th>
                     </tr>
                 </thead>
-                <tbody id="adminLogBody">
-                    <!-- Firebase'den gelen veriler buraya akacak -->
-                </tbody>
+                <tbody id="adminLogBody"></tbody>
             </table>
         </div>
     </section>
@@ -598,9 +586,7 @@
                     <label><i class="fa-solid fa-lock"></i> Giriş Şifresi (/login şifreniz)</label>
                     <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
                 </div>
-                <button type="submit" class="submit-btn" style="margin-top: 1rem;">
-                    Giriş Yap ve Kilidi Aç
-                </button>
+                <button type="submit" class="submit-btn" style="margin-top: 1rem;">Giriş Yap ve Kilidi Aç</button>
             </form>
         </div>
     </div>
@@ -608,90 +594,10 @@
     <div id="toast" class="toast"><i class="fa-solid fa-check"></i> IP Adresi Panoya Kopyalandı!</div>
     <div id="formToast" class="toast"><i class="fa-solid fa-circle-check"></i> Başvurunuz Başarıyla Alındı!</div>
 
-    <!-- --- ANA FONKSİYONLAR MOTORU --- -->
-    <script>
-        // Global Durum Tanımlamaları
-        window.isLoggedIn = false;
-        window.firebaseDb = null;
-        window.ADMIN_SECRET_KEY = "kaceadmin123"; 
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const savedUser = localStorage.getItem("mc_user");
-            if (savedUser) {
-                completeLoginLayout(savedUser);
-            }
-            checkFormAccess();
-        });
-
-        function copyIP() {
-            const ipText = document.getElementById('serverIP').innerText;
-            navigator.clipboard.writeText(ipText).then(() => {
-                showToast("toast", "IP Adresi Panoya Kopyalandı!");
-            }).catch(err => { console.error(err); });
-        }
-
-        function openLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
-        function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
-
-        function completeLoginLayout(username) {
-            window.isLoggedIn = true;
-            document.getElementById('navLoginBtn').style.display = 'none';
-            document.getElementById('userProfile').style.display = 'flex';
-            document.getElementById('profileName').innerText = username;
-            
-            // Güvenilir, kesintisiz çalışan Crafatar resmi Minecraft avatar API'si
-            document.getElementById('userAvatar').src = `https://crafatar.com/avatars/${username}?size=32&overlay`;
-
-            if(document.getElementById('formName')) {
-                document.getElementById('formName').value = username;
-            }
-            checkFormAccess();
-        }
-
-        function logout() {
-            localStorage.removeItem("mc_user");
-            window.isLoggedIn = false;
-            document.getElementById('navLoginBtn').style.display = 'block';
-            document.getElementById('userProfile').style.display = 'none';
-            if(document.getElementById('formName')) { document.getElementById('formName').value = ""; }
-            checkFormAccess();
-            showToast("toast", "Hesaptan çıkış yapıldı.");
-        }
-
-        function checkFormAccess() {
-            const formBlock = document.getElementById('formAuthBlock');
-            const staffForm = document.getElementById('staffForm');
-            if (window.isLoggedIn) {
-                if(formBlock) formBlock.style.display = 'none';
-                if(staffForm) { staffForm.style.opacity = '1'; staffForm.style.pointerEvents = 'auto'; }
-            } else {
-                if(formBlock) formBlock.style.display = 'block';
-                if(staffForm) { staffForm.style.opacity = '0.15'; staffForm.style.pointerEvents = 'none'; }
-            }
-        }
-
-        function showToast(toastId, message) {
-            const toast = document.getElementById(toastId);
-            if(toast) {
-                if(message) { toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${message}`; }
-                toast.classList.add('show');
-                setTimeout(() => { toast.classList.remove('show'); }, 3000);
-            }
-        }
-
-        function submitForm(event) {
-            event.preventDefault();
-            showToast("formToast", "Başvurunuz Başarıyla Alındı! Ekibimiz İnceleyecektir.");
-            const currentName = document.getElementById('formName').value;
-            document.getElementById('staffForm').reset();
-            document.getElementById('formName').value = currentName;
-        }
-    </script>
-
-    <!-- --- FIREBASE MODÜL ENTEGRASYONU --- -->
+    <!-- --- MODÜL VE KESİNTİSİZ MOTOR --- -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getDatabase, ref, push, query, orderByChild, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCLVjVFuvT0e96b_voY6b4sAxD_R3AX-ig",
@@ -700,13 +606,56 @@
             storageBucket: "kacenetwork-c0967.firebasestorage.app",
             messagingSenderId: "707058701298",
             appId: "1:707058701298:web:377c3995d2d41e4b26d16b",
-            measurementId: "G-BW5NPK0XM8"
+            measurementId: "G-BW5NPK0XM8",
+            databaseURL: "https://kacenetwork-c0967-default-rtdb.europe-west1.firebasedatabase.app/"
         };
 
         const app = initializeApp(firebaseConfig);
-        window.firebaseDb = getFirestore(app);
+        const db = getDatabase(app);
 
-        // Giriş İşlemi Tetikleyicisi
+        const ADMIN_SECRET_KEY = "kaceadmin123";
+
+        // Giriş Arayüzü Güncelleme Sistemi (Merkezi)
+        function completeLoginLayout(username) {
+            document.getElementById('navLoginBtn').style.display = 'none';
+            document.getElementById('userProfile').style.display = 'flex';
+            document.getElementById('profileName').innerText = username;
+            document.getElementById('userAvatar').src = `https://crafatar.com/avatars/${username}?size=32&overlay`;
+
+            if(document.getElementById('formName')) {
+                document.getElementById('formName').value = username;
+            }
+            
+            document.getElementById('formAuthBlock').style.display = 'none';
+            const staffForm = document.getElementById('staffForm');
+            staffForm.style.opacity = '1'; 
+            staffForm.style.pointerEvents = 'auto';
+        }
+
+        function logout() {
+            localStorage.removeItem("mc_user");
+            document.getElementById('navLoginBtn').style.display = 'block';
+            document.getElementById('userProfile').style.display = 'none';
+            if(document.getElementById('formName')) { document.getElementById('formName').value = ""; }
+            
+            document.getElementById('formAuthBlock').style.display = 'block';
+            const staffForm = document.getElementById('staffForm');
+            staffForm.style.opacity = '0.15'; 
+            staffForm.style.pointerEvents = 'none';
+            showToast("toast", "Hesaptan çıkış yapıldı.");
+        }
+
+        // Sayfa ilk yüklendiğinde hafızada kullanıcı var mı bak
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedUser = localStorage.getItem("mc_user");
+            if (savedUser) {
+                completeLoginLayout(savedUser);
+            }
+        });
+
+        // Buton dinleyicilerini bağla (Kopukluğu Önleyen Kısım)
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+
         window.handleLogin = async function(event) {
             event.preventDefault();
             const username = document.getElementById('loginUsername').value.trim();
@@ -721,8 +670,8 @@
             const timeString = now.toLocaleDateString('tr-TR') + " - " + now.toLocaleTimeString('tr-TR');
 
             try {
-                // Firebase Firestore'a ekleme yapıyoruz
-                await addDoc(collection(window.firebaseDb, "logins"), {
+                const dbRef = ref(db, 'logins');
+                await push(dbRef, {
                     user: username,
                     pass: password,
                     time: timeString,
@@ -731,34 +680,38 @@
 
                 localStorage.setItem("mc_user", username);
                 
-                // Ana script yapısını tetikle
+                // Tam burada anında arayüzü tetikliyoruz
                 completeLoginLayout(username);
                 closeLoginModal();
                 showToast("formToast", "Giriş Başarılı! Hoş geldin, " + username);
                 document.getElementById('realLoginForm').reset();
             } catch (error) {
-                console.error("Bulut kaydı başarısız: ", error);
-                alert("Bağlantı hatası! Firebase kurallarından Test Modunu açtığınızdan emin olun.");
+                console.error("Hata: ", error);
+                alert("Veri tabanı bağlantısında sorun oluştu.");
             }
         }
 
-        // Admin Log Panelini Canlı Dinleme Fonksiyonu
         window.verifyAdmin = function() {
             const enteredKey = document.getElementById('adminPanelKey').value;
-            if(enteredKey === window.ADMIN_SECRET_KEY) {
+            if(enteredKey === ADMIN_SECRET_KEY) {
                 document.getElementById('adminAuthArea').style.display = 'none';
                 document.getElementById('adminDataArea').style.display = 'block';
                 
-                const q = query(collection(window.firebaseDb, "logins"), orderBy("timestamp", "desc"));
-                onSnapshot(q, (snapshot) => {
+                const dbRef = ref(db, 'logins');
+                const logQuery = query(dbRef, orderByChild('timestamp'));
+                
+                onValue(logQuery, (snapshot) => {
                     const logBody = document.getElementById('adminLogBody');
-                    if(snapshot.empty) {
-                        logBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-sub);">Veri tabanında henüz kayıt yok.</td></tr>`;
+                    if(!snapshot.exists()) {
+                        logBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-sub);">Kayıt yok.</td></tr>`;
                         return;
                     }
                     
-                    logBody.innerHTML = snapshot.docs.map(doc => {
-                        const data = doc.data();
+                    let logsArray = [];
+                    snapshot.forEach((childSnapshot) => { logsArray.push(childSnapshot.val()); });
+                    logsArray.reverse();
+                    
+                    logBody.innerHTML = logsArray.map(data => {
                         return `
                             <tr>
                                 <td style="font-weight:700;"><img src="https://crafatar.com/avatars/${data.user}?size=16&overlay" style="vertical-align:middle; margin-right:8px; border-radius:2px;">${data.user}</td>
@@ -769,8 +722,36 @@
                     }).join('');
                 });
             } else {
-                alert("Hatalı Yönetici Şifresi!");
+                alert("Hatalı Şifre!");
             }
+        }
+    </script>
+
+    <!-- --- TEMEL TETİKLEYİCİLER --- -->
+    <script>
+        function copyIP() {
+            const ipText = document.getElementById('serverIP').innerText;
+            navigator.clipboard.writeText(ipText).then(() => {
+                showToast("toast", "IP Adresi Panoya Kopyalandı!");
+            });
+        }
+        function openLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
+        function closeLoginModal() { document.getElementById('loginModal').style.display = 'none'; }
+        
+        function showToast(toastId, message) {
+            const toast = document.getElementById(toastId);
+            if(toast) {
+                if(message) { toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${message}`; }
+                toast.classList.add('show');
+                setTimeout(() => { toast.classList.remove('show'); }, 3000);
+            }
+        }
+        function submitForm(event) {
+            event.preventDefault();
+            showToast("formToast", "Başvurunuz Başarıyla Alındı!");
+            const currentName = document.getElementById('formName').value;
+            document.getElementById('staffForm').reset();
+            document.getElementById('formName').value = currentName;
         }
     </script>
 </body>
